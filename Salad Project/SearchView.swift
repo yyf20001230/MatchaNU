@@ -12,7 +12,7 @@ import MapKit
 
 struct CustomSearchView: View {
     @State var Class =  "COMP"
-    @ObservedObject var data = getData()
+    @ObservedObject var data = getClass()
     
     var body: some View {
         NavigationView {
@@ -58,7 +58,7 @@ struct SearchBar: View{
 
 struct ClassList: View{
     @Binding var txt: String
-    @Binding var datas: [DataType]
+    @Binding var datas: [Classes]
     @EnvironmentObject var classes: ClassLocations
     
     var body: some View{
@@ -77,38 +77,47 @@ struct ClassList: View{
                 VStack {
                     ScrollView(showsIndicators: false){
                         ForEach(self.datas.filter{$0.name.lowercased().contains(self.txt.lowercased())}){ i in
-                            NavigationLink(destination: Detail(data: i)){
-                                HStack {
-                                    Image(i.major)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 25)
-                                        .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                                        .padding(.leading)
+                            Button(action:{
+                                if Int(i.location.latitude) != -1 && Int(i.location.longitude) != -1{
+                                    let Point = MKPointAnnotation()
+                                    Point.title = i.name
+                                    Point.coordinate = CLLocationCoordinate2D(latitude: i.location.latitude, longitude: i.location.longitude)
+                                    classes.classlocations.append(Point)
+                                    print(getSection(documentID: i.id ?? "").count)
+                                    print(i.id ?? "")
                                     
-                                    VStack(alignment: .leading, spacing: 6.0) {
-                                        Text(i.name)
-                                            .foregroundColor(Color("Default"))
-                                            .font(.system(.body, design: .rounded))
-                                            .fontWeight(.bold)
-                                            .tracking(-0.5)
+                                }
+                                
+                                //print TBA or remote if the course does not have a location
+                                else{
+                                    
+                                }
+                                
+                            }) {
+                                HStack {
+                                        Image(i.major)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: 25)
+                                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                            .padding(.leading)
                                         
-                                        
-                                    }
-                                    .padding(.all)
-                                    Spacer()
+                                        VStack(alignment: .leading, spacing: 6.0) {
+                                            Text(i.name)
+                                                .foregroundColor(Color("Default"))
+                                                .font(.system(.body, design: .rounded))
+                                                .fontWeight(.bold)
+                                                .tracking(-0.5)
+                                            
+                                            
+                                        }
+                                        .padding(.all)
+                                        Spacer()
                                 }
                             }
-                            
                         }
                         .background(Color("ClassColor"))
                         .cornerRadius(12)
-                    }
-                    .onTapGesture{
-                        let London = MKPointAnnotation()
-                        London.title = "COMP_SCI 340"
-                        London.coordinate = CLLocationCoordinate2D(latitude: 42.06, longitude: -87.65)
-                        classes.classlocations.append(London)
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .padding(.horizontal)
@@ -130,9 +139,9 @@ struct ClassList: View{
     }
 }
 
-class getData: ObservableObject{
+class getClass: ObservableObject{
     private var path = "Classes"
-    @Published var data = [DataType]()
+    @Published var data = [Classes]()
     
     init(){
         let db = Firestore.firestore()
@@ -149,26 +158,63 @@ class getData: ObservableObject{
                 let name = i.get("name") as! String
                 let number = i.get("number") as! Int
                 let major = i.get("major") as! String
-                self.data.append(DataType(id: id, name: name, number: number, major: major))
+                let location = i.get("location") as! GeoPoint
+                self.data.append(Classes(id: id, name: name, number: number, major: major, location: location))
             }
+        }
+    }
+}
+
+func getSection(documentID: String) -> [Section]{
+    
+    var sections = [Section]()
+    
+    let db = Firestore.firestore()
+    
+    db.collection("Classes").document(documentID).collection("Section").getDocuments{(snapshot, error) in
+        
+        if error != nil{
+            print((error?.localizedDescription)!)
+            return
+        }
+        
+        for i in snapshot!.documents{
+            let id = i.documentID
+            let section = i.get("section") as! Int
+            sections.append(Section(id: id, section: section))
+            print(String(section))
             
         }
     }
-     
+    
+    return sections
+    
+    
 }
 
-struct DataType: Identifiable{
+
+
+
+
+struct Classes: Identifiable{
     
     @DocumentID var id: String?
     var name: String
     var number: Int
     var major: String
+    var location: GeoPoint
+}
+
+struct Section: Identifiable{
+    
+    @DocumentID var id: String?
+    var section: Int
 }
 
 
 struct Detail: View {
     
-    var data: DataType
+    var data: Classes
     
     var body: some View{
         Text(String(data.number))

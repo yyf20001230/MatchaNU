@@ -56,13 +56,13 @@ struct MapView: UIViewRepresentable {
         uiView.removeAnnotations(uiView.annotations)
         uiView.showsUserLocation = true
         if show{
-            
             let destination = MKPointAnnotation()
             destination.coordinate = CLLocationCoordinate2D(latitude: coordinate[0], longitude: coordinate[1])
             destination.title = "IEMS313"
             destination.subtitle = "Tech M128"
             uiView.addAnnotation(destination)
             let request = MKDirections.Request()
+            
             request.source = .forCurrentLocation()
             request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination.coordinate))
             request.transportType = .walking
@@ -77,8 +77,25 @@ struct MapView: UIViewRepresentable {
         else{
             uiView.removeOverlays(uiView.overlays)
             uiView.removeAnnotations(uiView.annotations)
-            uiView.addAnnotations(self.classes.classlocations)
-            setCenter(uiView)
+            if self.classes.classlocations.count != 0{
+                var zoomRect = MKMapRect.null
+                for annotations in classes.classlocations{
+                    let aPoint = MKMapPoint(annotations.coordinate)
+                    let rect = MKMapRect(x: aPoint.x, y: aPoint.y, width: 0.1,height: 0.1)
+                    
+                    if zoomRect.isNull {
+                        zoomRect = rect
+                    } else {
+                        zoomRect = zoomRect.union(rect)
+                    }
+                }
+                uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
+                uiView.addAnnotations(self.classes.classlocations)
+            }
+            else{
+                uiView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 42.055984, longitude: -87.675171), span: MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)),
+                              animated: true)
+            }
         }
         
         
@@ -98,7 +115,11 @@ struct MapView: UIViewRepresentable {
                 zoomRect = zoomRect.union(rect)
             }
         }
-        uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80), animated: true)
+        uiView.removeOverlays(uiView.overlays)
+        uiView.removeAnnotations(uiView.annotations)
+        uiView.addAnnotations(self.classes.classlocations)
+        uiView.showAnnotations(uiView.annotations, animated: true)
+        uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
     }
     
     class MapViewCoordinator: NSObject, MKMapViewDelegate{

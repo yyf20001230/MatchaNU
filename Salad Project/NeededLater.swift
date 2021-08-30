@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct SearchView: View {
     
-    @ObservedObject var data = getData()
+    @ObservedObject var data = getClass()
     
     var body: some View {
 
@@ -32,7 +32,7 @@ struct SearchView_Previews: PreviewProvider {
 
 struct CustomSearchBar: View{
     @State var txt = ""
-    @Binding var datas: [DataType]
+    @Binding var datas: [Classes]
     
     var body: some View{
         

@@ -20,7 +20,7 @@ struct ContentView: View {
     @State var ShowClass = false
     
     @State var ClassName = ""
-    @ObservedObject var datas = getData()
+    @ObservedObject var datas = getClass()
     
     @State var coordinate: [Double] = [42.05, -87.7]
     @State var showRoute = false
@@ -41,7 +41,7 @@ struct ContentView: View {
             VStack{
                 HStack {
                     Spacer()
-                    SideButtonView().environmentObject(classes)
+                    SideButtonView()
                         .padding(.trailing)
                         .padding(.top, self.height / 18)
                 }
@@ -51,11 +51,6 @@ struct ContentView: View {
                         CornerButtonView()
                             .onTapGesture {
                                 self.showRoute.toggle()
-                                let London = MKPointAnnotation()
-                                London.title = "COMP_SCI 349"
-                                London.coordinate = CLLocationCoordinate2D(latitude: 42.05, longitude: -87.67)
-                                self.classes.classlocations.append(London)
-                                
                             }
                             .foregroundColor(showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                             .offset(y: -self.height / 12 - 44)
@@ -66,17 +61,8 @@ struct ContentView: View {
                             .offset(y: -self.height / 12 - 44)
                             .padding(.trailing)
                             .opacity(Double(1 + self.MainTab.height))
-                            
-                            .onTapGesture {
-                                let London = MKPointAnnotation()
-                                London.title = "COMP_SCI 349"
-                                London.coordinate = CLLocationCoordinate2D(latitude: 42.06, longitude: -87.67)
-                                self.classes.classlocations.append(London)
-                                
-                            }
- 
                     }
-                    
+
                 }
                 
                 
