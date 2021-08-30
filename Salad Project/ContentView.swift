@@ -9,18 +9,22 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
+class ClassLocations: ObservableObject{
+    @Published var classlocations: [MKPointAnnotation] = []
+}
+
 struct ContentView: View {
     @State var height = CGFloat(UIScreen.main.bounds.height)
     @State var width =  CGFloat(UIScreen.main.bounds.width)
     @State var MainTab = CGSize.zero
     @State var ShowClass = false
     
-    @State var Class = ""
+    @State var ClassName = ""
     @ObservedObject var datas = getData()
     
     @State var coordinate: [Double] = [42.05, -87.7]
     @State var showRoute = false
-    @State var classes: [MKPointAnnotation] = []
+    @StateObject var classes = ClassLocations()
     @ObservedObject var locationManager = LocationManager()
     
     
@@ -28,7 +32,7 @@ struct ContentView: View {
         ZStack () {
             NavigationView{
                 VStack{
-                    MapView(coordinate: $coordinate, classes: $classes, show: $showRoute)
+                    MapView(coordinate: $coordinate, show: $showRoute).environmentObject(classes)
                         .ignoresSafeArea()
                         .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                 }
@@ -37,7 +41,7 @@ struct ContentView: View {
             VStack{
                 HStack {
                     Spacer()
-                    SideButtonView()
+                    SideButtonView().environmentObject(classes)
                         .padding(.trailing)
                         .padding(.top, self.height / 18)
                 }
@@ -50,7 +54,7 @@ struct ContentView: View {
                                 let London = MKPointAnnotation()
                                 London.title = "COMP_SCI 349"
                                 London.coordinate = CLLocationCoordinate2D(latitude: 42.05, longitude: -87.67)
-                                self.classes = [London]
+                                self.classes.classlocations.append(London)
                                 
                             }
                             .foregroundColor(showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
@@ -62,6 +66,15 @@ struct ContentView: View {
                             .offset(y: -self.height / 12 - 44)
                             .padding(.trailing)
                             .opacity(Double(1 + self.MainTab.height))
+                            
+                            .onTapGesture {
+                                let London = MKPointAnnotation()
+                                London.title = "COMP_SCI 349"
+                                London.coordinate = CLLocationCoordinate2D(latitude: 42.06, longitude: -87.67)
+                                self.classes.classlocations.append(London)
+                                
+                            }
+ 
                     }
                     
                 }
@@ -87,16 +100,16 @@ struct ContentView: View {
                         .foregroundColor(Color("TextbarColor"))
                         
                     HStack {
-                        TextField("Add your class here", text: $Class)
-                            .onChange(of: Class){ value in
+                        TextField("Add your class here...", text: $ClassName)
+                            .onChange(of: ClassName){ value in
                                 self.ShowClass = true
                             }
                             .padding(.leading)
                             
                         Spacer()
-                        if self.Class != ""{
+                        if self.ClassName != ""{
                             Button(action: {
-                                self.Class = ""
+                                self.ClassName = ""
                             }){
                                 Image(systemName: "xmark.circle.fill")
                                     .padding(.trailing)
@@ -119,7 +132,7 @@ struct ContentView: View {
 
                 if self.MainTab.height < -20 || self.ShowClass{
                     //NavigationView {
-                        ClassList(txt: self.$Class, datas: self.$datas.data)
+                    ClassList(txt: self.$ClassName, datas: self.$datas.data).environmentObject(classes)
                             .padding(.top)
                             .gesture(
                                 DragGesture().onChanged{ value in
@@ -169,9 +182,10 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group{
-            ContentView()
+            let classes = ClassLocations()
+            ContentView(classes: classes)
                 .preferredColorScheme(.dark)
-            ContentView()
+            ContentView(classes: classes)
                 .preferredColorScheme(.light)
         }
     }

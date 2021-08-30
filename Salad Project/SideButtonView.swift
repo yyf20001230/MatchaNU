@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct SideButtonView: View {
+    @EnvironmentObject var classes: ClassLocations
     var body: some View {
         VStack {
             Image(systemName: "map")
@@ -25,6 +27,12 @@ struct SideButtonView: View {
         .background(Color("SearchbarColor"))
         .cornerRadius(8)
         .shadow(color: .black.opacity(0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
+        .onTapGesture{
+            let London = MKPointAnnotation()
+            London.title = "COMP_SCI 349"
+            London.coordinate = CLLocationCoordinate2D(latitude: 42.05, longitude: -87.68)
+            classes.classlocations.append(London)
+        }
     }
 }
 

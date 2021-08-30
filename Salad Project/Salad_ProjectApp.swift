@@ -16,7 +16,9 @@ struct Salad_ProjectApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let classes = ClassLocations()
+            ContentView(classes: classes)
+                .preferredColorScheme(.dark)
         }
     }
 }

@@ -36,7 +36,7 @@ struct MapView: UIViewRepresentable {
 
     typealias UIViewType = MKMapView
     @Binding var coordinate: [Double]
-    @Binding var classes: [MKPointAnnotation]
+    @EnvironmentObject var classes: ClassLocations
     @Binding var show: Bool
     
     func makeCoordinator() -> MapViewCoordinator{
@@ -55,7 +55,6 @@ struct MapView: UIViewRepresentable {
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
         uiView.removeAnnotations(uiView.annotations)
         uiView.showsUserLocation = true
-        
         if show{
             
             let destination = MKPointAnnotation()
@@ -78,9 +77,8 @@ struct MapView: UIViewRepresentable {
         else{
             uiView.removeOverlays(uiView.overlays)
             uiView.removeAnnotations(uiView.annotations)
-            uiView.addAnnotations(classes)
-            uiView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 42.055984, longitude: -87.675171), span: MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)),
-                             animated: true)
+            uiView.addAnnotations(self.classes.classlocations)
+            setCenter(uiView)
         }
         
         
@@ -88,8 +86,19 @@ struct MapView: UIViewRepresentable {
         
     }
     
-    func updateAnnotations(from mapView: MKMapView){
-        
+    func setCenter(_ uiView: MKMapView){
+        var zoomRect = MKMapRect.null
+        for annotations in classes.classlocations{
+            let aPoint = MKMapPoint(annotations.coordinate)
+            let rect = MKMapRect(x: aPoint.x, y: aPoint.y, width: 0,height: 0)
+            
+            if zoomRect.isNull {
+                zoomRect = rect
+            } else {
+                zoomRect = zoomRect.union(rect)
+            }
+        }
+        uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80), animated: true)
     }
     
     class MapViewCoordinator: NSObject, MKMapViewDelegate{

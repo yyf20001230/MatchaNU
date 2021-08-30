@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import MapKit
 
 struct CustomSearchView: View {
     @State var Class =  "COMP"
@@ -58,12 +59,13 @@ struct SearchBar: View{
 struct ClassList: View{
     @Binding var txt: String
     @Binding var datas: [DataType]
+    @EnvironmentObject var classes: ClassLocations
     
     var body: some View{
 
         if self.txt != "" {
             if self.datas.filter({$0.name.lowercased().contains(self.txt.lowercased())}).count == 0{
-                Text("No result found")
+                Text("No result found...")
                     .foregroundColor(Color("Default"))
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.bold)
@@ -96,11 +98,17 @@ struct ClassList: View{
                                     .padding(.all)
                                     Spacer()
                                 }
-                                
                             }
+                            
                         }
                         .background(Color("ClassColor"))
                         .cornerRadius(12)
+                    }
+                    .onTapGesture{
+                        let London = MKPointAnnotation()
+                        London.title = "COMP_SCI 340"
+                        London.coordinate = CLLocationCoordinate2D(latitude: 42.06, longitude: -87.65)
+                        classes.classlocations.append(London)
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .padding(.horizontal)
