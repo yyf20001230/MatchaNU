@@ -83,7 +83,7 @@ struct ClassList: View{
                                     Point.title = i.name
                                     Point.coordinate = CLLocationCoordinate2D(latitude: i.location.latitude, longitude: i.location.longitude)
                                     classes.classlocations.append(Point)
-                                    print(getSection(documentID: i.id ?? "").count)
+                                    print(getSection(documentID: i.id!))
                                     print(i.id ?? "")
                                     
                                 }
@@ -182,8 +182,6 @@ func getSection(documentID: String) -> [Section]{
             let id = i.documentID
             let section = i.get("section") as! Int
             sections.append(Section(id: id, section: section))
-            print(String(section))
-            
         }
     }
     
