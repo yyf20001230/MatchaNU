@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @State var darkMode = false
+    
     @State var locationOn = true
     
     @State var height = CGFloat(UIScreen.main.bounds.height)
@@ -18,6 +18,7 @@ struct SettingsView: View {
     @State var ShowClass = false
     @State var `class` = ""
     
+    @Binding var darkMode: Bool
     @Binding var showSchedule: Bool
     @Binding var showSettings: Bool
     var body: some View {
@@ -29,12 +30,9 @@ struct SettingsView: View {
                         Toggle(isOn: $darkMode, label: {
                             Text("Toggle Dark Mode")
                         })
-                        
-                    
                         Toggle(isOn: $locationOn, label: {
                             Text("Turn off location services")
                         })
-                        
                         
                     
                         NavigationLink(destination: AboutView()){
@@ -42,19 +40,24 @@ struct SettingsView: View {
                         }
                         NavigationLink(destination: BugView()){
                             Text("Report Bugs")
-                        }.navigationBarTitle("App Settings")
                         }
-                        
+                    }.padding(.top, 50.0)
+                    
+                    .listStyle(GroupedListStyle())
+                    
+                    .navigationBarTitle("App Settings")
+                    .ignoresSafeArea()
                               
                         
                     
                     
                     
                 }
+                .ignoresSafeArea()
                 
                 
                 
-            }
+            }.ignoresSafeArea()
             VStack{
                 HStack {
                     Spacer()
@@ -73,6 +76,6 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(showSchedule: .constant(false), showSettings: .constant(false))
+        SettingsView(darkMode: .constant(false), showSchedule: .constant(false), showSettings: .constant(false))
     }
 }

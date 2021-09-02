@@ -10,16 +10,36 @@ import SwiftUI
 struct MainView: View {
     @State var showSettings = false
     @State var showSchedule = false
+    @State var darkMode = false
     var body: some View {
         let classes = ClassLocations()
-        if showSettings{
-            SettingsView(showSchedule: $showSchedule, showSettings: $showSettings)
-        }
-        else if showSchedule{
-            ScheduleView(showSchedule: $showSchedule, showSettings: $showSettings)
+        if darkMode{
+            if showSettings{
+                SettingsView(darkMode: $darkMode, showSchedule: $showSchedule, showSettings: $showSettings)
+                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+            }
+            else if showSchedule{
+                ScheduleView(showSchedule: $showSchedule, showSettings: $showSettings)
+                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+            }
+            else{
+                ContentView(classes: classes,showSchedule: $showSchedule, showSettings: $showSettings)
+                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+            }
         }
         else{
-            ContentView(classes: classes,showSchedule: $showSchedule, showSettings: $showSettings)
+            if showSettings{
+                SettingsView(darkMode: $darkMode, showSchedule: $showSchedule, showSettings: $showSettings)
+                    .preferredColorScheme(.light)
+            }
+            else if showSchedule{
+                ScheduleView(showSchedule: $showSchedule, showSettings: $showSettings)
+                    .preferredColorScheme(.light)
+            }
+            else{
+                ContentView(classes: classes,showSchedule: $showSchedule, showSettings: $showSettings)
+                    .preferredColorScheme(.light)
+            }
         }
     }
 }
