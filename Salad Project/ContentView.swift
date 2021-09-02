@@ -171,9 +171,9 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group{
             let classes = ClassLocations()
-            ContentView(classes: classes)
+            ContentView(classes: classes, showSchedule: .constant(false), showSettings: .constant(false))
                 .preferredColorScheme(.dark)
-            ContentView(classes: classes)
+            ContentView(classes: classes, showSchedule: .constant(false), showSettings: .constant(false))
                 .preferredColorScheme(.light)
         }
     }

@@ -11,7 +11,7 @@ struct MainView: View {
     @State var showSettings = false
     @State var showSchedule = false
     var body: some View {
-        
+        let classes = ClassLocations()
         if showSettings{
             SettingsView(showSchedule: $showSchedule, showSettings: $showSettings)
         }
@@ -19,7 +19,7 @@ struct MainView: View {
             ScheduleView(showSchedule: $showSchedule, showSettings: $showSettings)
         }
         else{
-            ContentView(showSchedule: $showSchedule, showSettings: $showSettings)
+            ContentView(classes: classes,showSchedule: $showSchedule, showSettings: $showSettings)
         }
     }
 }

@@ -63,7 +63,7 @@ struct CustomSearchBar: View{
             if self.txt != "" {
                 
                 if self.datas.filter({$0.name.lowercased().contains(self.txt.lowercased())}).count == 0{
-                    Text("No result found").foregroundColor(.black.opacity(0.5)).padding()
+                    Text("No result found").foregroundColor(Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.5)).padding()
                 } else{
                     ScrollView {
                         ForEach(self.datas.filter{$0.name.lowercased().contains(self.txt.lowercased())}){ i in

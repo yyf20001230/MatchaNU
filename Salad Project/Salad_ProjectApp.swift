@@ -16,8 +16,8 @@ struct Salad_ProjectApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            let classes = ClassLocations()
-            ContentView(classes: classes)
+            
+            MainView()
                 .preferredColorScheme(.light)
         }
     }

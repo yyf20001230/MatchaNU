@@ -25,31 +25,29 @@ struct SettingsView: View {
             ZStack{
                 NavigationView{
                 VStack{
-                    
                     List{
-                        Section(header: Text("Viewing and Color")){
-                            Toggle(isOn: $darkMode, label: {
-                                Text("Toggle Dark Mode")
-                            })
+                        Toggle(isOn: $darkMode, label: {
+                            Text("Toggle Dark Mode")
+                        })
+                        
+                    
+                        Toggle(isOn: $locationOn, label: {
+                            Text("Turn off location services")
+                        })
+                        
+                        
+                    
+                        NavigationLink(destination: AboutView()){
+                            Text("About this app")
                         }
-                        Section(header: Text("Location Services")){
-                            Toggle(isOn: $locationOn, label: {
-                                Text("Turn off location services")
-                            })
+                        NavigationLink(destination: BugView()){
+                            Text("Report Bugs")
+                        }.navigationBarTitle("App Settings")
                         }
                         
-                        Section(header: Text("Feedback")){
-                            
-                            NavigationLink(destination: AboutView()){
-                                Text("About this app")
-                            }
-                            NavigationLink(destination: BugView()){
-                                Text("Report Bugs")
-                            }.navigationBarTitle("App Settings")
-                        }
                               
                         
-                    }
+                    
                     
                     
                 }

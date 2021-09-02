@@ -29,6 +29,7 @@
 		2B44E67D26E0D14C002531C7 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B44E67C26E0D14C002531C7 /* AboutView.swift */; };
 		2B44E68226E0D174002531C7 /* BugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B44E68126E0D174002531C7 /* BugView.swift */; };
 		2B44E68726E0D181002531C7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B44E68626E0D181002531C7 /* MainView.swift */; };
+		2B44E6A026E0DD68002531C7 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B44E69F26E0DD68002531C7 /* ScheduleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		2B44E67C26E0D14C002531C7 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		2B44E68126E0D174002531C7 /* BugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugView.swift; sourceTree = "<group>"; };
 		2B44E68626E0D181002531C7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		2B44E69F26E0DD68002531C7 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				019CB4D226D60F8E00577EBF /* Salad_ProjectApp.swift */,
 				2B44E67A26E0D131002531C7 /* SettingsView.swift */,
 				2B44E68626E0D181002531C7 /* MainView.swift */,
+				2B44E69F26E0DD68002531C7 /* ScheduleView.swift */,
 				2B44E67C26E0D14C002531C7 /* AboutView.swift */,
 				2B44E68126E0D174002531C7 /* BugView.swift */,
 				019CB4D426D60F8E00577EBF /* ContentView.swift */,
@@ -319,6 +322,7 @@
 				0175756A26D8D2FA00757862 /* LocationManager.swift in Sources */,
 				019CB4D326D60F8E00577EBF /* Salad_ProjectApp.swift in Sources */,
 				01C710EE26D8C7FC00DCC220 /* WeatherView.swift in Sources */,
+				2B44E6A026E0DD68002531C7 /* ScheduleView.swift in Sources */,
 				01531DDD26D70D0D00A8CEFD /* ClassView.swift in Sources */,
 				0175756C26D8D45C00757862 /* MapView.swift in Sources */,
 				2B44E68726E0D181002531C7 /* MainView.swift in Sources */,
