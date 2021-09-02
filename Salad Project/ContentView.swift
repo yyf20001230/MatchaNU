@@ -27,6 +27,8 @@ struct ContentView: View {
     @StateObject var classes = ClassLocations()
     @ObservedObject var locationManager = LocationManager()
     
+    @Binding var showSchedule: Bool
+    @Binding var showSettings: Bool
     
     var body: some View {
         ZStack () {
@@ -41,7 +43,7 @@ struct ContentView: View {
             VStack{
                 HStack {
                     Spacer()
-                    SideButtonView()
+                    SideButtonView(showSchedule: $showSchedule, showSettings: $showSettings)
                         .padding(.trailing)
                         .padding(.top, self.height / 18)
                 }
