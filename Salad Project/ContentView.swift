@@ -21,6 +21,7 @@ struct ContentView: View {
     
     @State var ClassName = ""
     @ObservedObject var datas = getClass()
+    @State var Sectionn = [Section]()
     
     @State var coordinate: [Double] = [42.05, -87.7]
     @State var showRoute = false
@@ -120,7 +121,7 @@ struct ContentView: View {
 
                 if self.MainTab.height < -20 || self.ShowClass{
                     //NavigationView {
-                    ClassList(txt: self.$ClassName, datas: self.$datas.data).environmentObject(classes)
+                    ClassList(txt: self.$ClassName, datas: self.$datas.data, sectionn: self.$Sectionn).environmentObject(classes)
                             .padding(.top)
                             .gesture(
                                 DragGesture().onChanged{ value in

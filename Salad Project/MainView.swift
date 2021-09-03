@@ -13,6 +13,7 @@ struct MainView: View {
     @State var darkMode = false
     var body: some View {
         let classes = ClassLocations()
+        
         if darkMode{
             if showSettings{
                 SettingsView(darkMode: $darkMode, showSchedule: $showSchedule, showSettings: $showSettings)

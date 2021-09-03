@@ -10,28 +10,6 @@ import MapKit
 import SwiftUI
 import UIKit
 
-class Coordinator: NSObject, MKMapViewDelegate{
-    
-    var control: MapView
-    
-    init(_ control: MapView) {
-        self.control = control
-    }
-    
-    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]){
-        if let annotationView = views.first {
-            if let annotation = annotationView.annotation{
-                if annotation is MKUserLocation {
-                    let region = MKCoordinateRegion(center: annotation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012))
-                    mapView.setRegion(region, animated: true)
-                }
-            }
-        }
-    }
-}
-
-
-
 struct MapView: UIViewRepresentable {
 
     typealias UIViewType = MKMapView
@@ -130,6 +108,26 @@ struct MapView: UIViewRepresentable {
             renderer.lineCap = .round
             return renderer
         }
+        
+        /*
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            
+            let identifier = "capital"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            
+            if annotationView == nil{
+                annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView?.canShowCallout = true
+                annotationView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
+            } else{
+                annotationView?.annotation = annotation
+            }
+            
+            return annotationView
+        }
+        */
     }
+    
+    
 }
  

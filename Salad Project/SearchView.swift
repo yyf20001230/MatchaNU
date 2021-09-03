@@ -13,10 +13,11 @@ import MapKit
 struct CustomSearchView: View {
     @State var Class =  "COMP"
     @ObservedObject var data = getClass()
+    @State var Sectionn = [Section]()
     
     var body: some View {
         NavigationView {
-            ClassList(txt: self.$Class, datas: self.$data.data)
+            ClassList(txt: self.$Class, datas: self.$data.data, sectionn: self.$Sectionn)
                     .padding(.all)
         }
         
@@ -60,6 +61,27 @@ struct ClassList: View{
     @Binding var txt: String
     @Binding var datas: [Classes]
     @EnvironmentObject var classes: ClassLocations
+    @Binding var sectionn: [Section]
+    
+    func getSection(documentID: String){
+        
+        let db = Firestore.firestore()
+        
+        db.collection("Classes").document(documentID).collection("Section").getDocuments{(snapshot, error) in
+            
+            if error != nil{
+                print((error?.localizedDescription)!)
+                return
+            }
+            
+            for i in snapshot!.documents{
+                let id = i.documentID
+                let section = i.get("section") as! Int
+                self.sectionn.append(Section(id: id, section: section))
+            }
+        }
+    }
+
     
     var body: some View{
 
@@ -83,9 +105,9 @@ struct ClassList: View{
                                     Point.title = i.name
                                     Point.coordinate = CLLocationCoordinate2D(latitude: i.location.latitude, longitude: i.location.longitude)
                                     classes.classlocations.append(Point)
-                                    print(getSection(documentID: i.id!))
-                                    print(i.id ?? "")
+                                    getSection(documentID: i.id!)
                                     
+                                    print(sectionn)
                                 }
                                 
                                 //print TBA or remote if the course does not have a location
@@ -165,30 +187,6 @@ class getClass: ObservableObject{
     }
 }
 
-func getSection(documentID: String) -> [Section]{
-    
-    var sections = [Section]()
-    
-    let db = Firestore.firestore()
-    
-    db.collection("Classes").document(documentID).collection("Section").getDocuments{(snapshot, error) in
-        
-        if error != nil{
-            print((error?.localizedDescription)!)
-            return
-        }
-        
-        for i in snapshot!.documents{
-            let id = i.documentID
-            let section = i.get("section") as! Int
-            sections.append(Section(id: id, section: section))
-        }
-    }
-    
-    return sections
-    
-    
-}
 
 
 
