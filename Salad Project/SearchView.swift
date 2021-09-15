@@ -10,83 +10,20 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import MapKit
 
-struct CustomSearchView: View {
-    @State var Class =  "COMP"
-    @ObservedObject var data = getClass()
-    @State var Sectionn = [Section]()
-    
-    var body: some View {
-        NavigationView {
-            ClassList(txt: self.$Class, datas: self.$data.data, sectionn: self.$Sectionn)
-                    .padding(.all)
-        }
-        
-    }
-}
-
-struct CustomSearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomSearchView()
-    }
-}
-
-struct SearchBar: View{
-    @State var txt = ""
-    var body: some View{
-
-        HStack {
-            TextField("Add your class here", text: $txt)
-            Spacer()
-            if self.txt != ""{
-                Button(action: {
-                    self.txt = ""
-                }){
-                    Image(systemName: "xmark.circle.fill")
-                        .padding(.trailing)
-                }
-                .foregroundColor((Color("Default").opacity(0.3)))
-            } else{
-                Image(systemName:"magnifyingglass")
-                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                    .padding(.trailing)
-            }
-        }
-        
-
-    }
-}
-
-
 struct ClassList: View{
     @Binding var txt: String
     @Binding var datas: [Classes]
+    @Binding var uniqueData: [Classes]
     @EnvironmentObject var classes: ClassLocations
-    @Binding var sectionn: [Section]
-    
-    func getSection(documentID: String){
-        
-        let db = Firestore.firestore()
-        
-        db.collection("Classes").document(documentID).collection("Section").getDocuments{(snapshot, error) in
-            
-            if error != nil{
-                print((error?.localizedDescription)!)
-                return
-            }
-            
-            for i in snapshot!.documents{
-                let id = i.documentID
-                let section = i.get("section") as! Int
-                self.sectionn.append(Section(id: id, section: section))
-            }
-        }
-    }
 
     
     var body: some View{
 
         if self.txt != "" {
-            if self.datas.filter({$0.name.lowercased().contains(self.txt.lowercased())}).count == 0{
+            let elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).contains(self.txt.lowercased())})
+            
+            
+            if elements.count == 0{
                 Text("No result found...")
                     .foregroundColor(Color("Default"))
                     .font(.system(.body, design: .rounded))
@@ -95,29 +32,23 @@ struct ClassList: View{
                     .padding()
                     
                     
-            } else{
+            }
+            else if elements.count > 20{
+                Text("Keep Typing...")
+                    .foregroundColor(.secondary)
+                    .font(.system(.body, design: .rounded))
+                    .tracking(-0.5)
+                    
+                    
+            }else if self.classes.Section.count == 0{
                 VStack {
                     ScrollView(showsIndicators: false){
-                        ForEach(self.datas.filter{$0.name.lowercased().contains(self.txt.lowercased())}){ i in
+                        ForEach(elements){ i in
                             Button(action:{
-                                if Int(i.location.latitude) != -1 && Int(i.location.longitude) != -1{
-                                    let Point = MKPointAnnotation()
-                                    Point.title = i.name
-                                    Point.coordinate = CLLocationCoordinate2D(latitude: i.location.latitude, longitude: i.location.longitude)
-                                    classes.classlocations.append(Point)
-                                    getSection(documentID: i.id!)
-                                    
-                                    print(sectionn)
-                                }
-                                
-                                //print TBA or remote if the course does not have a location
-                                else{
-                                    
-                                }
-                                
+                                self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
                             }) {
                                 HStack {
-                                        Image(i.major)
+                                        Image(i.School)
                                             .resizable()
                                             .scaledToFit()
                                             .frame(height: 25)
@@ -125,12 +56,17 @@ struct ClassList: View{
                                             .padding(.leading)
                                         
                                         VStack(alignment: .leading, spacing: 6.0) {
-                                            Text(i.name)
+                                            Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0])
                                                 .foregroundColor(Color("Default"))
                                                 .font(.system(.body, design: .rounded))
                                                 .fontWeight(.bold)
                                                 .tracking(-0.5)
                                             
+                                            
+                                            Text(i.Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                                                .foregroundColor(.secondary)
+                                                .font(.system(.caption2, design: .rounded))
+                                                .tracking(-0.5)
                                             
                                         }
                                         .padding(.all)
@@ -151,9 +87,51 @@ struct ClassList: View{
                 .ignoresSafeArea()
                 
                 
+            } else {
+                VStack{
+                    ScrollView(showsIndicators: false){
+                        ForEach(self.classes.Section){ i in
+                            Button(action: {
+                                
+                            }) {
+                                HStack (spacing: 20.0){
+                                    Text(i.Section.components(separatedBy: ":")[0])
+                                        .foregroundColor(Color("Default"))
+                                        .font(.system(.body, design: .rounded))
+                                        .fontWeight(.bold)
+                                        .tracking(-0.5)
+                                        .padding(.trailing)
+                                    
+                                    VStack(alignment: .leading, spacing: 2.0){
+                                        Text(i.Instructor + " | " + i.MeetingInfo.components(separatedBy: ": ")[0])
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                        Text(i.MeetingInfo.components(separatedBy: ": ")[1])
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                    }
+                                }
+                                .padding(.all)
+                                Spacer()
+                            }
+                        }
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .padding(.horizontal)
+                    
+                    Rectangle()
+                        .foregroundColor(Color("SearchbarColor"))
+                        .frame(height: 120)
+                }
             }
             
-            
+        } else {
+            Text("Keep Typing...")
+                .foregroundColor(.secondary)
+                .font(.system(.body, design: .rounded))
+                .tracking(-0.5)
         }
         
         
@@ -162,8 +140,9 @@ struct ClassList: View{
 }
 
 class getClass: ObservableObject{
-    private var path = "Classes"
+    private var path = "classes"
     @Published var data = [Classes]()
+    @Published var uniquedata = [Classes]()
     
     init(){
         let db = Firestore.firestore()
@@ -177,11 +156,18 @@ class getClass: ObservableObject{
             
             for i in snapshot!.documents{
                 let id = i.documentID
-                let name = i.get("name") as! String
-                let number = i.get("number") as! Int
-                let major = i.get("major") as! String
-                let location = i.get("location") as! GeoPoint
-                self.data.append(Classes(id: id, name: name, number: number, major: major, location: location))
+                let Class = i.get("Class") as! String
+                let ClassOverView = i.get("Class Overview") as! String
+                let Instructor = i.get("Instructor") as! String
+                let Major = i.get("Major") as! String
+                let MeetingInfo = i.get("Meeting Info") as! String
+                let School = i.get("School") as! String
+                let Section = i.get("Section") as! String
+                self.data.append(Classes(id: id, Class: Class, ClassOverView: ClassOverView, Instructor: Instructor, Major: Major, MeetingInfo: MeetingInfo, School: School, Section: Section))
+                
+                if self.uniquedata.filter({($0.Class + $0.Major).contains(Class + Major)}).count == 0{
+                    self.uniquedata.append(Classes(id: id, Class: Class, ClassOverView: ClassOverView, Instructor: Instructor, Major: Major, MeetingInfo: MeetingInfo, School: School, Section: Section))
+                }
             }
         }
     }
@@ -192,30 +178,18 @@ class getClass: ObservableObject{
 
 
 
-struct Classes: Identifiable{
-    
+struct Classes: Identifiable, Equatable{
     @DocumentID var id: String?
-    var name: String
-    var number: Int
-    var major: String
-    var location: GeoPoint
-}
-
-struct Section: Identifiable{
-    
-    @DocumentID var id: String?
-    var section: Int
+    var Class: String
+    var ClassOverView: String
+    var Instructor: String
+    var Major: String
+    var MeetingInfo: String
+    var School: String
+    var Section: String
 }
 
 
-struct Detail: View {
-    
-    var data: Classes
-    
-    var body: some View{
-        Text(String(data.number))
-    }
-}
 
 
 
