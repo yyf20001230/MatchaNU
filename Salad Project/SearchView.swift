@@ -15,12 +15,13 @@ struct ClassList: View{
     @Binding var datas: [Classes]
     @Binding var uniqueData: [Classes]
     @EnvironmentObject var classes: ClassLocations
+    var encoder = CLGeocoder()
 
     
     var body: some View{
 
         if self.txt != "" {
-            let elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).contains(self.txt.lowercased())})
+            let elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
             
             
             if elements.count == 0{
@@ -37,6 +38,7 @@ struct ClassList: View{
                 Text("Keep Typing...")
                     .foregroundColor(.secondary)
                     .font(.system(.body, design: .rounded))
+                    .fontWeight(.bold)
                     .tracking(-0.5)
                     
                     
@@ -92,7 +94,18 @@ struct ClassList: View{
                     ScrollView(showsIndicators: false){
                         ForEach(self.classes.Section){ i in
                             Button(action: {
-                                
+                                encoder.geocodeAddressString("Tech"){ (placemarks, error) in
+                                    guard
+                                        let placemarks = placemarks,
+                                        let location = placemarks.first?.location
+                                    else {
+                                        return
+                                    }
+                                    let classlocation = MKPointAnnotation()
+                                    classlocation.coordinate = location.coordinate
+                                    classlocation.title = i.Class
+                                    classes.classlocations.append(classlocation)
+                                }
                             }) {
                                 HStack (spacing: 20.0){
                                     Text(i.Section.components(separatedBy: ":")[0])
@@ -131,6 +144,7 @@ struct ClassList: View{
             Text("Keep Typing...")
                 .foregroundColor(.secondary)
                 .font(.system(.body, design: .rounded))
+                .fontWeight(.bold)
                 .tracking(-0.5)
         }
         
@@ -177,7 +191,6 @@ class getClass: ObservableObject{
 
 
 
-
 struct Classes: Identifiable, Equatable{
     @DocumentID var id: String?
     var Class: String
@@ -188,10 +201,3 @@ struct Classes: Identifiable, Equatable{
     var School: String
     var Section: String
 }
-
-
-
-
-
-
-

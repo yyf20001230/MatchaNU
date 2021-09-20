@@ -52,6 +52,7 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     if self.MainTab.height >= 0 && !self.ShowClass{
+                        
                         CornerButtonView()
                             .onTapGesture {
                                 self.showRoute.toggle()
@@ -61,10 +62,6 @@ struct ContentView: View {
                             .padding(.leading)
                             .opacity(Double(1 + self.MainTab.height))
                         Spacer()
-                        //WeatherView()
-                        //    .offset(y: -self.height / 12 - 44)
-                        //    .padding(.trailing)
-                        //    .opacity(Double(1 + self.MainTab.height))
                     }
 
                 }
@@ -92,9 +89,11 @@ struct ContentView: View {
                             
                         HStack {
                             TextField("Add your class here...", text: $ClassName)
+                                
                                 .onChange(of: ClassName){ value in
                                     self.ShowClass = true
                                 }
+                                
                                 .padding(.leading)
                                 
                             Spacer()
@@ -191,6 +190,7 @@ struct ContentView: View {
                     }
                     else if value.translation.height > 80{
                         self.ShowClass = false
+                        hideKeyboard()
                     }
                     
                     self.MainTab = CGSize.zero
@@ -202,6 +202,13 @@ struct ContentView: View {
 
         
         
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        let resign = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
     }
 }
 

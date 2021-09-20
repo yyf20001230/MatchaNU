@@ -60,7 +60,6 @@ struct MapView: UIViewRepresentable {
                 for annotations in classes.classlocations{
                     let aPoint = MKMapPoint(annotations.coordinate)
                     let rect = MKMapRect(x: aPoint.x, y: aPoint.y, width: 0.1,height: 0.1)
-                    
                     if zoomRect.isNull {
                         zoomRect = rect
                     } else {
@@ -108,24 +107,6 @@ struct MapView: UIViewRepresentable {
             renderer.lineCap = .round
             return renderer
         }
-        
-        /*
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            
-            let identifier = "capital"
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-            
-            if annotationView == nil{
-                annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                annotationView?.canShowCallout = true
-                annotationView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
-            } else{
-                annotationView?.annotation = annotation
-            }
-            
-            return annotationView
-        }
-        */
     }
     
     
