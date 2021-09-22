@@ -121,15 +121,21 @@ struct ContentView: View {
                     }
                     .padding([.leading, .trailing])
                     
-                } else{
+                } else {
                     
                     HStack{
                         Image(systemName: "arrow.left")
                             .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                             .padding(.trailing)
                             .onTapGesture{
-                                self.classes.Section = [ClassInfo]()
                                 self.ShowClass = true
+                                if self.classes.detail.isEmpty{
+                                    self.classes.Section = [ClassInfo]()
+                                    
+                                } else{
+                                    self.classes.detail = [ClassInfo]()
+                                }
+                                
                             }
                         
                         VStack (alignment: .leading, spacing: 4){
@@ -157,16 +163,18 @@ struct ContentView: View {
                 }
 
                 if self.MainTab.height < -20 || self.ShowClass{
-                    
-                    ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
+                    if self.classes.detail.isEmpty{
+                        ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
                             .padding(.top)
                             .gesture(
                                 DragGesture().onChanged{ value in
                                     self.MainTab = CGSize.zero
                                 }
-                        )
-                    
-                    
+                            )
+                        
+                    } else {
+                        DetailView().environmentObject(classes)
+                    }
                 }
                 Spacer()
             }
