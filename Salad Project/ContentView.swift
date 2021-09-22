@@ -174,6 +174,7 @@ struct ContentView: View {
                             )
                         
                     } else {
+                        
                         DetailView().environmentObject(classes)
                     }
                 }
@@ -184,7 +185,7 @@ struct ContentView: View {
             .cornerRadius(8.0)
             .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
-            .offset(y: ShowClass ? self.height / 6 : self.height / 1.2)
+            .offset(y: ShowClass ? self.height / 6 : self.height / 1.22)
             .gesture(
                 DragGesture().onChanged { value in
                     self.MainTab = value.translation
