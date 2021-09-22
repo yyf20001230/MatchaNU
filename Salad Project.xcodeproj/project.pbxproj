@@ -102,13 +102,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0157F02A26F9A0D50049337D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		019CB4C626D60F8E00577EBF = {
 			isa = PBXGroup;
 			children = (
@@ -133,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				019CB4D226D60F8E00577EBF /* Salad_ProjectApp.swift */,
-				0157F02A26F9A0D50049337D /* Model */,
 				2B44E67A26E0D131002531C7 /* SettingsView.swift */,
 				2B44E68626E0D181002531C7 /* MainView.swift */,
 				2B44E69F26E0DD68002531C7 /* ScheduleView.swift */,

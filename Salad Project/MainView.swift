@@ -7,46 +7,59 @@
 
 import SwiftUI
 
+class appSettings: ObservableObject{
+    @Published var toggleDarkMode = false
+    @Published var Schedule = false
+    @Published var Settings = false
+    
+}
+
 struct MainView: View {
-    @State var showSettings = false
-    @State var showSchedule = false
-    @State var darkMode = false
+    @StateObject var settings = appSettings()
     var body: some View {
         let classes = ClassLocations()
         
-        if darkMode{
-            if showSettings{
-                SettingsView(darkMode: $darkMode, showSchedule: $showSchedule, showSettings: $showSettings)
+        if settings.toggleDarkMode{
+            if settings.Settings{
+                SettingsView()
                     .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+                    .environmentObject(settings)
             }
-            else if showSchedule{
-                ScheduleView(showSchedule: $showSchedule, showSettings: $showSettings)
+            else if settings.Schedule{
+                ScheduleView()
                     .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+                    .environmentObject(settings)
             }
             else{
-                ContentView(classes: classes,showSchedule: $showSchedule, showSettings: $showSettings)
+                ContentView()
                     .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+                    .environmentObject(settings)
             }
         }
         else{
-            if showSettings{
-                SettingsView(darkMode: $darkMode, showSchedule: $showSchedule, showSettings: $showSettings)
+            if settings.Settings{
+                SettingsView()
                     .preferredColorScheme(.light)
+                    .environmentObject(settings)
             }
-            else if showSchedule{
-                ScheduleView(showSchedule: $showSchedule, showSettings: $showSettings)
+            else if settings.Schedule{
+                ScheduleView()
                     .preferredColorScheme(.light)
+                    .environmentObject(settings)
             }
             else{
-                ContentView(classes: classes,showSchedule: $showSchedule, showSettings: $showSettings)
+                ContentView()
                     .preferredColorScheme(.light)
+                    .environmentObject(settings)
             }
         }
+        
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+            
     }
 }

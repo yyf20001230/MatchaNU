@@ -14,10 +14,11 @@ class ClassLocations: ObservableObject{
     @Published var detaillocation: [MKPointAnnotation] = []
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
-
     @Published var showRoute = false
     @Published var time: Double = 0
 }
+
+
 
 struct ContentView: View {
     @State var height = CGFloat(UIScreen.main.bounds.height)
@@ -31,8 +32,7 @@ struct ContentView: View {
     @StateObject var classes = ClassLocations()
     @ObservedObject var locationManager = LocationManager()
     
-    @Binding var showSchedule: Bool
-    @Binding var showSettings: Bool
+    @EnvironmentObject var settings: appSettings
     
     var body: some View {
         ZStack () {
@@ -47,7 +47,7 @@ struct ContentView: View {
             VStack{
                 HStack {
                     Spacer()
-                    SideButtonView(showSchedule: $showSchedule, showSettings: $showSettings)
+                    SideButtonView()
                         .padding(.trailing)
                         .padding(.top, self.height / 18)
                 }
@@ -217,9 +217,9 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group{
             let classes = ClassLocations()
-            ContentView(classes: classes, showSchedule: .constant(false), showSettings: .constant(false))
+            ContentView()
                 .preferredColorScheme(.dark)
-            ContentView(classes: classes, showSchedule: .constant(false), showSettings: .constant(false))
+            ContentView()
                 .preferredColorScheme(.light)
         }
     }

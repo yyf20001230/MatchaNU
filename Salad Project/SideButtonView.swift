@@ -10,12 +10,12 @@ import MapKit
 
 struct SideButtonView: View {
     @EnvironmentObject var classes: ClassLocations
-    @Binding var showSchedule : Bool
-    @Binding var showSettings : Bool
+    @EnvironmentObject var settings: appSettings
+
     var body: some View {
         VStack {
            
-            Button(action: {self.showSchedule.toggle()}) {
+            Button(action: {settings.Schedule.toggle()}) {
                 Image(systemName: "map")
                     .padding(.bottom,8)
                     .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
@@ -25,7 +25,7 @@ struct SideButtonView: View {
                 .frame(width: 24.0)
                 .background(Color.white)
             
-            Button(action: {self.showSettings.toggle()}){
+            Button(action: {settings.Settings.toggle()}){
                 Image(systemName: "gear")
                 .padding(.top,8)
                 .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
@@ -42,9 +42,9 @@ struct SideButtonView: View {
 struct SideButtonView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            SideButtonView(showSchedule: .constant(true), showSettings: .constant(false))
+            SideButtonView()
                 .preferredColorScheme(.light)
-            SideButtonView(showSchedule: .constant(true), showSettings: .constant(false))
+            SideButtonView()
                 .preferredColorScheme(.dark)
         }
     }
