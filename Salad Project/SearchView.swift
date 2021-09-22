@@ -93,6 +93,16 @@ struct ClassList: View{
                         ForEach(self.classes.Section){ i in
                             Button(action: {
                                 self.classes.detail.removeAll()
+                                self.classes.detail.append(i)
+                                
+                                if i.ClassLocation[0] != -1{
+                                    let classlocation = MKPointAnnotation()
+                                    classlocation.coordinate.latitude = i.ClassLocation[0]
+                                    classlocation.coordinate.longitude = i.ClassLocation[1]
+                                    classlocation.title = i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
+                                    classlocation.subtitle = i.MeetingInfo + "\n\n"
+                                    self.classes.detaillocation.append(classlocation)
+                                }
                                 
                                 if i.ClassLocation[0] != -1{
                                     let first =  classes.classlocations.map({$0.coordinate.latitude}).firstIndex(of: i.ClassLocation[0])
@@ -232,7 +242,6 @@ struct Classes: Identifiable, Equatable{
 }
 
 struct ClassInfo: Identifiable, Codable, Equatable{
-    
     let id = UUID()
     var Class: String
     var ClassLocation: [Double]
