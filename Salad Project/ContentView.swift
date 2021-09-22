@@ -11,10 +11,9 @@ import CoreLocation
 
 class ClassLocations: ObservableObject{
     @Published var classlocations: [MKPointAnnotation] = []
-    @Published var detaillocation: [MKPointAnnotation] = []
+    @Published var userClass: [ClassInfo] = []
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
-
     @Published var showRoute = false
     @Published var time: Double = 0
 }
@@ -134,6 +133,7 @@ struct ContentView: View {
                                     
                                 } else{
                                     self.classes.detail = [ClassInfo]()
+                                    self.classes.showRoute = false
                                 }
                                 
                             }
@@ -145,7 +145,7 @@ struct ContentView: View {
                                 .fontWeight(.bold)
                                 .tracking(-0.5)
                                 .padding(.trailing)
-                            Text(self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                            Text(self.classes.detail.isEmpty ? self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " ") :  self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                 .foregroundColor(.secondary)
                                 .font(.system(.caption2, design: .rounded))
                                 .tracking(-0.5)

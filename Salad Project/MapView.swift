@@ -29,11 +29,13 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
-        uiView.removeAnnotations(uiView.annotations)
         uiView.showsUserLocation = true
-        if self.classes.showRoute{
+        if !self.classes.detail.isEmpty{
             let destination = MKPointAnnotation()
-            destination.coordinate = CLLocationCoordinate2D(latitude: classes.detail.first?.ClassLocation[0] ?? -1, longitude: self.classes.detail.first?.ClassLocation[1] ?? -1)
+            destination.coordinate = CLLocationCoordinate2D(latitude: classes.detail[0].ClassLocation[0], longitude: self.classes.detail[0].ClassLocation[1])
+            destination.title = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "\n"
+            destination.subtitle = classes.detail[0].MeetingInfo + "\n\n"
+            uiView.addAnnotation(destination)
             let request = MKDirections.Request()
             
             request.source = .forCurrentLocation()
@@ -42,12 +44,16 @@ struct MapView: UIViewRepresentable {
             
             let directions = MKDirections(request: request)
             
-            directions.calculate{ response, error in
-                guard let route = response?.routes.first else { return }
-                self.classes.time = route.expectedTravelTime / 60
-                uiView.addOverlay(route.polyline)
-                uiView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80),animated: true)
+            if self.classes.showRoute{
+                directions.calculate{ response, error in
+                    guard let route = response?.routes.first else { return }
+                    uiView.addOverlay(route.polyline)
+                    uiView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80),animated: true)
+                }
+            } else {
+                uiView.setRegion(MKCoordinateRegion(center: destination.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
             }
+            
         }
         
         else{
@@ -73,25 +79,6 @@ struct MapView: UIViewRepresentable {
             }
         }
         
-    }
-    
-    func setCenter(_ uiView: MKMapView){
-        var zoomRect = MKMapRect.null
-        for annotations in classes.classlocations{
-            let aPoint = MKMapPoint(annotations.coordinate)
-            let rect = MKMapRect(x: aPoint.x, y: aPoint.y, width: 0,height: 0)
-            
-            if zoomRect.isNull {
-                zoomRect = rect
-            } else {
-                zoomRect = zoomRect.union(rect)
-            }
-        }
-        uiView.removeOverlays(uiView.overlays)
-        uiView.removeAnnotations(uiView.annotations)
-        uiView.addAnnotations(self.classes.classlocations)
-        uiView.showAnnotations(uiView.annotations, animated: true)
-        uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
     }
     
     class MapViewCoordinator: NSObject, MKMapViewDelegate{
