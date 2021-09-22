@@ -18,7 +18,7 @@ struct Salad_ProjectApp: App {
         WindowGroup {
             
             MainView()
-                .preferredColorScheme(.light)
+                
         }
     }
 }

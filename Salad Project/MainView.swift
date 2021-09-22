@@ -8,51 +8,35 @@
 import SwiftUI
 
 class appSettings: ObservableObject{
-    @Published var toggleDarkMode = false
+    @Published var toggleDarkMode: ColorScheme = .light
     @Published var Schedule = false
     @Published var Settings = false
-    
 }
 
 struct MainView: View {
     @StateObject var settings = appSettings()
+    
     var body: some View {
         let classes = ClassLocations()
         
-        if settings.toggleDarkMode{
-            if settings.Settings{
-                SettingsView()
-                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-                    .environmentObject(settings)
-            }
-            else if settings.Schedule{
-                ScheduleView()
-                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-                    .environmentObject(settings)
-            }
-            else{
-                ContentView()
-                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-                    .environmentObject(settings)
-            }
+       
+        if settings.Settings{
+        SettingsView()
+            .preferredColorScheme(settings.toggleDarkMode)
+            .environmentObject(settings)
+        }
+        else if settings.Schedule{
+            ScheduleView()
+                .preferredColorScheme(settings.toggleDarkMode)
+                .environmentObject(settings)
         }
         else{
-            if settings.Settings{
-                SettingsView()
-                    .preferredColorScheme(.light)
-                    .environmentObject(settings)
-            }
-            else if settings.Schedule{
-                ScheduleView()
-                    .preferredColorScheme(.light)
-                    .environmentObject(settings)
-            }
-            else{
-                ContentView()
-                    .preferredColorScheme(.light)
-                    .environmentObject(settings)
-            }
+            ContentView()
+                .preferredColorScheme(settings.toggleDarkMode)
+                .environmentObject(settings)
         }
+    
+        
         
     }
 }

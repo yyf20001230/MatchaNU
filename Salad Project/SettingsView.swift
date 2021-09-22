@@ -18,17 +18,27 @@ struct SettingsView: View {
     @State var MainTab = CGSize.zero
     @State var ShowClass = false
     @State var `class` = ""
+    @State private var darkMode = false
     @EnvironmentObject var settings: appSettings
    
     var body: some View {
-        
+            
             ZStack{
                 NavigationView{
+                    
                 VStack{
+                    
                     List{
-                        Button(action: {settings.toggleDarkMode.toggle()}){
-                            Text("Toggle Dark Mode")
-                        }
+                        Toggle("Toggle Dark Mode", isOn: $darkMode)
+                            .onChange(of: darkMode) {value in
+                                if darkMode == true{
+                                    settings.toggleDarkMode = .dark
+                                }
+                                else{
+                                    settings.toggleDarkMode = .dark
+                                }
+                            }
+                        
                     
                         NavigationLink(destination: AboutView()){
                             Text("About this app")
