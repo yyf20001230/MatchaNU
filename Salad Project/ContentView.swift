@@ -11,6 +11,7 @@ import CoreLocation
 
 class ClassLocations: ObservableObject{
     @Published var classlocations: [MKPointAnnotation] = []
+    @Published var detaillocation: [MKPointAnnotation] = []
     @Published var userClass: [ClassInfo] = []
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
