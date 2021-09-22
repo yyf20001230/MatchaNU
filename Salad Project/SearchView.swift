@@ -12,8 +12,8 @@ import MapKit
 
 struct ClassList: View{
     @Binding var txt: String
-    @Binding var datas: [Classes]
-    @Binding var uniqueData: [Classes]
+    @Binding var datas: [ClassInfo]
+    @Binding var uniqueData: [ClassInfo]
     @EnvironmentObject var classes: ClassLocations
     
     var body: some View{
@@ -92,21 +92,26 @@ struct ClassList: View{
                     ScrollView(showsIndicators: false){
                         ForEach(self.classes.Section){ i in
                             Button(action: {
+                                self.classes.detail.removeAll()
                                 
-                                let first =  classes.classlocations.map({$0.coordinate.latitude}).firstIndex(of: i.ClassLocation[0])
-                                let second = classes.classlocations.map({$0.coordinate.longitude}).firstIndex(of: i.ClassLocation[1])
+                                if i.ClassLocation[0] != -1{
+                                    let first =  classes.classlocations.map({$0.coordinate.latitude}).firstIndex(of: i.ClassLocation[0])
+                                    let second = classes.classlocations.map({$0.coordinate.longitude}).firstIndex(of: i.ClassLocation[1])
 
-                                if (first != nil) && (second != nil) && first! == second!{
-                                    classes.classlocations[first!].title! += i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
-                                    classes.classlocations[first!].subtitle! += i.MeetingInfo + "\n\n"
-                                } else {
-                                    let classlocation = MKPointAnnotation()
-                                    classlocation.coordinate.latitude = i.ClassLocation[0]
-                                    classlocation.coordinate.longitude = i.ClassLocation[1]
-                                    classlocation.title = i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
-                                    classlocation.subtitle = i.MeetingInfo + "\n\n"
-                                    classes.classlocations.append(classlocation)
+                                    if (first != nil) && (second != nil) && first! == second!{
+                                        classes.classlocations[first!].title! += i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
+                                        classes.classlocations[first!].subtitle! += i.MeetingInfo + "\n\n"
+                                    } else {
+                                        let classlocation = MKPointAnnotation()
+                                        classlocation.coordinate.latitude = i.ClassLocation[0]
+                                        classlocation.coordinate.longitude = i.ClassLocation[1]
+                                        classlocation.title = i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
+                                        classlocation.subtitle = i.MeetingInfo + "\n\n"
+                                        classes.classlocations.append(classlocation)
+                                    }
                                 }
+                                
+                                
 
                             }) {
                                 HStack (spacing: 20.0){
@@ -157,11 +162,11 @@ struct ClassList: View{
 
 class getClass: ObservableObject{
     private var path = "classes"
-    @Published var data = [Classes]()
-    @Published var uniquedata = [Classes]()
+    @Published var data = [ClassInfo]()
+    @Published var uniquedata = [ClassInfo]()
     
     init(){
-        
+        /*
         let db = Firestore.firestore()
         
         db.collection(path).getDocuments{ (snapshot, error) in
@@ -188,8 +193,27 @@ class getClass: ObservableObject{
                 }
             }
         }
+        */
+        if let fileLocation = Bundle.main.url(forResource: "ClassInfo", withExtension: "json") {
+            do {
+                let classData = try Data(contentsOf: fileLocation)
+                let jsonDecoder = JSONDecoder()
+                let datafromJson = try jsonDecoder.decode([ClassInfo].self,from: classData)
+                
+                self.data = datafromJson
+                for document in self.data{
+                    if self.uniquedata.filter({($0.Class + $0.Major).contains(document.Class + document.Major)}).count == 0 {
+                        self.uniquedata.append(document)
+                    }
+                }
+            }
+            catch {
+                print(error)
+            }
+        }
     }
 }
+
 
 
 
@@ -200,6 +224,19 @@ struct Classes: Identifiable, Equatable{
     var Class: String
     var ClassLocation: [Double]
     var ClassOverView: String
+    var Instructor: String
+    var Major: String
+    var MeetingInfo: String
+    var School: String
+    var Section: String
+}
+
+struct ClassInfo: Identifiable, Codable, Equatable{
+    
+    let id = UUID()
+    var Class: String
+    var ClassLocation: [Double]
+    var ClassOverview: String
     var Instructor: String
     var Major: String
     var MeetingInfo: String

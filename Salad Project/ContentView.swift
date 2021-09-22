@@ -11,8 +11,10 @@ import CoreLocation
 
 class ClassLocations: ObservableObject{
     @Published var classlocations: [MKPointAnnotation] = []
-    @Published var Section: [Classes] = []
-    @Published var detail: [Classes] = []
+    @Published var detaillocation: [MKPointAnnotation] = []
+    @Published var Section: [ClassInfo] = []
+    @Published var detail: [ClassInfo] = []
+
     @Published var showRoute = false
     @Published var time: Double = 0
 }
@@ -126,7 +128,7 @@ struct ContentView: View {
                             .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                             .padding(.trailing)
                             .onTapGesture{
-                                self.classes.Section = [Classes]()
+                                self.classes.Section = [ClassInfo]()
                                 self.ShowClass = true
                             }
                         

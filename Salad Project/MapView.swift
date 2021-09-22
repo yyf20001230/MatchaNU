@@ -32,13 +32,27 @@ struct MapView: UIViewRepresentable {
         uiView.removeAnnotations(uiView.annotations)
         uiView.showsUserLocation = true
         if self.classes.showRoute{
+            let destination = MKPointAnnotation()
+            destination.coordinate = CLLocationCoordinate2D(latitude: classes.detail.first?.ClassLocation[0] ?? -1, longitude: self.classes.detail.first?.ClassLocation[1] ?? -1)
+            let request = MKDirections.Request()
             
+            request.source = .forCurrentLocation()
+            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination.coordinate))
+            request.transportType = .walking
+            
+            let directions = MKDirections(request: request)
+            
+            directions.calculate{ response, error in
+                guard let route = response?.routes.first else { return }
+                self.classes.time = route.expectedTravelTime / 60
+                uiView.addOverlay(route.polyline)
+                uiView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80),animated: true)
+            }
         }
         
         else{
             uiView.removeOverlays(uiView.overlays)
             uiView.removeAnnotations(uiView.annotations)
-            self.classes.time = 0
             if self.classes.classlocations.count != 0{
                 var zoomRect = MKMapRect.null
                 for annotations in classes.classlocations{
