@@ -13,9 +13,7 @@ import UIKit
 struct MapView: UIViewRepresentable {
 
     typealias UIViewType = MKMapView
-    @Binding var coordinate: [Double]
     @EnvironmentObject var classes: ClassLocations
-    @Binding var show: Bool
     
     func makeCoordinator() -> MapViewCoordinator{
         return MapViewCoordinator()
@@ -33,28 +31,14 @@ struct MapView: UIViewRepresentable {
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
         uiView.removeAnnotations(uiView.annotations)
         uiView.showsUserLocation = true
-        if show{
-            let destination = MKPointAnnotation()
-            destination.coordinate = CLLocationCoordinate2D(latitude: coordinate[0], longitude: coordinate[1])
-            destination.title = "IEMS313"
-            destination.subtitle = "Tech M128"
-            uiView.addAnnotation(destination)
-            let request = MKDirections.Request()
+        if self.classes.showRoute{
             
-            request.source = .forCurrentLocation()
-            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination.coordinate))
-            request.transportType = .walking
-            
-            let directions = MKDirections(request: request)
-            directions.calculate{ response, error in
-                guard let route = response?.routes.first else {return}
-                uiView.addOverlay(route.polyline)
-                uiView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80),animated: true)
-            }
         }
+        
         else{
             uiView.removeOverlays(uiView.overlays)
             uiView.removeAnnotations(uiView.annotations)
+            self.classes.time = 0
             if self.classes.classlocations.count != 0{
                 var zoomRect = MKMapRect.null
                 for annotations in classes.classlocations{
@@ -74,9 +58,6 @@ struct MapView: UIViewRepresentable {
                               animated: true)
             }
         }
-        
-        
-        
         
     }
     

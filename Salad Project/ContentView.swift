@@ -12,6 +12,9 @@ import CoreLocation
 class ClassLocations: ObservableObject{
     @Published var classlocations: [MKPointAnnotation] = []
     @Published var Section: [Classes] = []
+    @Published var detail: [Classes] = []
+    @Published var showRoute = false
+    @Published var time: Double = 0
 }
 
 struct ContentView: View {
@@ -21,11 +24,8 @@ struct ContentView: View {
     @State var ShowClass = false
     
     @State var ClassName = ""
-    @State var Section = [Classes]()
     @ObservedObject var datas = getClass()
     
-    @State var coordinate: [Double] = [42.05, -87.7]
-    @State var showRoute = false
     @StateObject var classes = ClassLocations()
     @ObservedObject var locationManager = LocationManager()
     
@@ -36,7 +36,7 @@ struct ContentView: View {
         ZStack () {
             NavigationView{
                 VStack{
-                    MapView(coordinate: $coordinate, show: $showRoute).environmentObject(classes)
+                    MapView().environmentObject(classes)
                         .ignoresSafeArea()
                         .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                 }
@@ -52,12 +52,11 @@ struct ContentView: View {
                 Spacer()
                 HStack {
                     if self.MainTab.height >= 0 && !self.ShowClass{
-                        
                         CornerButtonView()
                             .onTapGesture {
-                                self.showRoute.toggle()
+                                self.classes.showRoute.toggle()
                             }
-                            .foregroundColor(showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                            .foregroundColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                             .offset(y: -self.height / 12 - 44)
                             .padding(.leading)
                             .opacity(Double(1 + self.MainTab.height))

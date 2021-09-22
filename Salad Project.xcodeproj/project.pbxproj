@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0142828926F0032800E0949E /* BugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142828826F0032800E0949E /* BugView.swift */; };
-		01531DDD26D70D0D00A8CEFD /* ClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01531DDC26D70D0D00A8CEFD /* ClassView.swift */; };
 		01531DDF26D713F600A8CEFD /* SideButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01531DDE26D713F600A8CEFD /* SideButtonView.swift */; };
 		01531DE526D74A2B00A8CEFD /* SchoolList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01531DE426D74A2B00A8CEFD /* SchoolList.swift */; };
 		0175756A26D8D2FA00757862 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0175756926D8D2FA00757862 /* LocationManager.swift */; };
@@ -21,6 +20,7 @@
 		019CB4E526D60F9000577EBF /* Salad_ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019CB4E426D60F9000577EBF /* Salad_ProjectTests.swift */; };
 		019CB4F026D60F9000577EBF /* Salad_ProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019CB4EF26D60F9000577EBF /* Salad_ProjectUITests.swift */; };
 		019EFA1E26F1C14400C83E00 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */; };
+		01BC370826FAC1F300B2C191 /* ClassInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BC370726FAC1F300B2C191 /* ClassInfo.swift */; };
 		01C710EE26D8C7FC00DCC220 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C710ED26D8C7FC00DCC220 /* WeatherView.swift */; };
 		01CFC76D26D7909C00497454 /* CornerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CFC76C26D7909C00497454 /* CornerButtonView.swift */; };
 		01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EF57E826DAF19000005597 /* GoogleService-Info.plist */; };
@@ -50,7 +50,6 @@
 
 /* Begin PBXFileReference section */
 		0142828826F0032800E0949E /* BugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugView.swift; sourceTree = "<group>"; };
-		01531DDC26D70D0D00A8CEFD /* ClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassView.swift; sourceTree = "<group>"; };
 		01531DDE26D713F600A8CEFD /* SideButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideButtonView.swift; sourceTree = "<group>"; };
 		01531DE426D74A2B00A8CEFD /* SchoolList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolList.swift; sourceTree = "<group>"; };
 		0175756926D8D2FA00757862 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -61,12 +60,13 @@
 		019CB4D626D60F9000577EBF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		019CB4DB26D60F9000577EBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		019CB4E026D60F9000577EBF /* Salad ProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Salad ProjectTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		019CB4E426D60F9000577EBF /* Salad_ProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salad_ProjectTests.swift; sourceTree = "<group>"; };
+		019CB4E426D60F9000577EBF /* Salad_ProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salad_ProjectTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		019CB4E626D60F9000577EBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		019CB4EB26D60F9000577EBF /* Salad ProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Salad ProjectUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		019CB4EF26D60F9000577EBF /* Salad_ProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salad_ProjectUITests.swift; sourceTree = "<group>"; };
 		019CB4F126D60F9000577EBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		01BC370726FAC1F300B2C191 /* ClassInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassInfo.swift; sourceTree = "<group>"; };
 		01C710ED26D8C7FC00DCC220 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		01CFC76C26D7909C00497454 /* CornerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerButtonView.swift; sourceTree = "<group>"; };
 		01EF57E826DAF19000005597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -104,6 +104,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0157F02A26F9A0D50049337D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		019CB4C626D60F8E00577EBF = {
 			isa = PBXGroup;
 			children = (
@@ -128,15 +135,16 @@
 			isa = PBXGroup;
 			children = (
 				019CB4D226D60F8E00577EBF /* Salad_ProjectApp.swift */,
+				0157F02A26F9A0D50049337D /* Model */,
 				2B44E67A26E0D131002531C7 /* SettingsView.swift */,
 				2B44E68626E0D181002531C7 /* MainView.swift */,
 				2B44E69F26E0DD68002531C7 /* ScheduleView.swift */,
 				2B44E67C26E0D14C002531C7 /* AboutView.swift */,
 				019CB4D426D60F8E00577EBF /* ContentView.swift */,
 				01531DDE26D713F600A8CEFD /* SideButtonView.swift */,
+				01BC370726FAC1F300B2C191 /* ClassInfo.swift */,
 				01C710ED26D8C7FC00DCC220 /* WeatherView.swift */,
 				0142828826F0032800E0949E /* BugView.swift */,
-				01531DDC26D70D0D00A8CEFD /* ClassView.swift */,
 				01CFC76C26D7909C00497454 /* CornerButtonView.swift */,
 				01531DE426D74A2B00A8CEFD /* SchoolList.swift */,
 				0175756926D8D2FA00757862 /* LocationManager.swift */,
@@ -319,9 +327,9 @@
 				01FEC9DB26DB412D004B506F /* SearchView.swift in Sources */,
 				0175756A26D8D2FA00757862 /* LocationManager.swift in Sources */,
 				019CB4D326D60F8E00577EBF /* Salad_ProjectApp.swift in Sources */,
+				01BC370826FAC1F300B2C191 /* ClassInfo.swift in Sources */,
 				01C710EE26D8C7FC00DCC220 /* WeatherView.swift in Sources */,
 				2B44E6A026E0DD68002531C7 /* ScheduleView.swift in Sources */,
-				01531DDD26D70D0D00A8CEFD /* ClassView.swift in Sources */,
 				0175756C26D8D45C00757862 /* MapView.swift in Sources */,
 				2B44E68726E0D181002531C7 /* MainView.swift in Sources */,
 				2B44E67D26E0D14C002531C7 /* AboutView.swift in Sources */,

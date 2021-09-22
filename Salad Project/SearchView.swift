@@ -15,8 +15,6 @@ struct ClassList: View{
     @Binding var datas: [Classes]
     @Binding var uniqueData: [Classes]
     @EnvironmentObject var classes: ClassLocations
-    var encoder = CLGeocoder()
-
     
     var body: some View{
 
@@ -94,18 +92,22 @@ struct ClassList: View{
                     ScrollView(showsIndicators: false){
                         ForEach(self.classes.Section){ i in
                             Button(action: {
-                                encoder.geocodeAddressString("Tech"){ (placemarks, error) in
-                                    guard
-                                        let placemarks = placemarks,
-                                        let location = placemarks.first?.location
-                                    else {
-                                        return
-                                    }
+                                
+                                let first =  classes.classlocations.map({$0.coordinate.latitude}).firstIndex(of: i.ClassLocation[0])
+                                let second = classes.classlocations.map({$0.coordinate.longitude}).firstIndex(of: i.ClassLocation[1])
+
+                                if (first != nil) && (second != nil) && first! == second!{
+                                    classes.classlocations[first!].title! += i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
+                                    classes.classlocations[first!].subtitle! += i.MeetingInfo + "\n\n"
+                                } else {
                                     let classlocation = MKPointAnnotation()
-                                    classlocation.coordinate = location.coordinate
-                                    classlocation.title = i.Class
+                                    classlocation.coordinate.latitude = i.ClassLocation[0]
+                                    classlocation.coordinate.longitude = i.ClassLocation[1]
+                                    classlocation.title = i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
+                                    classlocation.subtitle = i.MeetingInfo + "\n\n"
                                     classes.classlocations.append(classlocation)
                                 }
+
                             }) {
                                 HStack (spacing: 20.0){
                                     Text(i.Section.components(separatedBy: ":")[0])
@@ -159,6 +161,7 @@ class getClass: ObservableObject{
     @Published var uniquedata = [Classes]()
     
     init(){
+        
         let db = Firestore.firestore()
         
         db.collection(path).getDocuments{ (snapshot, error) in
@@ -171,16 +174,17 @@ class getClass: ObservableObject{
             for i in snapshot!.documents{
                 let id = i.documentID
                 let Class = i.get("Class") as! String
+                let ClassLocation = i.get("Class Location") as! [Double]
                 let ClassOverView = i.get("Class Overview") as! String
                 let Instructor = i.get("Instructor") as! String
                 let Major = i.get("Major") as! String
                 let MeetingInfo = i.get("Meeting Info") as! String
                 let School = i.get("School") as! String
                 let Section = i.get("Section") as! String
-                self.data.append(Classes(id: id, Class: Class, ClassOverView: ClassOverView, Instructor: Instructor, Major: Major, MeetingInfo: MeetingInfo, School: School, Section: Section))
+                self.data.append(Classes(id: id, Class: Class, ClassLocation: ClassLocation, ClassOverView: ClassOverView, Instructor: Instructor, Major: Major, MeetingInfo: MeetingInfo, School: School, Section: Section))
                 
-                if self.uniquedata.filter({($0.Class + $0.Major).contains(Class + Major)}).count == 0{
-                    self.uniquedata.append(Classes(id: id, Class: Class, ClassOverView: ClassOverView, Instructor: Instructor, Major: Major, MeetingInfo: MeetingInfo, School: School, Section: Section))
+                if self.uniquedata.filter({($0.Class + $0.Major).contains(Class + Major)}).count == 0 {
+                    self.uniquedata.append(Classes(id: id, Class: Class, ClassLocation: ClassLocation, ClassOverView: ClassOverView, Instructor: Instructor, Major: Major, MeetingInfo: MeetingInfo, School: School, Section: Section))
                 }
             }
         }
@@ -194,6 +198,7 @@ class getClass: ObservableObject{
 struct Classes: Identifiable, Equatable{
     @DocumentID var id: String?
     var Class: String
+    var ClassLocation: [Double]
     var ClassOverView: String
     var Instructor: String
     var Major: String
