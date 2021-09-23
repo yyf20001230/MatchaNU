@@ -12,6 +12,7 @@ import CoreLocation
 class ClassLocations: ObservableObject{
     @Published var classlocations: [MKPointAnnotation] = []
     @Published var detaillocation: [MKPointAnnotation] = []
+    @Published var userClass: [ClassInfo] = []
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
     @Published var showRoute = false
@@ -134,6 +135,7 @@ struct ContentView: View {
                                     
                                 } else{
                                     self.classes.detail = [ClassInfo]()
+                                    self.classes.showRoute = false
                                 }
                                 
                             }
@@ -145,7 +147,7 @@ struct ContentView: View {
                                 .fontWeight(.bold)
                                 .tracking(-0.5)
                                 .padding(.trailing)
-                            Text(self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                            Text(self.classes.detail.isEmpty ? self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " ") :  self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                 .foregroundColor(.secondary)
                                 .font(.system(.caption2, design: .rounded))
                                 .tracking(-0.5)
@@ -173,6 +175,7 @@ struct ContentView: View {
                             )
                         
                     } else {
+                        
                         DetailView().environmentObject(classes)
                     }
                 }
@@ -183,7 +186,7 @@ struct ContentView: View {
             .cornerRadius(8.0)
             .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
-            .offset(y: ShowClass ? self.height / 6 : self.height / 1.2)
+            .offset(y: ShowClass ? self.height / 6 : self.height / 1.22)
             .gesture(
                 DragGesture().onChanged { value in
                     self.MainTab = value.translation

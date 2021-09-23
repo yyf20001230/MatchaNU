@@ -103,26 +103,6 @@ struct ClassList: View{
                                     classlocation.subtitle = i.MeetingInfo + "\n\n"
                                     self.classes.detaillocation.append(classlocation)
                                 }
-                                
-                                if i.ClassLocation[0] != -1{
-                                    let first =  classes.classlocations.map({$0.coordinate.latitude}).firstIndex(of: i.ClassLocation[0])
-                                    let second = classes.classlocations.map({$0.coordinate.longitude}).firstIndex(of: i.ClassLocation[1])
-
-                                    if (first != nil) && (second != nil) && first! == second!{
-                                        classes.classlocations[first!].title! += i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
-                                        classes.classlocations[first!].subtitle! += i.MeetingInfo + "\n\n"
-                                    } else {
-                                        let classlocation = MKPointAnnotation()
-                                        classlocation.coordinate.latitude = i.ClassLocation[0]
-                                        classlocation.coordinate.longitude = i.ClassLocation[1]
-                                        classlocation.title = i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
-                                        classlocation.subtitle = i.MeetingInfo + "\n\n"
-                                        classes.classlocations.append(classlocation)
-                                    }
-                                }
-                                
-                                
-
                             }) {
                                 HStack (spacing: 20.0){
                                     Text(i.Section.components(separatedBy: ":")[0])
