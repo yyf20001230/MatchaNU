@@ -17,9 +17,6 @@ struct MainView: View {
     @StateObject var settings = appSettings()
     
     var body: some View {
-        let classes = ClassLocations()
-        
-       
         if settings.Settings{
         SettingsView()
             .preferredColorScheme(settings.toggleDarkMode)

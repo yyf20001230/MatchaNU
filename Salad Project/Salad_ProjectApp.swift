@@ -6,17 +6,12 @@
 //
 
 import SwiftUI
-import Firebase
 
 @main
 struct Salad_ProjectApp: App {
     
-    init(){
-        FirebaseApp.configure()
-    }
     var body: some Scene {
         WindowGroup {
-            
             MainView()
                 
         }

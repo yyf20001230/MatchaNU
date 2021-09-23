@@ -10,13 +10,12 @@ import MapKit
 import CoreLocation
 
 class ClassLocations: ObservableObject{
-    @Published var classlocations: [MKPointAnnotation] = []
-    @Published var detaillocation: [MKPointAnnotation] = []
+    @Published var classannotation: [MKPointAnnotation] = []
     @Published var userClass: [ClassInfo] = []
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
     @Published var showRoute = false
-    @Published var time: Double = 0
+    @Published var showUserLocation = false
 }
 
 
@@ -57,10 +56,10 @@ struct ContentView: View {
                     if self.MainTab.height >= 0 && !self.ShowClass{
                         CornerButtonView()
                             .onTapGesture {
-                                self.classes.showRoute.toggle()
+                                self.classes.showUserLocation.toggle()
                             }
-                            .foregroundColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                            .offset(y: -self.height / 12 - 44)
+                            .foregroundColor(self.classes.showUserLocation ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                            .offset(y: -self.height / 12 - 50)
                             .padding(.leading)
                             .opacity(Double(1 + self.MainTab.height))
                         Spacer()
@@ -134,7 +133,7 @@ struct ContentView: View {
                                     self.classes.Section = [ClassInfo]()
                                     
                                 } else{
-                                    self.classes.detail = [ClassInfo]()
+                                    self.classes.detail.removeAll()
                                     self.classes.showRoute = false
                                 }
                                 
@@ -227,7 +226,6 @@ extension View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group{
-            let classes = ClassLocations()
             ContentView()
                 .preferredColorScheme(.dark)
             ContentView()

@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 import MapKit
 
 struct ClassList: View{
@@ -94,15 +92,6 @@ struct ClassList: View{
                             Button(action: {
                                 self.classes.detail.removeAll()
                                 self.classes.detail.append(i)
-                                
-                                if i.ClassLocation[0] != -1{
-                                    let classlocation = MKPointAnnotation()
-                                    classlocation.coordinate.latitude = i.ClassLocation[0]
-                                    classlocation.coordinate.longitude = i.ClassLocation[1]
-                                    classlocation.title = i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "\n"
-                                    classlocation.subtitle = i.MeetingInfo + "\n\n"
-                                    self.classes.detaillocation.append(classlocation)
-                                }
                             }) {
                                 HStack (spacing: 20.0){
                                     Text(i.Section.components(separatedBy: ":")[0])
@@ -156,34 +145,7 @@ class getClass: ObservableObject{
     @Published var uniquedata = [ClassInfo]()
     
     init(){
-        /*
-        let db = Firestore.firestore()
-        
-        db.collection(path).getDocuments{ (snapshot, error) in
-            
-            if error != nil{
-                print((error?.localizedDescription)!)
-                return
-            }
-            
-            for i in snapshot!.documents{
-                let id = i.documentID
-                let Class = i.get("Class") as! String
-                let ClassLocation = i.get("Class Location") as! [Double]
-                let ClassOverView = i.get("Class Overview") as! String
-                let Instructor = i.get("Instructor") as! String
-                let Major = i.get("Major") as! String
-                let MeetingInfo = i.get("Meeting Info") as! String
-                let School = i.get("School") as! String
-                let Section = i.get("Section") as! String
-                self.data.append(Classes(id: id, Class: Class, ClassLocation: ClassLocation, ClassOverView: ClassOverView, Instructor: Instructor, Major: Major, MeetingInfo: MeetingInfo, School: School, Section: Section))
-                
-                if self.uniquedata.filter({($0.Class + $0.Major).contains(Class + Major)}).count == 0 {
-                    self.uniquedata.append(Classes(id: id, Class: Class, ClassLocation: ClassLocation, ClassOverView: ClassOverView, Instructor: Instructor, Major: Major, MeetingInfo: MeetingInfo, School: School, Section: Section))
-                }
-            }
-        }
-        */
+       
         if let fileLocation = Bundle.main.url(forResource: "ClassInfo", withExtension: "json") {
             do {
                 let classData = try Data(contentsOf: fileLocation)
@@ -202,23 +164,6 @@ class getClass: ObservableObject{
             }
         }
     }
-}
-
-
-
-
-
-
-struct Classes: Identifiable, Equatable{
-    @DocumentID var id: String?
-    var Class: String
-    var ClassLocation: [Double]
-    var ClassOverView: String
-    var Instructor: String
-    var Major: String
-    var MeetingInfo: String
-    var School: String
-    var Section: String
 }
 
 struct ClassInfo: Identifiable, Codable, Equatable{

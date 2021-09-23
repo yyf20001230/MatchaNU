@@ -15,6 +15,7 @@ struct DetailView: View {
     var body: some View {
         
         if !self.classes.detail.isEmpty{
+            
             VStack {
                 Rectangle()
                     .frame(height: 10)
@@ -42,13 +43,12 @@ struct DetailView: View {
                     }
                     
                     Button(action: {
-                        let classlocation = MKPointAnnotation()
-                        classlocation.coordinate = CLLocationCoordinate2D(latitude: classes.detail[0].ClassLocation[0], longitude: classes.detail[0].ClassLocation[1])
-                        classlocation.title = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "\n"
-                        classlocation.subtitle = classes.detail[0].MeetingInfo + "\n\n"
-                        self.classes.classlocations.append(classlocation)
-                        self.classes.userClass.append(self.classes.detail[0])
-                        self.showAlert = true
+                        if classes.userClass.contains(classes.detail[0]){
+                            classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
+                        } else{
+                            classes.userClass.append(self.classes.detail[0])
+                            self.showAlert = true
+                        }
                     }){
                         VStack{
                             Image(systemName: "plus.circle.fill")
@@ -66,7 +66,7 @@ struct DetailView: View {
                         .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                     }
-
+                    
                 }
                 
                 if self.classes.detail[0].ClassLocation == [42.05780619999999,-87.67587739999999]{
@@ -91,7 +91,17 @@ struct DetailView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
                 .background(Color("ClassColor"))
             }
+            
+            Button(action: {
+                self.showAlert = false
+            }){
+                Text("hello")
+            }
+            .offset(y: self.showAlert ? CGFloat(UIScreen.main.bounds.height) / 3 : CGFloat(UIScreen.main.bounds.height))
         }
+        
+       
+        
     }
 }
 

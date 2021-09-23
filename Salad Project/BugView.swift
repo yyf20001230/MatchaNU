@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BugView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Not Available yet. We are working hard on this!")
     }
 }
 

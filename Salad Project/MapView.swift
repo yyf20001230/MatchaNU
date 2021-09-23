@@ -30,52 +30,84 @@ struct MapView: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
         uiView.showsUserLocation = true
+        
         if !self.classes.detail.isEmpty{
-            let destination = MKPointAnnotation()
-            destination.coordinate = CLLocationCoordinate2D(latitude: classes.detail[0].ClassLocation[0], longitude: self.classes.detail[0].ClassLocation[1])
-            destination.title = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "\n"
-            destination.subtitle = classes.detail[0].MeetingInfo + "\n\n"
-            uiView.addAnnotation(destination)
-            let request = MKDirections.Request()
-            
-            request.source = .forCurrentLocation()
-            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination.coordinate))
-            request.transportType = .walking
-            
-            let directions = MKDirections(request: request)
-            
-            if self.classes.showRoute{
-                directions.calculate{ response, error in
-                    guard let route = response?.routes.first else { return }
-                    uiView.addOverlay(route.polyline)
-                    uiView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80),animated: true)
+            uiView.removeAnnotations(uiView.annotations)
+            if self.classes.detail[0].ClassLocation[0] != -1{
+                
+                let destination = MKPointAnnotation()
+                destination.coordinate.latitude = classes.detail[0].ClassLocation[0]
+                destination.coordinate.longitude = classes.detail[0].ClassLocation[1]
+                destination.title = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "\n"
+                destination.subtitle = classes.detail[0].MeetingInfo + "\n\n"
+                uiView.addAnnotation(destination)
+                let request = MKDirections.Request()
+                request.source = .forCurrentLocation()
+                request.destination = MKMapItem(placemark: MKPlacemark(coordinate: destination.coordinate))
+                request.transportType = .walking
+                
+                let directions = MKDirections(request: request)
+                
+                if classes.showRoute{
+                    directions.calculate{ response, error in
+                        guard let route = response?.routes.first else { return }
+                        uiView.addOverlay(route.polyline)
+                        uiView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80),animated: true)
+                    }
+                } else {
+                    uiView.removeOverlays(uiView.overlays)
+                    if classes.showUserLocation{
+                        uiView.setRegion(MKCoordinateRegion(center: uiView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
+                    } else {
+                        uiView.setRegion(MKCoordinateRegion(center: destination.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
+                    }
+                    
                 }
-            } else {
-                uiView.setRegion(MKCoordinateRegion(center: destination.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
             }
-            
         }
         
-        else{
+        else {
             uiView.removeOverlays(uiView.overlays)
             uiView.removeAnnotations(uiView.annotations)
-            if self.classes.classlocations.count != 0{
+            if self.classes.userClass.count != 0{
                 var zoomRect = MKMapRect.null
-                for annotations in classes.classlocations{
-                    let aPoint = MKMapPoint(annotations.coordinate)
-                    let rect = MKMapRect(x: aPoint.x, y: aPoint.y, width: 0.1,height: 0.1)
-                    if zoomRect.isNull {
-                        zoomRect = rect
-                    } else {
-                        zoomRect = zoomRect.union(rect)
+                for classinfo in self.classes.userClass{
+                    if classinfo.ClassLocation[0] != -1{
+                        let classlocation = MKPointAnnotation()
+                        classlocation.coordinate.latitude = classinfo.ClassLocation[0]
+                        classlocation.coordinate.longitude = classinfo.ClassLocation[1]
+                        classlocation.title = classinfo.Major.components(separatedBy: " ")[0] + " " + classinfo.Class.components(separatedBy: " ")[0] + "\n"
+                        classlocation.subtitle = classinfo.MeetingInfo + "\n\n"
+                        uiView.addAnnotation(classlocation)
+                        
+                        let aPoint = MKMapPoint(classlocation.coordinate)
+                        let rect = MKMapRect(x: aPoint.x, y: aPoint.y, width: 0.1, height: 0.1)
+                        if zoomRect.isNull{
+                            zoomRect = rect
+                        } else{
+                            zoomRect = zoomRect.union(rect)
+                        }
                     }
                 }
-                uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
-                uiView.addAnnotations(self.classes.classlocations)
+                
+                if classes.showUserLocation{
+                    uiView.setRegion(MKCoordinateRegion(center: uiView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
+                } else {
+                    uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
+                }
+                
+                
+                
             }
             else{
-                uiView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 42.055984, longitude: -87.675171), span: MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)),
-                              animated: true)
+                
+                if classes.showUserLocation{
+                    uiView.setRegion(MKCoordinateRegion(center: uiView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
+                } else {
+                    uiView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 42.055984, longitude: -87.675171), span: MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)),
+                                  animated: true)
+                }
+                
             }
         }
         
