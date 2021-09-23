@@ -52,17 +52,17 @@ struct DetailView: View {
                     }){
                         VStack{
                             Image(systemName: "plus.circle.fill")
-                                .rotationEffect(classes.userClass.contains(classes.detail[0]) ? Angle(degrees: 0) : Angle(degrees: 45))
+                                .rotationEffect(classes.userClass.contains(classes.detail[0]) ? Angle(degrees: 45) : Angle(degrees: 0))
                                 .padding(.top)
                                 .padding(.horizontal, 16)
                                 .scaleEffect(1.5)
                                 .scaledToFill()
                                 .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                            Text(classes.userClass.contains(classes.detail[0]) ? "ADD" : "DROP")
+                            Text(classes.userClass.contains(classes.detail[0]) ? "DROP" : "ADD")
                                 .padding(.all)
                                 .font(.system(.caption2, design: .rounded))
                         }
-                        .accentColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                        .accentColor(classes.userClass.contains(classes.detail[0]) ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                         .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                     }
