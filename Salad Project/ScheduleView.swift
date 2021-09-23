@@ -13,18 +13,17 @@ struct ScheduleView: View {
     @State var MainTab = CGSize.zero
     @State var ShowClass = false
     @State var `class` = ""
-    
-    @Binding var showSchedule: Bool
-    @Binding var showSettings: Bool
     var body: some View {
         ZStack {
             VStack{
                 HStack {
                     Spacer()
-                    SideButtonView(showSchedule: $showSchedule, showSettings: $showSettings)
+                    SideButtonView()
                         .padding(.trailing)
                         
                 }
+                Spacer()
+                Text("Schedule view will be coming soon!")
                 Spacer()
                 
             }
@@ -34,6 +33,6 @@ struct ScheduleView: View {
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(showSchedule: .constant(true), showSettings: .constant(false))
+        ScheduleView()
     }
 }

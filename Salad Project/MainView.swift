@@ -7,46 +7,43 @@
 
 import SwiftUI
 
+class appSettings: ObservableObject{
+    @Published var toggleDarkMode: ColorScheme = .light
+    @Published var Schedule = false
+    @Published var Settings = false
+}
+
 struct MainView: View {
-    @State var showSettings = false
-    @State var showSchedule = false
-    @State var darkMode = false
+    @StateObject var settings = appSettings()
+    
     var body: some View {
         let classes = ClassLocations()
         
-        if darkMode{
-            if showSettings{
-                SettingsView(darkMode: $darkMode, showSchedule: $showSchedule, showSettings: $showSettings)
-                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-            }
-            else if showSchedule{
-                ScheduleView(showSchedule: $showSchedule, showSettings: $showSettings)
-                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-            }
-            else{
-                ContentView(classes: classes,showSchedule: $showSchedule, showSettings: $showSettings)
-                    .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-            }
+       
+        if settings.Settings{
+        SettingsView()
+            .preferredColorScheme(settings.toggleDarkMode)
+            .environmentObject(settings)
+        }
+        else if settings.Schedule{
+            ScheduleView()
+                .preferredColorScheme(settings.toggleDarkMode)
+                .environmentObject(settings)
         }
         else{
-            if showSettings{
-                SettingsView(darkMode: $darkMode, showSchedule: $showSchedule, showSettings: $showSettings)
-                    .preferredColorScheme(.light)
-            }
-            else if showSchedule{
-                ScheduleView(showSchedule: $showSchedule, showSettings: $showSettings)
-                    .preferredColorScheme(.light)
-            }
-            else{
-                ContentView(classes: classes,showSchedule: $showSchedule, showSettings: $showSettings)
-                    .preferredColorScheme(.light)
-            }
+            ContentView()
+                .preferredColorScheme(settings.toggleDarkMode)
+                .environmentObject(settings)
         }
+    
+        
+        
     }
 }
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+            
     }
 }
