@@ -18,6 +18,14 @@ class ClassLocations: ObservableObject{
     @Published var showUserLocation = false
 }
 
+class appSettings: ObservableObject{
+    
+    @Published var currentSystemScheme = schemeTransform(userInterfaceStyle: UITraitCollection.current.userInterfaceStyle)
+    @Published var isDarkMode = false
+    @Published var Schedule = false
+    @Published var Settings = false
+    
+}
 
 
 struct ContentView: View {
@@ -32,7 +40,7 @@ struct ContentView: View {
     @StateObject var classes = ClassLocations()
     @ObservedObject var locationManager = LocationManager()
     
-    @EnvironmentObject var settings: appSettings
+    @StateObject var settings = appSettings()
     
     var body: some View {
         ZStack () {
@@ -48,6 +56,7 @@ struct ContentView: View {
                 HStack {
                     Spacer()
                     SideButtonView()
+                        .environmentObject(settings)
                         .padding(.trailing)
                         .padding(.top, self.height / 18)
                 }
@@ -209,11 +218,18 @@ struct ContentView: View {
                 }
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
+            
+            SettingsView()
+                .environmentObject(settings)
+                .offset(y: settings.Settings ? self.height / 3 : self.height)
         }
-
+        
+        
+       
         
         
     }
+    
 }
 
 extension View {

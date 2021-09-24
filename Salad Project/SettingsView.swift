@@ -18,53 +18,64 @@ struct SettingsView: View {
     @State var MainTab = CGSize.zero
     @State var ShowClass = false
     @State var `class` = ""
-    @State private var darkMode = false
     @EnvironmentObject var settings: appSettings
-   
+    @State private var darkMode = false
     var body: some View {
+        
+        
+        
+        VStack{
             
-            ZStack{
-                NavigationView{
-                    
-                VStack{
-                    
-                    List{
-                        Toggle("Toggle Dark Mode", isOn: $darkMode)
-                            .onChange(of: darkMode) {value in
-                                if darkMode == true{
-                                    settings.toggleDarkMode = .dark
-                                }
-                                else{
-                                    settings.toggleDarkMode = .dark
-                                }
-                            }
-                        
-                    
-                        NavigationLink(destination: AboutView()){
-                            Text("About this app")
-                        }
-                        NavigationLink(destination: BugView()){
-                            Text("Report Bugs")
-                        }
-                        
-                    }.padding(.top, 50.0)
-                    
-                    .listStyle(GroupedListStyle())
-                    
-                    .navigationBarTitle("App Settings")
-                    .ignoresSafeArea()
-                              
-                        
-                    
-                    
+           
+            
+            HStack{
+                Button(action:{settings.Settings.toggle()}){
+                    HStack(spacing: 2.0){
+                        Image(systemName: "arrow.left")
+                        Text("Back")
+                    }
                     
                 }
-                .ignoresSafeArea()
+                Spacer()
+                
+            }
+            .padding(.leading, 15)
+            List{
                 
                 
+                Toggle("Toggle Dark Mode", isOn: $darkMode)
+                    .onChange(of: darkMode) {value in
+                        if (darkMode == true){
+                            settings.currentSystemScheme = .dark
+                        }
+                        else{
+                            settings.currentSystemScheme = .light
+                        }
+                        
+                        
+                    }
                 
-            }.ignoresSafeArea()
+                
+                NavigationLink(destination: AboutView()){
+                    Text("About this app")
+                }
+                NavigationLink(destination: BugView()){
+                    Text("Report Bugs")
+                }
+                
+            }
+        
+            
+            
         }
+        
+        
+        
+        
+        
+        
+        
+        
         
         
     }
