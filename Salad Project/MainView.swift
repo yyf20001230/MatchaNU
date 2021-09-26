@@ -7,29 +7,35 @@
 
 import SwiftUI
 
-class appSettings: ObservableObject{
-    @Published var toggleDarkMode: ColorScheme = .light
-    @Published var Schedule = false
-    @Published var Settings = false
-}
+
+func schemeTransform(userInterfaceStyle:UIUserInterfaceStyle) -> ColorScheme {
+    if userInterfaceStyle == .light {
+        return .light
+    }else if userInterfaceStyle == .dark {
+        return .dark
+    }
+    return .light}
 
 struct MainView: View {
+    
+    
     @StateObject var settings = appSettings()
+    
     
     var body: some View {
         if settings.Settings{
-        SettingsView()
-            .preferredColorScheme(settings.toggleDarkMode)
-            .environmentObject(settings)
+            SettingsView()
+                .preferredColorScheme(settings.currentSystemScheme)
+                .environmentObject(settings)
         }
         else if settings.Schedule{
             ScheduleView()
-                .preferredColorScheme(settings.toggleDarkMode)
+                .preferredColorScheme(settings.currentSystemScheme)
                 .environmentObject(settings)
         }
         else{
             ContentView()
-                .preferredColorScheme(settings.toggleDarkMode)
+                .preferredColorScheme(settings.currentSystemScheme)
                 .environmentObject(settings)
         }
     

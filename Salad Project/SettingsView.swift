@@ -18,53 +18,77 @@ struct SettingsView: View {
     @State var MainTab = CGSize.zero
     @State var ShowClass = false
     @State var `class` = ""
-    @State private var darkMode = false
     @EnvironmentObject var settings: appSettings
-   
+    @State private var darkMode = false
     var body: some View {
-            
-            ZStack{
-                NavigationView{
-                    
-                VStack{
-                    
-                    List{
-                        Toggle("Toggle Dark Mode", isOn: $darkMode)
-                            .onChange(of: darkMode) {value in
-                                if darkMode == true{
-                                    settings.toggleDarkMode = .dark
-                                }
-                                else{
-                                    settings.toggleDarkMode = .dark
-                                }
-                            }
-                        
-                    
-                        NavigationLink(destination: AboutView()){
-                            Text("About this app")
+        
+        
+        
+        VStack{
+//            HStack{
+//                Button(action:{settings.Settings.toggle()}){
+//                    HStack(spacing: 2.0){
+//                        Image(systemName: "arrow.left")
+//                        Text("Back")
+//                    }
+//
+//                }
+//                Spacer()
+//
+//            }
+//            .padding(.leading, 15)
+            Form{
+                Toggle("Toggle Dark Mode", isOn: $darkMode)
+                    .onChange(of: darkMode) {value in
+                        if (darkMode == true){
+                            settings.currentSystemScheme = .dark
                         }
-                        NavigationLink(destination: BugView()){
-                            Text("Report Bugs")
+                        else{
+                            settings.currentSystemScheme = .light
                         }
                         
-                    }.padding(.top, 50.0)
-                    
-                    .listStyle(GroupedListStyle())
-                    
-                    .navigationBarTitle("App Settings")
-                    .ignoresSafeArea()
-                              
                         
-                    
-                    
+                    }
+                
+                
+                Button(action:{settings.About.toggle()}){
+                    HStack{
+                        Text("About this app")
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                            .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
+                    }
+                }
+                .foregroundColor(/*@START_MENU_TOKEN@*/Color("Default")/*@END_MENU_TOKEN@*/)
+                
+                
+                Button(action:{settings.Bug.toggle()}){
+                    HStack{
+                        Text("Report Bugs")
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                            .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
+                    }
                     
                 }
-                .ignoresSafeArea()
+                .foregroundColor(/*@START_MENU_TOKEN@*/Color("Default")/*@END_MENU_TOKEN@*/)
                 
                 
-                
-            }.ignoresSafeArea()
+            }.cornerRadius(8)
+            
+        
+            
+            
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
     }

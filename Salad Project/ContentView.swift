@@ -18,6 +18,15 @@ class ClassLocations: ObservableObject{
     @Published var showUserLocation = false
 }
 
+class appSettings: ObservableObject{
+    
+    @Published var currentSystemScheme = schemeTransform(userInterfaceStyle: UITraitCollection.current.userInterfaceStyle)
+    @Published var isDarkMode = false
+    @Published var Schedule = false
+    @Published var Settings = false
+    @Published var About = false
+    @Published var Bug = false
+}
 
 
 struct ContentView: View {
@@ -33,7 +42,7 @@ struct ContentView: View {
     @ObservedObject var datas = getClass()
     @ObservedObject var locationManager = LocationManager()
     
-    @EnvironmentObject var settings: appSettings
+    @StateObject var settings = appSettings()
     
     var body: some View {
         ZStack () {
@@ -48,6 +57,7 @@ struct ContentView: View {
                 HStack {
                     Spacer()
                     SideButtonView()
+                        .environmentObject(settings)
                         .padding(.trailing)
                         .padding(.top, self.height / 18)
                 }
@@ -209,10 +219,38 @@ struct ContentView: View {
                 }
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
+            OtherView()
+                .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : self.height)
+            SettingsView()
+                .environmentObject(settings)
+                .offset(y: settings.Settings ? self.height / 1.5 : self.height)
+                .animation(.spring())
             
+            AboutView()
+                .environmentObject(settings)
+                .offset(y: settings.About ?  0 : self.height)
+                .animation(.spring())
+                
+//
+//            BugView()
+//                .environmentObject(settings)
+//                .offset(y: settings.Bug ?  0 : self.height)
+//                .animation(.spring())
+        
+            
+                
         }
+        .preferredColorScheme(settings.currentSystemScheme)
+        
+        
+        
+       
+        
+        
     }
+        
 }
+   
 
 extension View {
     func hideKeyboard() {
