@@ -83,16 +83,19 @@ struct DetailView: View {
                     }
                     
                     VStack(alignment: .leading){
-                        Text("Meeting Info")
+                        Text("Class Overview")
                             .padding(.all)
                     }
                     
                     if !self.classes.detail.isEmpty{
                         ScrollView(showsIndicators: true){
                             Text(self.classes.detail[0].ClassOverview)
+                                .padding(/*@START_MENU_TOKEN@*/.all, 20.0/*@END_MENU_TOKEN@*/)
+                            
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .background(Color("ClassColor"))
+                        .frame(maxHeight: 200)
                     }
                 }
             }

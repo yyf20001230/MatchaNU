@@ -10,10 +10,11 @@ import SwiftUI
 struct OtherView: View {
     var body: some View {
         VStack{
-            Spacer()
         }
-            .background(Color("Black"))
-            .opacity(0.8)
+        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+20)
+        
+        .background(Color.black)
+        .opacity(0.7)
     }
 }
 

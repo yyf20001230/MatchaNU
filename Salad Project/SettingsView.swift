@@ -10,6 +10,9 @@ import SwiftUI
 
 
 struct SettingsView: View {
+//    init(){
+//            UITableView.appearance().backgroundColor = .clear
+//        }
     
     @State var locationOn = true
     
@@ -48,10 +51,13 @@ struct SettingsView: View {
                         }
                         
                         
-                    }
+                    }.foregroundColor((Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1))))
                 
                 
-                Button(action:{settings.About.toggle()}){
+                Button(action:{
+                    settings.About.toggle()
+                    settings.Settings = false
+                }){
                     HStack{
                         Text("About this app")
                         Spacer()
@@ -59,10 +65,12 @@ struct SettingsView: View {
                             .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
                     }
                 }
-                .foregroundColor(/*@START_MENU_TOKEN@*/Color("Default")/*@END_MENU_TOKEN@*/)
+                .foregroundColor((Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1))))
                 
                 
-                Button(action:{settings.Bug.toggle()}){
+                Button(action:{settings.Bug.toggle()
+                    settings.Settings = false
+                }){
                     HStack{
                         Text("Report Bugs")
                         Spacer()
@@ -71,15 +79,19 @@ struct SettingsView: View {
                     }
                     
                 }
-                .foregroundColor(/*@START_MENU_TOKEN@*/Color("Default")/*@END_MENU_TOKEN@*/)
+                .foregroundColor((Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1))))
                 
                 
             }.cornerRadius(8)
+                
+                
             
+                
         
             
             
         }
+        
         
         
         
