@@ -53,13 +53,7 @@ struct ContentView: View {
                 
             
             VStack{
-                HStack {
-                    Spacer()
-                    SideButtonView()
-                        .environmentObject(settings)
-                        .padding(.trailing)
-                        .padding(.top, self.height / 18)
-                }
+                
                 Spacer()
                 HStack {
                     if self.MainTab.height >= 0 && !self.ShowClass{
@@ -194,7 +188,7 @@ struct ContentView: View {
             .cornerRadius(8.0)
             .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
-            .offset(y: ShowClass ? self.height / 6 : self.height / 1.22)
+            .offset(y: ShowClass ? self.height / 4 : self.height / 1.12)
             .gesture(
                 DragGesture().onChanged { value in
                     self.MainTab = value.translation
@@ -225,10 +219,21 @@ struct ContentView: View {
                 .offset(y: settings.Settings ? self.height / 1.5 : self.height)
                 .animation(.spring())
             
+            VStack{
+                HStack {
+                    Spacer()
+                    SideButtonView()
+                        .environmentObject(settings)
+                        .padding(.trailing)
+                        .padding(.top, self.height / 18)
+                }
+                Spacer()
+            }
             AboutView()
                 .environmentObject(settings)
                 .offset(y: settings.About ?  0 : self.height)
                 .animation(.spring())
+            
                 
 //
 //            BugView()
