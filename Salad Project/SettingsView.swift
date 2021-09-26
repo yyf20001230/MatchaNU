@@ -25,24 +25,19 @@ struct SettingsView: View {
         
         
         VStack{
-            
-           
-            
-            HStack{
-                Button(action:{settings.Settings.toggle()}){
-                    HStack(spacing: 2.0){
-                        Image(systemName: "arrow.left")
-                        Text("Back")
-                    }
-                    
-                }
-                Spacer()
-                
-            }
-            .padding(.leading, 15)
-            List{
-                
-                
+//            HStack{
+//                Button(action:{settings.Settings.toggle()}){
+//                    HStack(spacing: 2.0){
+//                        Image(systemName: "arrow.left")
+//                        Text("Back")
+//                    }
+//
+//                }
+//                Spacer()
+//
+//            }
+//            .padding(.leading, 15)
+            Form{
                 Toggle("Toggle Dark Mode", isOn: $darkMode)
                     .onChange(of: darkMode) {value in
                         if (darkMode == true){
@@ -56,18 +51,35 @@ struct SettingsView: View {
                     }
                 
                 
-                NavigationLink(destination: AboutView()){
-                    Text("About this app")
+                Button(action:{settings.About.toggle()}){
+                    HStack{
+                        Text("About this app")
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                            .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
+                    }
                 }
-                NavigationLink(destination: BugView()){
-                    Text("Report Bugs")
+                .foregroundColor(/*@START_MENU_TOKEN@*/Color("Default")/*@END_MENU_TOKEN@*/)
+                
+                
+                Button(action:{settings.Bug.toggle()}){
+                    HStack{
+                        Text("Report Bugs")
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                            .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
+                    }
+                    
                 }
+                .foregroundColor(/*@START_MENU_TOKEN@*/Color("Default")/*@END_MENU_TOKEN@*/)
                 
             }
+            
         
             
             
         }
+        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("Default")/*@END_MENU_TOKEN@*/)
         
         
         

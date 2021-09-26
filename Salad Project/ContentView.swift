@@ -24,7 +24,8 @@ class appSettings: ObservableObject{
     @Published var isDarkMode = false
     @Published var Schedule = false
     @Published var Settings = false
-    
+    @Published var About = false
+    @Published var Bug = false
 }
 
 
@@ -221,16 +222,17 @@ struct ContentView: View {
             
             SettingsView()
                 .environmentObject(settings)
-                .offset(y: settings.Settings ? self.height / 3 : self.height)
-        }
+                .offset(y: settings.Settings ? self.height / 1.5 : self.height)
+        }.preferredColorScheme(settings.currentSystemScheme)
         
         
        
         
         
     }
-    
+        
 }
+   
 
 extension View {
     func hideKeyboard() {
