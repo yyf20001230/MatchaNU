@@ -27,22 +27,22 @@ struct ContentView: View {
     @State var ShowClass = false
     
     @State var ClassName = ""
-    @ObservedObject var datas = getClass()
+
     
     @StateObject var classes = ClassLocations()
+    @ObservedObject var datas = getClass()
     @ObservedObject var locationManager = LocationManager()
     
     @EnvironmentObject var settings: appSettings
     
     var body: some View {
         ZStack () {
-            NavigationView{
-                VStack{
-                    MapView().environmentObject(classes)
-                        .ignoresSafeArea()
-                        .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                }
-            }
+            
+            
+            MapView().environmentObject(classes)
+                .ignoresSafeArea()
+                .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                
             
             VStack{
                 HStack {
@@ -209,10 +209,8 @@ struct ContentView: View {
                 }
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
+            
         }
-
-        
-        
     }
 }
 
@@ -222,6 +220,8 @@ extension View {
         UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
     }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

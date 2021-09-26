@@ -145,7 +145,6 @@ class getClass: ObservableObject{
     @Published var uniquedata = [ClassInfo]()
     
     init(){
-       
         if let fileLocation = Bundle.main.url(forResource: "ClassInfo", withExtension: "json") {
             do {
                 let classData = try Data(contentsOf: fileLocation)
