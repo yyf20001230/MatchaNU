@@ -10,7 +10,6 @@ import MapKit
 import CoreLocation
 
 class ClassLocations: ObservableObject{
-    @Published var classannotation: [MKPointAnnotation] = []
     @Published var userClass: [ClassInfo] = []
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []

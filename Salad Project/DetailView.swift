@@ -23,7 +23,7 @@ struct DetailView: View {
                         .foregroundColor(Color("SearchBarColor"))
                     HStack{
                         Button(action: {
-                            self.classes.showRoute.toggle()
+                            classes.showRoute.toggle()
                         }){
                             VStack{
                                 Image(systemName: "mappin.circle.fill")
@@ -32,7 +32,7 @@ struct DetailView: View {
                                     .scaleEffect(1.5)
                                     .scaledToFill()
                                     .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                                Text(self.classes.showRoute ? "Stop Navigation" : "Navigate")
+                                Text(classes.showRoute ? "Stop Navigation" : "Navigate")
                                     .padding(.all)
                                     .font(.system(.caption2, design: .rounded))
                             }
@@ -65,7 +65,7 @@ struct DetailView: View {
                                     .font(.system(.caption2, design: .rounded))
                             }
                             .accentColor(classes.userClass.contains(classes.detail[0]) ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                            .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+                            .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
                         .alert(isPresented: $showAlert, content: {
@@ -95,11 +95,6 @@ struct DetailView: View {
                         .background(Color("ClassColor"))
                     }
                 }
-                
-                Rectangle()
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .foregroundColor(Color("SearchbarColor"))
-                    .offset(y: self.showAlert ? CGFloat(UIScreen.main.bounds.height) / 2: CGFloat(UIScreen.main.bounds.height))
             }
 
         }

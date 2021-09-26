@@ -73,11 +73,18 @@ struct MapView: UIViewRepresentable {
                 var zoomRect = MKMapRect.null
                 for classinfo in self.classes.userClass{
                     if classinfo.ClassLocation[0] != -1{
+                        
                         let classlocation = MKPointAnnotation()
                         classlocation.coordinate.latitude = classinfo.ClassLocation[0]
                         classlocation.coordinate.longitude = classinfo.ClassLocation[1]
                         classlocation.title = classinfo.Major.components(separatedBy: " ")[0] + " " + classinfo.Class.components(separatedBy: " ")[0] + "\n"
                         classlocation.subtitle = classinfo.MeetingInfo + "\n\n"
+                        if uiView.annotations.map({$0.coordinate.latitude}).contains(classinfo.ClassLocation[0]) && uiView.annotations.map({$0.coordinate.longitude}).contains(classinfo.ClassLocation[1]){
+                            let annotation = uiView.annotations.filter({$0.coordinate.latitude == classinfo.ClassLocation[0] && $0.coordinate.longitude == classinfo.ClassLocation[1]})[0]
+                            classlocation.title! += annotation.title!!
+                            classlocation.subtitle! += annotation.subtitle!!
+                            uiView.removeAnnotation(annotation)
+                        }
                         uiView.addAnnotation(classlocation)
                         
                         let aPoint = MKMapPoint(classlocation.coordinate)
@@ -89,15 +96,11 @@ struct MapView: UIViewRepresentable {
                         }
                     }
                 }
-                
                 if classes.showUserLocation{
                     uiView.setRegion(MKCoordinateRegion(center: uiView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
                 } else {
                     uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
                 }
-                
-                
-                
             }
             else{
                 
