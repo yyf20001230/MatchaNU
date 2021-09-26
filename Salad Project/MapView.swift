@@ -96,7 +96,7 @@ struct MapView: UIViewRepresentable {
                         }
                     }
                 }
-                if classes.showUserLocation{
+                if classes.showUserLocation || zoomRect.isNull{
                     uiView.setRegion(MKCoordinateRegion(center: uiView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
                 } else {
                     uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)

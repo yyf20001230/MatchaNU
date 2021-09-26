@@ -115,6 +115,7 @@ struct ClassList: View{
                                 .padding(.all)
                                 Spacer()
                             }
+                            
                         }
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
