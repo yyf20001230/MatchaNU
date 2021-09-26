@@ -23,6 +23,7 @@
 		01CFC76D26D7909C00497454 /* CornerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CFC76C26D7909C00497454 /* CornerButtonView.swift */; };
 		01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EF57E826DAF19000005597 /* GoogleService-Info.plist */; };
 		01FEC9DB26DB412D004B506F /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEC9DA26DB412D004B506F /* SearchView.swift */; };
+		2B1A78EE27004EBE00B8EC69 /* OtherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1A78ED27004EBD00B8EC69 /* OtherView.swift */; };
 		2B44E67B26E0D131002531C7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B44E67A26E0D131002531C7 /* SettingsView.swift */; };
 		2B44E67D26E0D14C002531C7 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B44E67C26E0D14C002531C7 /* AboutView.swift */; };
 		2B44E68726E0D181002531C7 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B44E68626E0D181002531C7 /* MainView.swift */; };
@@ -69,6 +70,7 @@
 		01CFC76C26D7909C00497454 /* CornerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerButtonView.swift; sourceTree = "<group>"; };
 		01EF57E826DAF19000005597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		01FEC9DA26DB412D004B506F /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		2B1A78ED27004EBD00B8EC69 /* OtherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherView.swift; sourceTree = "<group>"; };
 		2B44E67A26E0D131002531C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2B44E67C26E0D14C002531C7 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		2B44E68626E0D181002531C7 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				2B44E69F26E0DD68002531C7 /* ScheduleView.swift */,
 				2B44E67C26E0D14C002531C7 /* AboutView.swift */,
 				019CB4D426D60F8E00577EBF /* ContentView.swift */,
+				2B1A78ED27004EBD00B8EC69 /* OtherView.swift */,
 				0110BF2F26FAF14A00255FE6 /* DetailView.swift */,
 				01531DDE26D713F600A8CEFD /* SideButtonView.swift */,
 				01C710ED26D8C7FC00DCC220 /* WeatherView.swift */,
@@ -321,6 +324,7 @@
 				01531DDF26D713F600A8CEFD /* SideButtonView.swift in Sources */,
 				01CFC76D26D7909C00497454 /* CornerButtonView.swift in Sources */,
 				2B44E67B26E0D131002531C7 /* SettingsView.swift in Sources */,
+				2B1A78EE27004EBE00B8EC69 /* OtherView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

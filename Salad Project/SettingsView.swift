@@ -73,13 +73,14 @@ struct SettingsView: View {
                 }
                 .foregroundColor(/*@START_MENU_TOKEN@*/Color("Default")/*@END_MENU_TOKEN@*/)
                 
-            }
+                
+            }.cornerRadius(8)
             
         
             
             
         }
-        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color("Default")/*@END_MENU_TOKEN@*/)
+        
         
         
         
