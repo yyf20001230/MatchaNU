@@ -90,7 +90,7 @@ struct SettingsView: View {
         
             
             
-        }
+        }.cornerRadius(8)
         
         
         

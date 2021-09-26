@@ -13,19 +13,12 @@ struct ScheduleView: View {
     @State var MainTab = CGSize.zero
     @State var ShowClass = false
     @State var `class` = ""
+    
     var body: some View {
         ZStack {
             VStack{
-                HStack {
-                    Spacer()
-                    SideButtonView()
-                        .padding(.trailing)
-                        
-                }
-                Spacer()
-                Text("Schedule view will be coming soon!")
-                Spacer()
-                
+                Text("Schedule view will be coming soon! Press the schedule button on the top right to go back to map.")
+                    .padding(20)
             }
         }
     }

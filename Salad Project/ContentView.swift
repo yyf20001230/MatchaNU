@@ -214,6 +214,10 @@ struct ContentView: View {
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
             OtherView()
                 .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : self.height)
+            ScheduleView()
+                .environmentObject(settings)
+                .offset(y: settings.Schedule ?  0 : self.height)
+                .animation(.spring())
             SettingsView()
                 .environmentObject(settings)
                 .offset(y: settings.Settings ? self.height / 1.5 : self.height)
@@ -233,13 +237,10 @@ struct ContentView: View {
                 .environmentObject(settings)
                 .offset(y: settings.About ?  0 : self.height)
                 .animation(.spring())
-            
-                
-//
-//            BugView()
-//                .environmentObject(settings)
-//                .offset(y: settings.Bug ?  0 : self.height)
-//                .animation(.spring())
+            BugView()
+                .environmentObject(settings)
+                .offset(y: settings.Bug ?  0 : self.height)
+                .animation(.spring())
         
             
                 
