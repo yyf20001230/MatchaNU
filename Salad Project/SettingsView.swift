@@ -10,9 +10,9 @@ import SwiftUI
 
 
 struct SettingsView: View {
-//    init(){
-//            UITableView.appearance().backgroundColor = .clear
-//        }
+    init(){
+            UITableView.appearance().backgroundColor = .clear
+        }
     
     @State var locationOn = true
     
@@ -90,7 +90,8 @@ struct SettingsView: View {
         
             
             
-        }
+        }.cornerRadius(8)
+            .background(Color("SearchbarColor"))
         
         
         

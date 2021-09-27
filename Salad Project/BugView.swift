@@ -8,8 +8,13 @@
 import SwiftUI
 
 struct BugView: View {
+    @EnvironmentObject var settings: appSettings
     var body: some View {
         Text("Not Available yet. We are working hard on this!")
+        Button(action:{settings.Bug = false})
+        {
+            Text("Back")
+        }
     }
 }
 

@@ -188,7 +188,7 @@ struct ContentView: View {
             .cornerRadius(8.0)
             .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
-            .offset(y: ShowClass ? self.height / 4 : self.height / 1.12)
+            .offset(y: ShowClass ? self.height / 3 : self.height / 1.12)
             .gesture(
                 DragGesture().onChanged { value in
                     self.MainTab = value.translation
@@ -212,8 +212,14 @@ struct ContentView: View {
                 }
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
+            ZStack(){
             OtherView()
                 .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : self.height)
+                .ignoresSafeArea()
+            ScheduleView()
+                .environmentObject(settings)
+                .offset(y: settings.Schedule ?  0 : self.height)
+                .animation(.spring())
             SettingsView()
                 .environmentObject(settings)
                 .offset(y: settings.Settings ? self.height / 1.5 : self.height)
@@ -233,15 +239,12 @@ struct ContentView: View {
                 .environmentObject(settings)
                 .offset(y: settings.About ?  0 : self.height)
                 .animation(.spring())
-            
-                
-//
-//            BugView()
-//                .environmentObject(settings)
-//                .offset(y: settings.Bug ?  0 : self.height)
-//                .animation(.spring())
+            BugView()
+                .environmentObject(settings)
+                .offset(y: settings.Bug ?  0 : self.height)
+                .animation(.spring())
         
-            
+            }
                 
         }
         .preferredColorScheme(settings.currentSystemScheme)
