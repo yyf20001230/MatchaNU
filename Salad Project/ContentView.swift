@@ -96,6 +96,8 @@ struct ContentView: View {
                                 
                                 .onChange(of: ClassName){ value in
                                     self.ShowClass = true
+                                    UIApplication.shared
+                                    
                                 }
                                 
                                 .padding(.leading)

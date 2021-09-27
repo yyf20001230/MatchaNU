@@ -40,8 +40,9 @@ struct DetailView: View {
                             .accentColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                             .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .frame(width:100)
                             
-                        }.frame(width:100)
+                        }
                         
                         Button(action: {
                             if classes.userClass.contains(classes.detail[0]){
@@ -67,11 +68,12 @@ struct DetailView: View {
                             .accentColor(classes.userClass.contains(classes.detail[0]) ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                             .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .frame(width:100)
                         }
                         .alert(isPresented: $showAlert, content: {
                             Alert(title: Text(classes.userClass.contains(classes.detail[0]) ? "Class Added" : "Class Dropped"), message: Text(classes.userClass.contains(classes.detail[0]) ? "Class is added!" : "Class is dropped!"), dismissButton: .default(Text("Got it!")))
                         })
-                        .frame(width:100)
+                        
                         
                     }
                     

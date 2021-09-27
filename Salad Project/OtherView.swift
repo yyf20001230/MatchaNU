@@ -21,7 +21,7 @@ struct OtherView: View {
 //                .frame(height: 20.0)
 //                .background(Color.black)
 //                .opacity(0.7)
-        }
+        }.ignoresSafeArea()
     }
 }
 
