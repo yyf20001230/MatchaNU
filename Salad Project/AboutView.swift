@@ -36,9 +36,10 @@ struct AboutView: View {
                         Image(systemName: "arrow.left")
                         Text("Back to map")
                     }.foregroundColor((Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1))))
+                        
                     Spacer()
                 }.padding(.leading,20)
-                    .padding(.top, 50)
+                    .padding(.top, 100)
                 Spacer()
             }
         }
