@@ -13,7 +13,6 @@ struct Salad_ProjectApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                
         }
     }
 }

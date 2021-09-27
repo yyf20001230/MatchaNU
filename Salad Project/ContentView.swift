@@ -74,6 +74,16 @@ struct ContentView: View {
             }
             .ignoresSafeArea()
 
+            VStack{
+                HStack {
+                    Spacer()
+                    SideButtonView()
+                        .environmentObject(settings)
+                        .padding(.trailing)
+                        .padding(.top, self.height / 18)
+                }
+                Spacer()
+            }
             
             VStack {
                 Rectangle()
@@ -212,29 +222,22 @@ struct ContentView: View {
                 }
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
-            ZStack(){
+            
+            
             OtherView()
                 .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : self.height)
                 .ignoresSafeArea()
+                
             ScheduleView()
                 .environmentObject(settings)
                 .offset(y: settings.Schedule ?  0 : self.height)
                 .animation(.spring())
             SettingsView()
                 .environmentObject(settings)
-                .offset(y: settings.Settings ? self.height / 1.5 : self.height)
+                .environmentObject(classes)
+                .offset(y: settings.Settings ? self.height / 3.2 : self.height)
                 .animation(.spring())
             
-            VStack{
-                HStack {
-                    Spacer()
-                    SideButtonView()
-                        .environmentObject(settings)
-                        .padding(.trailing)
-                        .padding(.top, self.height / 18)
-                }
-                Spacer()
-            }
             AboutView()
                 .environmentObject(settings)
                 .offset(y: settings.About ?  0 : self.height)
@@ -243,8 +246,7 @@ struct ContentView: View {
                 .environmentObject(settings)
                 .offset(y: settings.Bug ?  0 : self.height)
                 .animation(.spring())
-        
-            }
+            
                 
         }
         .preferredColorScheme(settings.currentSystemScheme)
