@@ -29,7 +29,10 @@ struct AboutView: View {
             .padding(.horizontal, 20.0)
             VStack{
                 HStack(spacing:0){
-                    Button(action:{ settings.About.toggle()}){
+                    Button(action:{ settings.About.toggle()
+                        settings.Settings = false
+                        
+                    }){
                         Image(systemName: "arrow.left")
                         Text("Back to map")
                     }.foregroundColor((Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1))))
