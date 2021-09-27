@@ -17,27 +17,31 @@ struct DetailView: View {
         if !self.classes.detail.isEmpty{
             
             
-            VStack (alignment: .leading) {
+            VStack() {
                 Rectangle()
                     .frame(height: 10)
                     .foregroundColor(Color("SearchBarColor"))
                 
                 Text("Class Info")
                     .foregroundColor(.secondary)
-                    .font(.system(.caption2, design: .rounded))
+                    .font(.system(.subheadline, design: .rounded))
                     .tracking(-0.5)
-                    .padding(.leading)
-                    .padding(.leading)
+                    
+                VStack(alignment: .center){
+                    Text(classes.detail[0].MeetingInfo)
+                    Text(classes.detail[0].Instructor.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "|", with: ","))
+                }
+                .padding(.all)
+                .padding(.horizontal, 30)
+                .frame(width: UIScreen.main.bounds.width)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
                 
-                Text(classes.detail[0].MeetingInfo)
-                Text(classes.detail[0].Instructor.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "|", with: ","))
                 
                 Text("Actions")
                     .foregroundColor(.secondary)
-                    .font(.system(.caption2, design: .rounded))
+                    .font(.system(.subheadline, design: .rounded))
                     .tracking(-0.5)
-                    .padding(.leading)
-                    .padding(.leading)
+                    
                 
                 HStack{
                     Button(action: {
@@ -60,8 +64,7 @@ struct DetailView: View {
                         .background(Color("ClassColor"))
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                     }
-                    .padding(.leading)
-                    .padding(.leading)
+                    
                     
                     Button(action: {
                         if classes.userClass.contains(classes.detail[0]){
@@ -115,29 +118,25 @@ struct DetailView: View {
                         })
                     }
                     
-                    Spacer()
+
                 }
                 
-                
-                VStack(alignment: .leading){
-                    Text("Class Overview")
-                        .foregroundColor(.secondary)
-                        .font(.system(.caption2, design: .rounded))
-                        .tracking(-0.5)
-                        .padding(.leading)
-                        .padding(.leading)
+                   
+                            Text("Class Overview")
+                                .foregroundColor(.secondary)
+                                .font(.system(.subheadline, design: .rounded))
+                                .tracking(-0.5)
+                                
                     
-                }
                 
                 if !self.classes.detail.isEmpty{
-                    
-                    Text(self.classes.detail[0].ClassOverview)
-                        .padding(.all)
-                        .frame(width: CGFloat(UIScreen.main.bounds.width))
-                        .background(Color("ClassColor"))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .padding(.leading)
-                        .padding(.leading)
+                    ScrollView {
+                        Text(self.classes.detail[0].ClassOverview)
+                            
+                    }
+                    .padding(.all)
+                    .frame(width: UIScreen.main.bounds.width, height: 150)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
                     
                 }
             }
