@@ -15,12 +15,12 @@ struct ScheduleView: View {
     @State var `class` = ""
     
     var body: some View {
-        ZStack {
-            VStack{
-                Text("Schedule view will be coming soon! Press the schedule button on the top right to go back to map.")
-                    .padding(20)
-            }
+        
+        VStack{
+            Text("Schedule view will be coming soon! Press the schedule button on the top right to go back to map.")
+                .padding(20)
         }
+        
     }
 }
 

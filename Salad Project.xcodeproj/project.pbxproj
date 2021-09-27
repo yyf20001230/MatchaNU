@@ -19,7 +19,6 @@
 		019CB4F026D60F9000577EBF /* Salad_ProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019CB4EF26D60F9000577EBF /* Salad_ProjectUITests.swift */; };
 		019EFA1E26F1C14400C83E00 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */; };
 		01BC370C26FAD2B300B2C191 /* ClassInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 01BC370B26FAD2B300B2C191 /* ClassInfo.json */; };
-		01C710EE26D8C7FC00DCC220 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C710ED26D8C7FC00DCC220 /* WeatherView.swift */; };
 		01CFC76D26D7909C00497454 /* CornerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CFC76C26D7909C00497454 /* CornerButtonView.swift */; };
 		01E3C05A26FDA025003B0622 /* gifView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E3C05926FDA025003B0622 /* gifView.swift */; };
 		01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EF57E826DAF19000005597 /* GoogleService-Info.plist */; };
@@ -67,7 +66,6 @@
 		019CB4F126D60F9000577EBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		01BC370B26FAD2B300B2C191 /* ClassInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ClassInfo.json; sourceTree = "<group>"; };
-		01C710ED26D8C7FC00DCC220 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		01CFC76C26D7909C00497454 /* CornerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerButtonView.swift; sourceTree = "<group>"; };
 		01E3C05926FDA025003B0622 /* gifView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gifView.swift; sourceTree = "<group>"; };
 		01EF57E826DAF19000005597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 				0110BF2F26FAF14A00255FE6 /* DetailView.swift */,
 				01531DDE26D713F600A8CEFD /* SideButtonView.swift */,
 				01E3C05926FDA025003B0622 /* gifView.swift */,
-				01C710ED26D8C7FC00DCC220 /* WeatherView.swift */,
 				0142828826F0032800E0949E /* BugView.swift */,
 				01CFC76C26D7909C00497454 /* CornerButtonView.swift */,
 				01BC370B26FAD2B300B2C191 /* ClassInfo.json */,
@@ -319,7 +316,6 @@
 				0110BF3026FAF14A00255FE6 /* DetailView.swift in Sources */,
 				0175756A26D8D2FA00757862 /* LocationManager.swift in Sources */,
 				019CB4D326D60F8E00577EBF /* Salad_ProjectApp.swift in Sources */,
-				01C710EE26D8C7FC00DCC220 /* WeatherView.swift in Sources */,
 				2B44E6A026E0DD68002531C7 /* ScheduleView.swift in Sources */,
 				0175756C26D8D45C00757862 /* MapView.swift in Sources */,
 				2B44E68726E0D181002531C7 /* MainView.swift in Sources */,
