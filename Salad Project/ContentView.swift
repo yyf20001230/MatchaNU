@@ -165,7 +165,7 @@ struct ContentView: View {
                                 .padding(.trailing)
                             Text(self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                 .foregroundColor(.secondary)
-                                .font(.system(.subheadline, design: .rounded))
+                                .font(.system(.caption2, design: .rounded))
                                 .tracking(-0.5)
                         }
                         

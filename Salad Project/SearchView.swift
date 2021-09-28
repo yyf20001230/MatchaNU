@@ -30,7 +30,7 @@ struct ClassList: View{
             
         
         else{
-            var elements = (self.txt.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))}).count != 0)
+            let elements = (self.txt.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))}).count != 0)
             
             ?
             
@@ -39,19 +39,7 @@ struct ClassList: View{
             :
             
             self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
-            //            var elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0]).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
-            //
-            //
-            //
-            //            if elements.count == 0 && self.txt.count < 7{
-            //                var new_elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
-            //
-            //                if new_elements.count > 0{
-            //                    print("there's still hope!")
-            //                } else {
-            //                    print("actually no result")
-            //                }
-            // }
+                        
             if elements.count == 0{
                 Text("No results")
                     .foregroundColor(.secondary)
@@ -87,7 +75,7 @@ struct ClassList: View{
                                             
                                             Text(i.Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                                 .foregroundColor(.secondary)
-                                                .font(.system(.subheadline, design: .rounded))
+                                                .font(.system(.caption2, design: .rounded))
                                                 .tracking(-0.5)
                                             
                                         }
@@ -122,36 +110,31 @@ struct ClassList: View{
                             })
                             {
                                 HStack (spacing: 20.0){
-                                    Text(i.Section.components(separatedBy: ":")[0])
+                                    Text(i.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
                                         .foregroundColor(Color("Default"))
                                         .font(.system(.body, design: .rounded))
                                         .fontWeight(.bold)
                                         .tracking(-0.5)
-                                        .padding(.trailing)
-                                    
+                                        .frame(width: 60)
+                                        
                                     VStack(alignment: .leading, spacing: 4.0){
-                                        Text(i.Instructor)
+                                        Text(i.Instructor.dropLast())
                                             .foregroundColor(.secondary)
-                                            .font(.system(.subheadline, design: .rounded))
+                                            .font(.system(.caption2, design: .rounded))
                                             .tracking(-0.5)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[0])
                                             .foregroundColor(.secondary)
-                                            .font(.system(.subheadline, design: .rounded))
+                                            .font(.system(.caption2, design: .rounded))
                                             .tracking(-0.5)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[1])
                                             .foregroundColor(.secondary)
-                                            .font(.system(.subheadline, design: .rounded))
+                                            .font(.system(.caption2, design: .rounded))
                                             .tracking(-0.5)
                                     }
                                 }
                                 .padding(.all)
                                 Spacer()
                             }
-                            /*
-                            .alert(isPresented: $showAlert, content: {
-                                Alert(title: Text("Unknown Location"), message: Text("\(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0]) is either online or its location is still being determined"), dismissButton: .default(Text("Got it!")))
-                            })
-                            */
                             
                             
                         }
