@@ -25,6 +25,7 @@ class appSettings: ObservableObject{
     @Published var Settings = false
     @Published var About = false
     @Published var Bug = false
+    @Published var searchMethod = false;
 }
 
 
@@ -181,6 +182,7 @@ struct ContentView: View {
                 if self.MainTab.height < -20 || self.ShowClass{
                     if self.classes.detail.isEmpty{
                         ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
+                            .environmentObject(settings)
                             .padding(.top)
                             .gesture(
                                 DragGesture().onChanged{ value in
@@ -194,13 +196,15 @@ struct ContentView: View {
                     }
                 }
                 Spacer()
+                
             }
+            .frame(maxHeight: 600)
             .edgesIgnoringSafeArea(.all)
             .background(Color("SearchbarColor"))
             .cornerRadius(8.0)
             .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
-            .offset(y: ShowClass ? self.height / 3 : self.height / 1.12)
+            .offset(y: ShowClass ? self.height / 4 : self.height / 1.4)
             .gesture(
                 DragGesture().onChanged { value in
                     self.MainTab = value.translation

@@ -15,7 +15,7 @@ struct AboutView: View {
             Text("Hello!")
                 .font(.headline)
                 .foregroundColor(Color.white)
-            Text("As last year's classes were mostly remote, most of us weren't able to go to lecture halls to take their classes. \n \nTo help people (re)familiarize themselves with the campus and to make sure they don't forget to take their classes, we built this app to help students easily find and navigate themselves to their classes. Hope you guys like it!\n\n\n\n")
+            Text("As last year's classes were mostly remote, most of us weren't able to go to lecture halls to take their classes. \n \nTo help people (re)familiarize themselves with the campus, we built this app to help students easily find and navigate themselves to their classes. Hope you guys like it!\n\n\n\n")
                 .foregroundColor(Color.white)
             HStack{
                 Text("Frank Yang")
