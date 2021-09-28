@@ -51,9 +51,20 @@ struct ContentView: View {
                 .ignoresSafeArea()
                 .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                 
+        
+            
             
             VStack{
-                
+                VStack{
+                    HStack {
+                        Spacer()
+                        SideButtonView()
+                            .environmentObject(settings)
+                            .padding(.trailing)
+                            .padding(.top, self.height / 18)
+                    }
+                    Spacer()
+                }
                 Spacer()
                 HStack {
                     if self.MainTab.height >= 0 && !self.ShowClass{
@@ -67,23 +78,14 @@ struct ContentView: View {
                             .opacity(Double(1 + self.MainTab.height))
                         Spacer()
                     }
-
+                    
                 }
                 
                 
             }
             .ignoresSafeArea()
 
-            VStack{
-                HStack {
-                    Spacer()
-                    SideButtonView()
-                        .environmentObject(settings)
-                        .padding(.trailing)
-                        .padding(.top, self.height / 18)
-                }
-                Spacer()
-            }
+           
             
             VStack {
                 Rectangle()

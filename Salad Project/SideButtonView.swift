@@ -14,7 +14,6 @@ struct SideButtonView: View {
 
     var body: some View {
         VStack {
-           
             Button(action: {settings.Schedule.toggle()}) {
                 Image(systemName: "map")
                     .padding(.bottom,8)
