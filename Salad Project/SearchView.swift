@@ -13,10 +13,11 @@ struct ClassList: View{
     @Binding var datas: [ClassInfo]
     @Binding var uniqueData: [ClassInfo]
     @EnvironmentObject var classes: ClassLocations
-    
+    @EnvironmentObject var settings: appSettings
     var body: some View{
-
+        
         if self.txt != "" {
+            if self.txt.count < 7{
             let elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
             
             
@@ -30,20 +31,22 @@ struct ClassList: View{
                     
                     
             }
-            else if elements.count > 20{
-                Text("Keep Typing...")
-                    .foregroundColor(.secondary)
-                    .font(.system(.body, design: .rounded))
-                    .fontWeight(.bold)
-                    .tracking(-0.5)
-                    
-                    
-            }else if self.classes.Section.count == 0{
+//            else if elements.count > 20{
+//                Text("Keep Typing...")
+//                    .foregroundColor(.secondary)
+//                    .font(.system(.body, design: .rounded))
+//                    .fontWeight(.bold)
+//                    .tracking(-0.5)
+//            }
+            
+            else if self.classes.Section.count == 0{
                 VStack {
                     ScrollView(showsIndicators: false){
-                        ForEach(elements){ i in
+                        ForEach(elements.prefix(20)){ i in
                             Button(action:{
-                                self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
+                                
+                                self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Major.lowercased() + i.Class.lowercased() )})
+                                
                             }) {
                                 HStack {
                                         Image(i.School)
@@ -135,7 +138,7 @@ struct ClassList: View{
                 .tracking(-0.5)
         }
         
-        
+        }
         
     }
 }

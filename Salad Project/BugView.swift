@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct BugView: View {
+    @State private var errorMessage = ""
     @EnvironmentObject var settings: appSettings
     var body: some View {
         VStack{
+//            TextField("This doesn't seem to work!", text: $errorMessage)
+//            Button(action:{submitError(error_message: errorMessage)}){
+//                Text("Send error message")
+//            }
             Text("Not Available yet. We are working hard on this!\n")
             Button(action:{settings.Bug = false})
             {
@@ -20,7 +25,9 @@ struct BugView: View {
         }
     }
 }
-
+//func submitError(error_message: String) -> Void{
+//    
+//}
 struct BugView_Previews: PreviewProvider {
     static var previews: some View {
         BugView()
