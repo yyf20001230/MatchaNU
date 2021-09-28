@@ -44,8 +44,6 @@ struct AboutView: View {
         }
         
         
-        
-        
     }
 }
 
