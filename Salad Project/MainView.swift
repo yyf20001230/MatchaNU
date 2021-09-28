@@ -27,6 +27,7 @@ struct MainView: View {
             SettingsView()
                 .preferredColorScheme(settings.currentSystemScheme)
                 .environmentObject(settings)
+            
         }
         else if settings.Schedule{
             ScheduleView()
@@ -38,7 +39,6 @@ struct MainView: View {
                 .preferredColorScheme(settings.currentSystemScheme)
                 .environmentObject(settings)
         }
-    
         
         
     }

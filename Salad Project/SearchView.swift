@@ -12,6 +12,7 @@ struct ClassList: View{
     @Binding var txt: String
     @Binding var datas: [ClassInfo]
     @Binding var uniqueData: [ClassInfo]
+    @State private var showAlert = false
     @EnvironmentObject var classes: ClassLocations
     
     var body: some View{
@@ -30,13 +31,7 @@ struct ClassList: View{
                     
                     
             }
-//            else if elements.count > 20{
-//                Text("Keep Typing...")
-//                    .foregroundColor(.secondary)
-//                    .font(.system(.body, design: .rounded))
-//                    .fontWeight(.bold)
-//                    .tracking(-0.5)
-//            }
+            
             else if self.classes.Section.count == 0{
                 VStack {
                     ScrollView(showsIndicators: false){
@@ -51,6 +46,7 @@ struct ClassList: View{
                                             .frame(height: 25)
                                             .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                                             .padding(.leading)
+                                            .padding(.leading)
                                         
                                         VStack(alignment: .leading, spacing: 6.0) {
                                             Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0])
@@ -59,10 +55,9 @@ struct ClassList: View{
                                                 .fontWeight(.bold)
                                                 .tracking(-0.5)
                                             
-                                            
                                             Text(i.Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                                 .foregroundColor(.secondary)
-                                                .font(.system(.caption2, design: .rounded))
+                                                .font(.system(.subheadline, design: .rounded))
                                                 .tracking(-0.5)
                                             
                                         }
@@ -91,7 +86,11 @@ struct ClassList: View{
                             Button(action: {
                                 self.classes.detail.removeAll()
                                 self.classes.detail.append(i)
-                            }) {
+                                if i.ClassLocation[0] == -1 && i.ClassLocation[1] == -1{
+                                    self.showAlert = true
+                                }
+                            })
+                            {
                                 HStack (spacing: 20.0){
                                     Text(i.Section.components(separatedBy: ":")[0])
                                         .foregroundColor(Color("Default"))
@@ -100,20 +99,30 @@ struct ClassList: View{
                                         .tracking(-0.5)
                                         .padding(.trailing)
                                     
-                                    VStack(alignment: .leading, spacing: 2.0){
-                                        Text(i.Instructor + " | " + i.MeetingInfo.components(separatedBy: ": ")[0])
+                                    VStack(alignment: .leading, spacing: 4.0){
+                                        Text(i.Instructor)
                                             .foregroundColor(.secondary)
-                                            .font(.system(.caption2, design: .rounded))
+                                            .font(.system(.subheadline, design: .rounded))
+                                            .tracking(-0.5)
+                                        Text(i.MeetingInfo.components(separatedBy: ": ")[0])
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.subheadline, design: .rounded))
                                             .tracking(-0.5)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[1])
                                             .foregroundColor(.secondary)
-                                            .font(.system(.caption2, design: .rounded))
+                                            .font(.system(.subheadline, design: .rounded))
                                             .tracking(-0.5)
                                     }
                                 }
                                 .padding(.all)
                                 Spacer()
                             }
+                            /*
+                            .alert(isPresented: $showAlert, content: {
+                                Alert(title: Text("Unknown Location"), message: Text("\(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0]) is either online or its location is still being determined"), dismissButton: .default(Text("Got it!")))
+                            })
+                            */
+                            
                             
                         }
                     }
@@ -140,12 +149,12 @@ struct ClassList: View{
 }
 
 class getClass: ObservableObject{
-    private var path = "classes"
+
     @Published var data = [ClassInfo]()
     @Published var uniquedata = [ClassInfo]()
     
     init(){
-        if let fileLocation = Bundle.main.url(forResource: "ClassInfo", withExtension: "json") {
+        if let fileLocation = Bundle.main.url(forResource: "Matcha", withExtension: "json") {
             do {
                 let classData = try Data(contentsOf: fileLocation)
                 let jsonDecoder = JSONDecoder()
@@ -164,6 +173,7 @@ class getClass: ObservableObject{
         }
     }
 }
+
 
 struct ClassInfo: Identifiable, Codable, Equatable{
     let id = UUID()

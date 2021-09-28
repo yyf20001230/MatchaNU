@@ -36,7 +36,7 @@ struct ContentView: View {
     @State var ShowClass = false
     
     @State var ClassName = ""
-
+    
     
     @StateObject var classes = ClassLocations()
     @ObservedObject var datas = getClass()
@@ -45,14 +45,15 @@ struct ContentView: View {
     @StateObject var settings = appSettings()
     
     var body: some View {
+        
         ZStack () {
             
             
             MapView().environmentObject(classes)
                 .ignoresSafeArea()
                 .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                
-        
+            
+            
             
             
             VStack{
@@ -85,8 +86,8 @@ struct ContentView: View {
                 
             }
             .ignoresSafeArea()
-
-           
+            
+            
             
             VStack {
                 Rectangle()
@@ -103,7 +104,7 @@ struct ContentView: View {
                             .cornerRadius(8)
                             .multilineTextAlignment(.center)
                             .foregroundColor(Color("TextbarColor"))
-                            
+                        
                         HStack {
                             TextField("Add your class here...", text: $ClassName)
                                 
@@ -112,7 +113,7 @@ struct ContentView: View {
                                 }
                                 
                                 .padding(.leading)
-                                
+                            
                             Spacer()
                             if self.ClassName != ""{
                                 Button(action: {
@@ -162,9 +163,9 @@ struct ContentView: View {
                                 .fontWeight(.bold)
                                 .tracking(-0.5)
                                 .padding(.trailing)
-                            Text(self.classes.detail.isEmpty ? self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " ") :  self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                            Text(self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                 .foregroundColor(.secondary)
-                                .font(.system(.caption2, design: .rounded))
+                                .font(.system(.subheadline, design: .rounded))
                                 .tracking(-0.5)
                         }
                         
@@ -178,7 +179,7 @@ struct ContentView: View {
                     
                     
                 }
-
+                
                 if self.MainTab.height < -20 || self.ShowClass{
                     if self.classes.detail.isEmpty{
                         ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
@@ -197,13 +198,12 @@ struct ContentView: View {
                 Spacer()
                 
             }
-            .frame(maxHeight: 600)
             .edgesIgnoringSafeArea(.all)
             .background(Color("SearchbarColor"))
             .cornerRadius(8.0)
             .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
-            .offset(y: ShowClass ? self.height / 4 : self.height / 1.4)
+            .offset(y: ShowClass ? self.height / 6 : self.height / 1.22)
             .gesture(
                 DragGesture().onChanged { value in
                     self.MainTab = value.translation
@@ -229,10 +229,16 @@ struct ContentView: View {
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
             
             
-            OtherView()
-                .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : self.height)
+            Rectangle()
+                .foregroundColor(Color.black)
+                .opacity(0.7)
                 .ignoresSafeArea()
-                
+                .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : self.height)
+                .onTapGesture(){
+                    settings.Settings = false
+                }
+
+            
             ScheduleView()
                 .environmentObject(settings)
                 .offset(y: settings.Schedule ?  0 : self.height)
@@ -252,19 +258,19 @@ struct ContentView: View {
                 .offset(y: settings.Bug ?  0 : self.height)
                 .animation(.spring())
             
-                
+            
         }
         .preferredColorScheme(settings.currentSystemScheme)
         
         
         
-       
+        
         
         
     }
-        
+    
 }
-   
+
 
 extension View {
     func hideKeyboard() {
