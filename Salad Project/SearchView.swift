@@ -14,34 +14,51 @@ struct ClassList: View{
     @Binding var uniqueData: [ClassInfo]
     @EnvironmentObject var classes: ClassLocations
     var body: some View{
-
+        
         if self.txt == ""{
-            Text("Keep Typing...")
+            
+            Text("Enter your class")
                 .foregroundColor(.secondary)
                 .font(.system(.body, design: .rounded))
                 .fontWeight(.bold)
                 .tracking(-0.5)
-        }
-        else{
-            let elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
+                .multilineTextAlignment(.center)
+                
+                
+            }
             
+        
+        else{
+            var elements = (self.txt.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))}).count != 0)
+            
+            ?
+            
+            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
+            
+            :
+            
+            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
+            //            var elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0]).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
+            //
+            //
+            //
+            //            if elements.count == 0 && self.txt.count < 7{
+            //                var new_elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
+            //
+            //                if new_elements.count > 0{
+            //                    print("there's still hope!")
+            //                } else {
+            //                    print("actually no result")
+            //                }
+            // }
             if elements.count == 0{
-                Text("No result found...")
-                    .foregroundColor(Color("Default"))
+                Text("No results")
+                    .foregroundColor(.secondary)
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.bold)
                     .tracking(-0.5)
-                    .padding()
-                    
-                    
+                    .multilineTextAlignment(.center)
             }
-//            else if elements.count > 20{
-//                Text("Keep Typing...")
-//                    .foregroundColor(.secondary)
-//                    .font(.system(.body, design: .rounded))
-//                    .fontWeight(.bold)
-//                    .tracking(-0.5)
-//            }
             else if self.classes.Section.count == 0{
                 VStack {
                     ScrollView(showsIndicators: false){
@@ -51,29 +68,29 @@ struct ClassList: View{
                                 
                             }) {
                                 HStack {
-                                        Image(i.School)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(height: 25)
-                                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                                            .padding(.leading)
+                                    Image(i.School)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 25)
+                                        .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                        .padding(.leading)
+                                    
+                                    VStack(alignment: .leading, spacing: 6.0) {
+                                        Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0])
+                                            .foregroundColor(Color("Default"))
+                                            .font(.system(.body, design: .rounded))
+                                            .fontWeight(.bold)
+                                            .tracking(-0.5)
                                         
-                                        VStack(alignment: .leading, spacing: 6.0) {
-                                            Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0])
-                                                .foregroundColor(Color("Default"))
-                                                .font(.system(.body, design: .rounded))
-                                                .fontWeight(.bold)
-                                                .tracking(-0.5)
-                                            
-                                            
-                                            Text(i.Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
-                                                .foregroundColor(.secondary)
-                                                .font(.system(.caption2, design: .rounded))
-                                                .tracking(-0.5)
-                                            
-                                        }
-                                        .padding(.all)
-                                        Spacer()
+                                        
+                                        Text(i.Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                        
+                                    }
+                                    .padding(.all)
+                                    Spacer()
                                 }
                             }
                         }

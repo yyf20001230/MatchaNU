@@ -25,7 +25,7 @@ class appSettings: ObservableObject{
     @Published var Settings = false
     @Published var About = false
     @Published var Bug = false
-    @Published var searchMethod = false;
+   
 }
 
 
@@ -180,6 +180,7 @@ struct ContentView: View {
                 if self.MainTab.height < -20 || self.ShowClass{
                     if self.classes.detail.isEmpty{
                         ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
+                            .environmentObject(settings)
                             .padding(.top)
                             .gesture(
                                 DragGesture().onChanged{ value in

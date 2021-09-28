@@ -96,6 +96,7 @@ struct SettingsView: View {
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text("Class Cleared"), message: Text("Your classes has been cleared"), dismissButton: .default(Text("Got it!")))
                 }
+                
             }
             .background(Color("ClassColor"))
             .clipShape(RoundedRectangle(cornerRadius: 8))
