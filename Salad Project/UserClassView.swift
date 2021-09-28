@@ -1,18 +1,15 @@
 //
-//  CornerButtonView.swift
+//  UserClassView.swift
 //  Salad Project
 //
-//  Created by Yunfan Yang on 8/26/21.
+//  Created by Yunfan Yang on 9/28/21.
 //
 
 import SwiftUI
 
-struct CornerButtonView: View {
-
+struct UserClassView: View {
     var body: some View {
-
-        Image(systemName: "mappin.and.ellipse")
-            
+        Image(systemName: "folder.badge.person.crop")
             .padding(.all,16)
             .background(Color("SearchbarColor"))
             .cornerRadius(8)
@@ -20,8 +17,8 @@ struct CornerButtonView: View {
     }
 }
 
-struct CornerButtonView_Previews: PreviewProvider {
+struct UserClassView_Previews: PreviewProvider {
     static var previews: some View {
-        CornerButtonView()
+        UserClassView()
     }
 }

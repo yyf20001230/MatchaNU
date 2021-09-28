@@ -132,9 +132,10 @@ struct ClassList: View{
                                             .tracking(-0.5)
                                     }
                                 }
-                                .padding(.all)
+                                .padding(.bottom)
                                 Spacer()
                             }
+                            
                             
                             
                         }

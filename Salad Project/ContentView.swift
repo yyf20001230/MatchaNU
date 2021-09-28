@@ -13,6 +13,7 @@ class ClassLocations: ObservableObject{
     @Published var userClass: [ClassInfo] = []
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
+    @Published var showUserClass = false
     @Published var showRoute = false
     @Published var showUserLocation = false
 }
@@ -72,13 +73,27 @@ struct ContentView: View {
                     if self.MainTab.height >= 0 && !self.ShowClass{
                         CornerButtonView()
                             .onTapGesture {
-                                self.classes.showUserLocation.toggle()
+                                classes.showUserLocation.toggle()
                             }
                             .foregroundColor(self.classes.showUserLocation ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                             .offset(y: -self.height / 12 - 50)
                             .padding(.leading)
                             .opacity(Double(1 + self.MainTab.height))
                         Spacer()
+                        UserClassView()
+                            .onTapGesture {
+                                classes.showUserClass.toggle()
+                                classes.detail.removeAll()
+                                classes.Section.removeAll()
+                                if classes.showUserClass {
+                                    self.ShowClass = true
+                                }
+                                
+                            }
+                            .foregroundColor(self.classes.showUserClass ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                            .offset(y: -self.height / 12 - 50)
+                            .padding(.trailing)
+                            .opacity(Double(1 + self.MainTab.height))
                     }
                     
                 }
@@ -98,45 +113,83 @@ struct ContentView: View {
                 
                 
                 if self.classes.Section.count == 0{
-                    ZStack {
-                        Rectangle()
-                            .frame(height: 34)
-                            .cornerRadius(8)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(Color("TextbarColor"))
-                        
-                        HStack {
-                            TextField("Add your class here...", text: $ClassName)
-                                
-                                .onChange(of: ClassName){ value in
-                                    self.ShowClass = true
-                                }
-                                
-                                .padding(.leading)
+                    if !classes.showUserClass{
+                        ZStack {
+                            Rectangle()
+                                .frame(height: 34)
+                                .cornerRadius(8)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color("TextbarColor"))
                             
-                            Spacer()
-                            if self.ClassName != ""{
-                                Button(action: {
-                                    self.ClassName = ""
-                                }){
-                                    Image(systemName: "xmark.circle.fill")
-                                        .padding(.trailing)
-                                }
-                                .foregroundColor(.black)
-                            } else{
-                                Image(systemName:"magnifyingglass")
-                                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                                    .padding(.trailing)
+                            HStack {
+                                TextField("Add your class here...", text: $ClassName)
+                                    
+                                    .onChange(of: ClassName){ value in
+                                        self.ShowClass = true
+                                    }
+                                    
+                                    .padding(.leading)
                                 
+                                Spacer()
+                                if self.ClassName != ""{
+                                    Button(action: {
+                                        self.ClassName = ""
+                                    }){
+                                        Image(systemName: "xmark.circle.fill")
+                                            .padding(.trailing)
+                                    }
+                                    .foregroundColor(.black)
+                                } else{
+                                    Image(systemName:"magnifyingglass")
+                                        .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                        .padding(.trailing)
+                                    
+                                }
                             }
+                            .onTapGesture {
+                                self.ShowClass = true
+                            }
+                            
+                            
                         }
-                        .onTapGesture {
-                            self.ShowClass = true
+                        .padding([.leading, .trailing])
+                    } else {
+                        ZStack{
+                            HStack{
+                                if !classes.detail.isEmpty {
+                                    Image(systemName: "arrow.left")
+                                        .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                        .padding(.trailing)
+                                        .onTapGesture{
+                                            classes.detail.removeAll()
+                                        }
+                                } 
+                                
+                                VStack (alignment: .leading, spacing: 4){
+                                    Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0])
+                                        .font(.system(.body, design: .rounded))
+                                        .fontWeight(.bold)
+                                        .tracking(-0.5)
+                                        .padding(.trailing)
+                                    Text(classes.detail.isEmpty ? "You have \(classes.userClass.count) class(es)" : classes.detail[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                                        .foregroundColor(.secondary)
+                                        .font(.system(.caption2, design: .rounded))
+                                        .tracking(-0.5)
+                                }
+                            
+                                
+                                Spacer()
+                            }
+                            
+                            .padding(.top, 6)
+                            .padding(.leading)
+                            .padding(.leading)
+                            
+                            
+                            
                         }
-                        
-                        
                     }
-                    .padding([.leading, .trailing])
+                    
                     
                 } else {
                     
@@ -177,22 +230,25 @@ struct ContentView: View {
                     .padding(.leading)
                     .padding(.leading)
                     
-                    
                 }
                 
                 if self.MainTab.height < -20 || self.ShowClass{
                     if self.classes.detail.isEmpty{
-                        ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
-                            .environmentObject(settings)
-                            .padding(.top)
-                            .gesture(
-                                DragGesture().onChanged{ value in
-                                    self.MainTab = CGSize.zero
-                                }
-                            )
+                        if !classes.showUserClass{
+                            ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
+                                .environmentObject(settings)
+                                .padding(.top)
+                                .gesture(
+                                    DragGesture().onChanged{ value in
+                                        self.MainTab = CGSize.zero
+                                    }
+                                )
+                        } else {
+                            UserClassList().environmentObject(classes)
+                        }
+                        
                         
                     } else {
-                        
                         DetailView().environmentObject(classes)
                     }
                 }
@@ -220,6 +276,7 @@ struct ContentView: View {
                     }
                     else if value.translation.height > 80{
                         self.ShowClass = false
+                        
                         hideKeyboard()
                     }
                     

@@ -29,10 +29,14 @@ struct DetailView: View {
                         .padding(.leading)
                     
                     VStack(alignment: .leading, spacing: 4.0){
-                        Text("Meeting Location: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0])
-                            .foregroundColor(.secondary)
-                            .font(.system(.caption2, design: .rounded))
-                            .tracking(-0.5)
+                        HStack{
+                            Text("Meeting Location: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0])
+                                .foregroundColor(.secondary)
+                                .font(.system(.caption2, design: .rounded))
+                                .tracking(-0.5)
+                            Spacer()
+                        }
+                       
                         Text("Meeting Info: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[1])
                             .foregroundColor(.secondary)
                             .font(.system(.caption2, design: .rounded))
@@ -42,8 +46,8 @@ struct DetailView: View {
                             .font(.system(.caption2, design: .rounded))
                             .tracking(-0.5)
                     }
-                    .frame(width: UIScreen.main.bounds.width / 1.25)
-                    .padding(.leading)
+                    .frame(width: UIScreen.main.bounds.width / 1.3)
+                    .padding(.all)
                     .background(Color("ClassColor"))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .padding([.leading,.bottom])
@@ -145,25 +149,29 @@ struct DetailView: View {
                     
                     
                     if !self.classes.detail.isEmpty{
-                        VStack(alignment: .leading){
-                            Text(self.classes.detail[0].ClassOverview)
-                                .foregroundColor(.secondary)
-                                .font(.system(.caption2, design: .rounded))
-                                .tracking(-0.5)
-                                .lineSpacing(4)
-                                .padding(.all)
+                        HStack{
+                            VStack(alignment: .leading){
+                                Text(self.classes.detail[0].ClassOverview)
+                                    .foregroundColor(.secondary)
+                                    .font(.system(.caption2, design: .rounded))
+                                    .tracking(-0.5)
+                                    .lineSpacing(4)
+                                    
+                            }
+
+                            Spacer()
                         }
-                        .frame(width: UIScreen.main.bounds.width / 1.25)
-                        .padding(.leading)
+                        .frame(width: UIScreen.main.bounds.width / 1.3)
+                        .padding(.all)
                         .background(Color("ClassColor"))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .padding(.leading)
-                        
-                        
-                        
-                        
-                        
+                        .padding([.leading,.bottom])
+  
                     }
+                    
+                    Rectangle()
+                        .frame(height: 100)
+                        .foregroundColor(Color("SearchbarColor"))
                 }
                 .padding(.leading)
             }
