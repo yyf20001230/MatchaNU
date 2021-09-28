@@ -14,12 +14,17 @@ struct ClassList: View{
     @Binding var uniqueData: [ClassInfo]
     @State private var showAlert = false
     @EnvironmentObject var classes: ClassLocations
-    
     var body: some View{
 
-        if self.txt != "" {
-            let elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
-            
+        if self.txt == ""{
+            Text("Keep Typing...")
+                .foregroundColor(.secondary)
+                .font(.system(.body, design: .rounded))
+                .fontWeight(.bold)
+                .tracking(-0.5)
+        }
+        else{
+            let elements = self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
             
             if elements.count == 0{
                 Text("No result found...")
@@ -38,6 +43,7 @@ struct ClassList: View{
                         ForEach(elements.prefix(20)){ i in
                             Button(action:{
                                 self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
+                                
                             }) {
                                 HStack {
                                         Image(i.School)
@@ -135,12 +141,6 @@ struct ClassList: View{
                 }
             }
             
-        } else {
-            Text("Keep Typing...")
-                .foregroundColor(.secondary)
-                .font(.system(.body, design: .rounded))
-                .fontWeight(.bold)
-                .tracking(-0.5)
         }
         
         
