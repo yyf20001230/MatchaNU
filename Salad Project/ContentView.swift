@@ -192,13 +192,15 @@ struct ContentView: View {
                     }
                 }
                 Spacer()
+                
             }
+            .frame(maxHeight: 600)
             .edgesIgnoringSafeArea(.all)
             .background(Color("SearchbarColor"))
             .cornerRadius(8.0)
             .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
-            .offset(y: ShowClass ? self.height / 3 : self.height / 1.12)
+            .offset(y: ShowClass ? self.height / 4 : self.height / 1.4)
             .gesture(
                 DragGesture().onChanged { value in
                     self.MainTab = value.translation

@@ -16,7 +16,7 @@ struct DetailView: View {
         
         if !self.classes.detail.isEmpty{
             
-            
+            ScrollView{
             VStack() {
                 Rectangle()
                     .frame(height: 10)
@@ -130,16 +130,18 @@ struct DetailView: View {
                     
                 
                 if !self.classes.detail.isEmpty{
-                    ScrollView {
-                        Text(self.classes.detail[0].ClassOverview)
-                            
-                    }
-                    .padding(.all)
-                    .frame(width: UIScreen.main.bounds.width, height: 150)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    Text(self.classes.detail[0].ClassOverview)
+                        .padding(.all)
+                        .frame(width: UIScreen.main.bounds.width)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    
                     
                 }
             }
+            }
+            .frame(maxHeight: 400)
         }
         
         
