@@ -11,11 +11,11 @@ import MapKit
 struct DetailView: View {
     @EnvironmentObject var classes: ClassLocations
     @State private var showAlert = false
+    @State private var showNavigationAlert = false
     
     var body: some View {
         
         if !self.classes.detail.isEmpty{
-            
             ScrollView (showsIndicators: false){
                 VStack(alignment: .leading) {
                     Rectangle()
@@ -62,7 +62,11 @@ struct DetailView: View {
                     
                     HStack{
                         Button(action: {
-                            classes.showRoute.toggle()
+                            if classes.detail[0].ClassLocation[0] == -1 && classes.detail[0].ClassLocation[1] == -1{
+                                self.showNavigationAlert = true
+                            } else {
+                                classes.showRoute.toggle()
+                            }
                         }){
                             VStack{
                                 Image(systemName: "mappin.circle.fill")
@@ -81,6 +85,11 @@ struct DetailView: View {
                             .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
+                        .alert(isPresented: $showNavigationAlert, content: {
+                            let message = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0]
+                            return Alert(title: Text("No location found"), message: Text(message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is either online or its location is not determined yet"), dismissButton: .default(Text("Got it!")))
+                        })
+                        
                         
                         
                         Button(action: {
@@ -111,7 +120,8 @@ struct DetailView: View {
                             
                         }
                         .alert(isPresented: $showAlert, content: {
-                            Alert(title: Text(classes.userClass.contains(classes.detail[0]) ? "Class Added" : "Class Dropped"), message: Text(classes.userClass.contains(classes.detail[0]) ? "Class is added!" : "Class is dropped!"), dismissButton: .default(Text("Got it!")))
+                            let message = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0]
+                            return Alert(title: Text(classes.userClass.contains(classes.detail[0]) ? "Class Added" : "Class Dropped"), message: Text(classes.userClass.contains(classes.detail[0]) ? message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is added to your schedule" : message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is dropped out of your schedule"), dismissButton: .default(Text("Got it!")))
                         })
                         
                         

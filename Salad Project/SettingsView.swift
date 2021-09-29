@@ -15,7 +15,6 @@ struct SettingsView: View {
         }
     
     @State var SettingTab = CGSize.zero
-    @State var FormTab = CGSize.zero
     @EnvironmentObject var settings: appSettings
     @EnvironmentObject var classes: ClassLocations
     @State private var darkMode = false

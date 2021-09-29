@@ -162,6 +162,7 @@ struct ContentView: View {
                                         .padding(.trailing)
                                         .onTapGesture{
                                             classes.detail.removeAll()
+                                            classes.showRoute = false
                                         }
                                 } 
                                 
@@ -301,6 +302,7 @@ struct ContentView: View {
                 .environmentObject(settings)
                 .offset(y: settings.Schedule ?  0 : self.height)
                 .animation(.spring())
+            
             SettingsView()
                 .environmentObject(settings)
                 .environmentObject(classes)
@@ -311,9 +313,10 @@ struct ContentView: View {
                 .environmentObject(settings)
                 .offset(y: settings.About ?  0 : self.height)
                 .animation(.spring())
+            
             BugView()
                 .environmentObject(settings)
-                .offset(y: settings.Bug ?  0 : self.height)
+                .offset(y: settings.Bug ?  self.height / 4.8 : self.height)
                 .animation(.spring())
             
             
@@ -337,6 +340,13 @@ extension View {
     }
 }
 
+func schemeTransform(userInterfaceStyle:UIUserInterfaceStyle) -> ColorScheme {
+    if userInterfaceStyle == .light {
+        return .light
+    }else if userInterfaceStyle == .dark {
+        return .dark
+    }
+    return .light}
 
 
 struct ContentView_Previews: PreviewProvider {
