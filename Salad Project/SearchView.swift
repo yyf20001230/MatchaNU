@@ -135,6 +135,7 @@ struct ClassList: View{
                     .background(Color("ClassColor"))
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 }
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .padding(.horizontal)
                 
                 Rectangle()

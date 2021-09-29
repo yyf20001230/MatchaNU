@@ -61,10 +61,11 @@ struct DetailView: View {
                     
                     HStack{
                         Button(action: {
-                            classes.ShowClass = false
+                            
                             if classes.detail[0].ClassLocation[0] == -1 && classes.detail[0].ClassLocation[1] == -1{
                                 self.showNavigationAlert = true
                             } else {
+                                classes.ShowClass = false
                                 classes.showRoute.toggle()
                             }
                         }){
