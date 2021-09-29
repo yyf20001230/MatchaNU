@@ -21,6 +21,7 @@ class ClassLocations: ObservableObject{
     @Published var showUserClass = false
     @Published var showRoute = false
     @Published var showUserLocation = false
+    @Published var ShowClass = false
     
     init(){
         getItems()
@@ -71,8 +72,6 @@ struct ContentView: View {
     
     var body: some View {
         
-        
-        
         ZStack () {
             
             
@@ -96,7 +95,7 @@ struct ContentView: View {
                 }
                 Spacer()
                 HStack {
-                    if self.MainTab.height >= 0 && !self.ShowClass{
+                    if self.MainTab.height >= 0 && !classes.ShowClass{
                         CornerButtonView()
                             .onTapGesture {
                                 classes.showUserLocation.toggle()
@@ -112,7 +111,7 @@ struct ContentView: View {
                                 classes.detail.removeAll()
                                 classes.Section.removeAll()
                                 if classes.showUserClass {
-                                    self.ShowClass = true
+                                    classes.ShowClass = true
                                 }
                                 
                             }
@@ -151,7 +150,7 @@ struct ContentView: View {
                                 TextField("Add your class here...", text: $ClassName)
                                     
                                     .onChange(of: ClassName){ value in
-                                        self.ShowClass = true
+                                        classes.ShowClass = true
                                     }
                                     
                                     .padding(.leading)
@@ -173,7 +172,7 @@ struct ContentView: View {
                                 }
                             }
                             .onTapGesture {
-                                self.ShowClass = true
+                                classes.ShowClass = true
                             }
                             
                             
@@ -221,7 +220,7 @@ struct ContentView: View {
                             .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                             .padding(.trailing)
                             .onTapGesture{
-                                self.ShowClass = true
+                                classes.ShowClass = true
                                 if classes.detail.isEmpty{
                                     classes.Section = [ClassInfo]()
                                     
@@ -256,7 +255,7 @@ struct ContentView: View {
                     
                 }
                 
-                if self.MainTab.height < -20 || self.ShowClass{
+                if self.MainTab.height < -20 || classes.ShowClass{
                     if self.classes.detail.isEmpty{
                         if !classes.showUserClass{
                             ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
@@ -284,22 +283,22 @@ struct ContentView: View {
             .cornerRadius(8.0)
             .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
-            .offset(y: ShowClass ? self.height / 6 : self.height / 1.22)
+            .offset(y: classes.ShowClass ? self.height / 6 : self.height / 1.22)
             .gesture(
                 DragGesture().onChanged { value in
                     self.MainTab = value.translation
-                    if value.translation.height < -40 && self.ShowClass
-                        || value.translation.height > 40 && !self.ShowClass{
+                    if value.translation.height < -40 && classes.ShowClass
+                        || value.translation.height > 40 && !classes.ShowClass{
                         self.MainTab = CGSize.zero
                     }
                     
                 }
                 .onEnded{ value in
                     if value.translation.height < -80{
-                        self.ShowClass = true
+                        classes.ShowClass = true
                     }
                     else if value.translation.height > 80{
-                        self.ShowClass = false
+                        classes.ShowClass = false
                         hideKeyboard()
                     }
                     

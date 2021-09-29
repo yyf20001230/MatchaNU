@@ -13,6 +13,7 @@ struct ClassList: View{
     @Binding var datas: [ClassInfo]
     @Binding var uniqueData: [ClassInfo]
     @EnvironmentObject var classes: ClassLocations
+    
     var body: some View{
         
         if self.txt == ""{
@@ -21,11 +22,9 @@ struct ClassList: View{
                 .foregroundColor(.secondary)
                 .font(.system(.body, design: .rounded))
                 .fontWeight(.bold)
-                .tracking(-0.5) 
-            }
+                .tracking(-0.5)
             
-        
-        else{
+        } else {
             let elements = (self.txt.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))}).count != 0)
             
             ?
@@ -79,9 +78,8 @@ struct ClassList: View{
                         }
                     }
                     .background(Color("ClassColor"))
-                    .cornerRadius(12)
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .padding(.horizontal)
                 
                 Rectangle()

@@ -8,7 +8,6 @@
 //Settings page
 import SwiftUI
 
-
 struct SettingsView: View {
     init(){
             UITableView.appearance().backgroundColor = .clear
@@ -21,8 +20,6 @@ struct SettingsView: View {
     @State private var showAlert = false
     
     var body: some View {
-        
-        
         
         VStack{
             Rectangle()
