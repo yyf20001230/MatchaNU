@@ -36,7 +36,8 @@ struct ClassList: View{
                                 
                                 
                                 HStack{
-                                    Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0])
+                                    let message = i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0]
+                                    Text(message + "-" + i.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
                                         .foregroundColor(Color("Default"))
                                         .font(.system(.subheadline, design: .rounded))
                                         .fontWeight(.bold)
@@ -72,10 +73,16 @@ struct ClassList: View{
                         }
                         .background(Color("ClassColor"))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
                     }
                 
                 }
                 .padding(.horizontal)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                
+                Rectangle()
+                    .foregroundColor(Color("SearchbarColor"))
+                    .frame(height: 120)
             }
             
             

@@ -38,7 +38,7 @@ struct MapView: UIViewRepresentable {
                 let destination = MKPointAnnotation()
                 destination.coordinate.latitude = classes.detail[0].ClassLocation[0]
                 destination.coordinate.longitude = classes.detail[0].ClassLocation[1]
-                destination.title = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "\n"
+                destination.title = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + "\n"
                 destination.subtitle = classes.detail[0].MeetingInfo + "\n\n"
                 uiView.addAnnotation(destination)
                 let request = MKDirections.Request()
@@ -77,7 +77,7 @@ struct MapView: UIViewRepresentable {
                         let classlocation = MKPointAnnotation()
                         classlocation.coordinate.latitude = classinfo.ClassLocation[0]
                         classlocation.coordinate.longitude = classinfo.ClassLocation[1]
-                        classlocation.title = classinfo.Major.components(separatedBy: " ")[0] + " " + classinfo.Class.components(separatedBy: " ")[0] + "\n"
+                        classlocation.title = classinfo.Major.components(separatedBy: " ")[0] + " " + classinfo.Class.components(separatedBy: " ")[0] + "-" + classinfo.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + "\n"
                         classlocation.subtitle = classinfo.MeetingInfo + "\n\n"
                         if uiView.annotations.map({$0.coordinate.latitude}).contains(classinfo.ClassLocation[0]) && uiView.annotations.map({$0.coordinate.longitude}).contains(classinfo.ClassLocation[1]){
                             let annotation = uiView.annotations.filter({$0.coordinate.latitude == classinfo.ClassLocation[0] && $0.coordinate.longitude == classinfo.ClassLocation[1]})[0]
