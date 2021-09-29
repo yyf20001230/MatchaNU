@@ -21,6 +21,7 @@ struct ScheduleView: View {
             Button(action:{settings.Schedule = false})
             {
                 Text("Back to map")
+                    .padding(.all)
                     .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))    
             }
         }

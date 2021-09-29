@@ -64,7 +64,7 @@ struct UserClassList: View {
             }
             .padding(.all)
             Rectangle()
-                .frame(height: 200)
+                .frame(height: 100)
                 .foregroundColor(Color("SearchbarColor"))
         }
     }

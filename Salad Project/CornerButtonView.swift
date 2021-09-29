@@ -13,7 +13,7 @@ struct CornerButtonView: View {
     var body: some View {
 
         Image(systemName: classes.showUserLocation ? "location.fill" : "location")
-            
+    
             .padding(.all,16)
             .background(Color("SearchbarColor"))
             .cornerRadius(8)

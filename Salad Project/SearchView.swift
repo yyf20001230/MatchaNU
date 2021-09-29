@@ -107,7 +107,7 @@ struct ClassList: View{
             
             else if self.classes.Section.count == 0{
                 ScrollView(showsIndicators: false){
-                    ForEach(elements.prefix(20)){ i in
+                    ForEach(elements.prefix(10)){ i in
                         Button(action:{
                             self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
                             
@@ -142,7 +142,6 @@ struct ClassList: View{
                     .background(Color("ClassColor"))
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                 .padding(.horizontal)
                 
                 Rectangle()
