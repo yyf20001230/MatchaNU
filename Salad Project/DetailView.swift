@@ -35,7 +35,7 @@ struct DetailView: View {
                                 .tracking(-0.5)
                             Spacer()
                         }
-                       
+                        
                         Text("Meeting Info: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[1])
                             .foregroundColor(.secondary)
                             .font(.system(.caption2, design: .rounded))
@@ -168,9 +168,9 @@ struct DetailView: View {
                                     .font(.system(.caption2, design: .rounded))
                                     .tracking(-0.5)
                                     .lineSpacing(4)
-                                    
+                                
                             }
-
+                            
                             Spacer()
                         }
                         .frame(width: UIScreen.main.bounds.width / 1.3)
@@ -178,7 +178,7 @@ struct DetailView: View {
                         .background(Color("ClassColor"))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                         .padding([.leading,.bottom])
-  
+                        
                     }
                     
                     Rectangle()

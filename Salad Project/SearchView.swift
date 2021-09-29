@@ -75,7 +75,7 @@ struct ClassList: View{
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         
                     }
-                
+                    
                 }
                 .padding(.horizontal)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -93,7 +93,7 @@ struct ClassList: View{
             self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
             :
             self.uniqueData.filter({($0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ") + $0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))})
-                        
+            
             if elements.count == 0{
                 Text("No results")
                     .foregroundColor(.secondary)
