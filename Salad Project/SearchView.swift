@@ -21,10 +21,7 @@ struct ClassList: View{
                 .foregroundColor(.secondary)
                 .font(.system(.body, design: .rounded))
                 .fontWeight(.bold)
-                .tracking(-0.5)
-                .multilineTextAlignment(.center)
-                
-                
+                .tracking(-0.5) 
             }
             
         
@@ -45,57 +42,51 @@ struct ClassList: View{
                     .font(.system(.body, design: .rounded))
                     .fontWeight(.bold)
                     .tracking(-0.5)
-                    .multilineTextAlignment(.center)
             }
             
             else if self.classes.Section.count == 0{
-                VStack {
-                    ScrollView(showsIndicators: false){
-                        ForEach(elements.prefix(20)){ i in
-                            Button(action:{
-                                self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
+                ScrollView(showsIndicators: false){
+                    ForEach(elements.prefix(20)){ i in
+                        Button(action:{
+                            self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
+                            
+                        }) {
+                            HStack {
+                                Image(i.School)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 25)
+                                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                    .padding(.leading)
+                                    .padding(.leading)
                                 
-                            }) {
-                                HStack {
-                                        Image(i.School)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(height: 25)
-                                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                                            .padding(.leading)
-                                            .padding(.leading)
-                                        
-                                        VStack(alignment: .leading, spacing: 6.0) {
-                                            Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0])
-                                                .foregroundColor(Color("Default"))
-                                                .font(.system(.body, design: .rounded))
-                                                .fontWeight(.bold)
-                                                .tracking(-0.5)
-                                            
-                                            Text(i.Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
-                                                .foregroundColor(.secondary)
-                                                .font(.system(.caption2, design: .rounded))
-                                                .tracking(-0.5)
-                                            
-                                        }
-                                        .padding(.all)
-                                        Spacer()
+                                VStack(alignment: .leading, spacing: 6.0) {
+                                    Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0])
+                                        .foregroundColor(Color("Default"))
+                                        .font(.system(.body, design: .rounded))
+                                        .fontWeight(.bold)
+                                        .tracking(-0.5)
+                                    
+                                    Text(i.Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                                        .foregroundColor(.secondary)
+                                        .font(.system(.caption2, design: .rounded))
+                                        .tracking(-0.5)
+                                    
                                 }
+                                .padding(.all)
+                                Spacer()
                             }
                         }
-                        .background(Color("ClassColor"))
-                        .cornerRadius(12)
                     }
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                    .padding(.horizontal)
-                    .multilineTextAlignment(.leading)
-                    
-                    Rectangle()
-                        .foregroundColor(Color("SearchbarColor"))
-                        .frame(height: 120)
+                    .background(Color("ClassColor"))
+                    .cornerRadius(12)
                 }
-                .ignoresSafeArea()
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .padding(.horizontal)
                 
+                Rectangle()
+                    .foregroundColor(Color("SearchbarColor"))
+                    .frame(height: 120)
                 
             } else {
                 VStack{
@@ -113,7 +104,7 @@ struct ClassList: View{
                                         .fontWeight(.bold)
                                         .tracking(-0.5)
                                         .frame(width: 60)
-                                        
+                                    
                                     VStack(alignment: .leading, spacing: 4.0){
                                         Text(i.Instructor.dropLast())
                                             .foregroundColor(.secondary)
@@ -152,7 +143,7 @@ struct ClassList: View{
 }
 
 class getClass: ObservableObject{
-
+    
     @Published var data = [ClassInfo]()
     @Published var uniquedata = [ClassInfo]()
     

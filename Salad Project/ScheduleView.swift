@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct ScheduleView: View {
-    @State var height = CGFloat(UIScreen.main.bounds.height)
-    @State var width =  CGFloat(UIScreen.main.bounds.width)
-    @State var MainTab = CGSize.zero
+    
     @State var ShowClass = false
     @State var `class` = ""
     @EnvironmentObject var settings: appSettings
@@ -23,9 +21,7 @@ struct ScheduleView: View {
             Button(action:{settings.Schedule = false})
             {
                 Text("Back to map")
-                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                    
-                    
+                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))    
             }
         }
         

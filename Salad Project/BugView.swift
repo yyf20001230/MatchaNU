@@ -28,7 +28,7 @@ struct BugView: View {
                 .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                 .offset(y: 10)
             
-            Text("Hi there! This is our first iteration of Matcha, we know a lot of things are not perfect yet. We still have a LOT of ideas in mind, and we welcome any feedback. To show our gratitude to comments, we will give out free Matcha boba teas (yes, we really love Matcha!) to the first 50 students who emailed us for suggestions! If you have a comment or even if you just want chat - please use the email below to reach out to us!")
+            Text("Hi there! This is our first iteration of Matcha, we know a lot of things are not perfect yet. We still have a LOT of ideas in mind, and we welcome any feedback. To show our gratitude to comments, we will give out free Matcha boba teas (yes, we really love Matcha!) to the first 20 students who emailed us for suggestions! If you have a comment or even if you just want chat - please use the email below to reach out to us!")
                 .font(.system(.subheadline, design: .rounded))
                 .foregroundColor(.secondary)
                 .tracking(-0.5)
@@ -46,7 +46,6 @@ struct BugView: View {
                         .foregroundColor(Color("ClassColor"))
                 }
                 .padding(.all)
-                .frame(width: UIScreen.main.bounds.width / 2)
                 .background(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
                 .padding(.all)
@@ -73,27 +72,10 @@ struct BugView: View {
                 if value.translation.height > 80{
                     settings.Bug = false
                 }
-                self.BugTab = CGSize.zero
-                
+                self.BugTab = CGSize.zero 
             }
         )
     }
-}
-
-func sendEmail() {
-    if MFMailComposeViewController.canSendMail() {
-        let mail = MFMailComposeViewController()
-        mail.setToRecipients(["you@yoursite.com"])
-        mail.setMessageBody("<p>You're so awesome!</p>", isHTML: true)
-        
-        
-    } else {
-        // show failure alert
-    }
-}
-
-func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-    controller.dismiss(animated: true)
 }
 
 

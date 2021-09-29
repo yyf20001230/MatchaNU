@@ -12,61 +12,61 @@ struct UserClassList: View {
     
     var body: some View {
         if classes.userClass.count != 0{
-        ScrollView(showsIndicators: false){
-            VStack{
-            ForEach(classes.userClass){ i in
-                Button(action: {
-                    classes.detail.removeAll()
-                    classes.detail.append(i)
-                }){
-                    VStack (alignment: .leading, spacing: 10){
-                        HStack{
-                            Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "-" + i.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
-                                .foregroundColor(Color("Default"))
-                                .font(.system(.subheadline, design: .rounded))
-                                .fontWeight(.bold)
-                                .tracking(-0.5)
-                                .padding(.leading)
-                            
-                            Spacer()
-                        }
-                        
-                        HStack{
-                            VStack(alignment: .leading, spacing: 4.0){
-                                Text(i.Instructor.dropLast())
-                                    .foregroundColor(.secondary)
-                                    .font(.system(.caption2, design: .rounded))
-                                    .tracking(-0.5)
-                                Text(i.MeetingInfo.components(separatedBy: ": ")[0])
-                                    .foregroundColor(.secondary)
-                                    .font(.system(.caption2, design: .rounded))
-                                    .tracking(-0.5)
-                                Text(i.MeetingInfo.components(separatedBy: ": ")[1])
-                                    .foregroundColor(.secondary)
-                                    .font(.system(.caption2, design: .rounded))
-                                    .tracking(-0.5)
+            ScrollView(showsIndicators: false){
+                VStack{
+                    ForEach(classes.userClass){ i in
+                        Button(action: {
+                            classes.detail.removeAll()
+                            classes.detail.append(i)
+                        }){
+                            VStack (alignment: .leading, spacing: 10){
+                                HStack{
+                                    Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0] + "-" + i.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
+                                        .foregroundColor(Color("Default"))
+                                        .font(.system(.subheadline, design: .rounded))
+                                        .fontWeight(.bold)
+                                        .tracking(-0.5)
+                                        .padding(.leading)
+                                    
+                                    Spacer()
+                                }
+                                
+                                HStack{
+                                    VStack(alignment: .leading, spacing: 4.0){
+                                        Text(i.Instructor.dropLast())
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                        Text(i.MeetingInfo.components(separatedBy: ": ")[0])
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                        Text(i.MeetingInfo.components(separatedBy: ": ")[1])
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                    }
+                                    .padding(.leading)
+                                    
+                                    Spacer()
+                                }
+                                
                             }
-                            .padding(.leading)
+                            .padding(.all)
                             
-                            Spacer()
                         }
-                        
+                        .background(Color("ClassColor"))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
-                    .padding(.all)
-
+                    Rectangle()
+                        .frame(height: 100)
+                        .foregroundColor(Color("SearchbarColor"))
                 }
-                .background(Color("ClassColor"))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
             }
-                Rectangle()
-                    .frame(height: 100)
-                    .foregroundColor(Color("SearchbarColor"))
-            }
-        }
-        .padding(.all)
-        Rectangle()
-            .frame(height: 200)
-            .foregroundColor(Color("SearchbarColor"))
+            .padding(.all)
+            Rectangle()
+                .frame(height: 200)
+                .foregroundColor(Color("SearchbarColor"))
         }
     }
 }

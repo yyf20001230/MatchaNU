@@ -8,33 +8,36 @@
 import SwiftUI
 import MapKit
 import CoreLocation
-import Combine
-
-private var cancellables = [String:AnyCancellable]()
-//extension Published{
-//    init(wrappedValue value: Value, key: String)
-//    {
-//        let value = UserDefaults.standard.object(forKey: key) as? Value ?? value
-//        self.init(initialValue: value)
-//        cancellables[key] = projectedValue.sink { val in
-//            UserDefaults.standard.set(val, forKey: key)
-//        }
-//
-//
-//    }
-//}
-
-
-
 
 class ClassLocations: ObservableObject{
     
-    @Published var userClass : [ClassInfo] = []
+    @Published var userClass: [ClassInfo] = [] {
+        didSet{
+            savedItems()
+        }
+    }
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
     @Published var showUserClass = false
     @Published var showRoute = false
     @Published var showUserLocation = false
+    
+    init(){
+        getItems()
+    }
+    
+    func getItems(){
+        guard let data = UserDefaults.standard.data(forKey: "UserClassFile") else { return }
+        guard let savedItems = try? JSONDecoder().decode([ClassInfo].self, from: data) else { return }
+        
+        self.userClass = savedItems
+    }
+    
+    func savedItems(){
+        if let encodedData = try? JSONEncoder().encode(userClass) {
+            UserDefaults.standard.set(encodedData, forKey: "UserClassFile")
+        }
+    }
     
 }
 
@@ -177,7 +180,7 @@ struct ContentView: View {
                         }
                         .padding([.leading, .trailing])
                     } else {
-                        ZStack{
+                        
                             HStack{
                                 if !classes.detail.isEmpty {
                                     Image(systemName: "arrow.left")
@@ -208,10 +211,6 @@ struct ContentView: View {
                             .padding(.top, 6)
                             .padding(.leading)
                             .padding(.leading)
-                            
-                            
-                            
-                        }
                     }
                     
                     
@@ -301,7 +300,6 @@ struct ContentView: View {
                     }
                     else if value.translation.height > 80{
                         self.ShowClass = false
-                        
                         hideKeyboard()
                     }
                     
