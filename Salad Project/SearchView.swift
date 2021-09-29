@@ -183,6 +183,7 @@ struct ClassList: View{
                                 .padding(.bottom)
                                 Spacer()
                             }
+                            .padding(.bottom)
                             
                         }
                     }

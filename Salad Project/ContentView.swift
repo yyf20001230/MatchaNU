@@ -103,7 +103,7 @@ struct ContentView: View {
                             .padding(.leading)
                             .opacity(Double(1 + self.MainTab.height))
                         Spacer()
-                        UserClassView()
+                        UserClassView().environmentObject(classes)
                             .onTapGesture {
                                 classes.showUserClass.toggle()
                                 classes.detail.removeAll()
