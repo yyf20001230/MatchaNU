@@ -14,7 +14,6 @@ struct DetailView: View {
     @State private var showNavigationAlert = false
     
     var body: some View {
-        
         if !self.classes.detail.isEmpty{
             ScrollView (showsIndicators: false){
                 VStack(alignment: .leading) {
@@ -130,7 +129,7 @@ struct DetailView: View {
                         if self.classes.detail[0].ClassLocation == [42.05780619999999,-87.67587739999999]{
                             Link(destination: URL(string: "https://www.mccormick.northwestern.edu/contact/tech-room-finder.html")!, label: {
                                 VStack{
-                                    Image(systemName: "location.circle.fill")
+                                    Image(systemName: "viewfinder.circle.fill")
                                         .padding(.top)
                                         .padding(.horizontal, 16)
                                         .scaleEffect(1.5)

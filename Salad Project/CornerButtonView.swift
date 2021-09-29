@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct CornerButtonView: View {
+    @EnvironmentObject var classes: ClassLocations
 
     var body: some View {
 
-        Image(systemName: "mappin.and.ellipse")
+        Image(systemName: classes.showUserLocation ? "location.fill" : "location")
             
             .padding(.all,16)
             .background(Color("SearchbarColor"))

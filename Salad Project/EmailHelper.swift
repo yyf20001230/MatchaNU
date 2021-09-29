@@ -2,18 +2,13 @@ import SwiftUI
 import MessageUI
 
 class EmailHelper: NSObject {
-    /// singleton
+
     static let shared = EmailHelper()
     private override init() {}
 }
 
 extension EmailHelper {
     
-    /// Remember to add the below code to Info.plist
-    ///    <key>LSApplicationQueriesSchemes</key>
-    ///    <array>
-    ///       <string>googlegmail</string>
-    ///    </array>
     func send(subject: String, body: String, to: [String]) {
         guard let viewController = UIApplication.shared.windows.first?.rootViewController else {
             return
@@ -72,7 +67,6 @@ extension EmailHelper {
     }
 }
 
-// MARK: - MFMailComposeViewControllerDelegate
 extension EmailHelper: MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

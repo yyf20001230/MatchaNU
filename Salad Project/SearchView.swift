@@ -18,11 +18,66 @@ struct ClassList: View{
         
         if self.txt == ""{
             
-            Text("Enter your class")
-                .foregroundColor(.secondary)
-                .font(.system(.body, design: .rounded))
-                .fontWeight(.bold)
-                .tracking(-0.5)
+            VStack (alignment: .leading){
+                Text("Enrolled class")
+                    .foregroundColor(.secondary)
+                    .font(.system(.subheadline, design: .rounded))
+                    .tracking(-0.5)
+                    .padding(.leading)
+                
+                ScrollView(showsIndicators: false){
+                    ForEach(classes.userClass){ i in
+                        Button(action: {
+                            classes.detail.removeAll()
+                            classes.detail.append(i)
+                            
+                        }){
+                            VStack (alignment: .leading, spacing: 10){
+                                
+                                
+                                HStack{
+                                    Text(i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0])
+                                        .foregroundColor(Color("Default"))
+                                        .font(.system(.subheadline, design: .rounded))
+                                        .fontWeight(.bold)
+                                        .tracking(-0.5)
+                                        .padding(.leading)
+                                    
+                                    Spacer()
+                                }
+                                
+                                HStack{
+                                    VStack(alignment: .leading, spacing: 4.0){
+                                        Text(i.Instructor.dropLast())
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                        Text(i.MeetingInfo.components(separatedBy: ": ")[0])
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                        Text(i.MeetingInfo.components(separatedBy: ": ")[1])
+                                            .foregroundColor(.secondary)
+                                            .font(.system(.caption2, design: .rounded))
+                                            .tracking(-0.5)
+                                    }
+                                    .padding(.leading)
+                                    
+                                    Spacer()
+                                }
+                                
+                            }
+                            .padding(.all)
+                            
+                        }
+                        .background(Color("ClassColor"))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                
+                }
+                .padding(.horizontal)
+            }
+            
             
         } else {
             let elements = (self.txt.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ")[0] + " " + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: " ").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: " "))}).count != 0)

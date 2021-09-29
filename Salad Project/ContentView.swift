@@ -79,9 +79,6 @@ struct ContentView: View {
                 .ignoresSafeArea()
                 .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
             
-            
-            
-            
             VStack{
                 VStack{
                     HStack {
@@ -97,6 +94,7 @@ struct ContentView: View {
                 HStack {
                     if self.MainTab.height >= 0 && !classes.ShowClass{
                         CornerButtonView()
+                            .environmentObject(classes)
                             .onTapGesture {
                                 classes.showUserLocation.toggle()
                             }
@@ -138,7 +136,7 @@ struct ContentView: View {
                 
                 
                 if self.classes.Section.count == 0{
-                    if !classes.showUserClass{
+                    if classes.detail.isEmpty && !classes.showUserClass{
                         ZStack {
                             Rectangle()
                                 .frame(height: 34)
@@ -179,37 +177,36 @@ struct ContentView: View {
                         }
                         .padding([.leading, .trailing])
                     } else {
-                        
-                            HStack{
-                                if !classes.detail.isEmpty {
-                                    Image(systemName: "arrow.left")
-                                        .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                                        .padding(.trailing)
-                                        .onTapGesture{
-                                            classes.detail.removeAll()
-                                            classes.showRoute = false
-                                        }
-                                } 
-                                
-                                VStack (alignment: .leading, spacing: 4){
-                                    Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0])
-                                        .font(.system(.body, design: .rounded))
-                                        .fontWeight(.bold)
-                                        .tracking(-0.5)
-                                        .padding(.trailing)
-                                    Text(classes.detail.isEmpty ? "You have \(classes.userClass.count) class(es)" : classes.detail[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
-                                        .foregroundColor(.secondary)
-                                        .font(.system(.caption2, design: .rounded))
-                                        .tracking(-0.5)
-                                }
-                            
-                                
-                                Spacer()
+                        HStack{
+                            if !classes.detail.isEmpty {
+                                Image(systemName: "arrow.left")
+                                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                    .padding(.trailing)
+                                    .onTapGesture{
+                                        classes.detail.removeAll()
+                                        classes.showRoute = false
+                                    }
                             }
                             
-                            .padding(.top, 6)
-                            .padding(.leading)
-                            .padding(.leading)
+                            VStack (alignment: .leading, spacing: 4){
+                                Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0])
+                                    .font(.system(.body, design: .rounded))
+                                    .fontWeight(.bold)
+                                    .tracking(-0.5)
+                                    .padding(.trailing)
+                                Text(classes.detail.isEmpty ? "You have \(classes.userClass.count) class(es)" : classes.detail[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                                    .foregroundColor(.secondary)
+                                    .font(.system(.caption2, design: .rounded))
+                                    .tracking(-0.5)
+                            }
+                            
+                            
+                            Spacer()
+                        }
+                        
+                        .padding(.top, 6)
+                        .padding(.leading)
+                        .padding(.leading)
                     }
                     
                     
@@ -290,6 +287,10 @@ struct ContentView: View {
                     if value.translation.height < -40 && classes.ShowClass
                         || value.translation.height > 40 && !classes.ShowClass{
                         self.MainTab = CGSize.zero
+                    }
+                    else if value.translation.height < -self.height / 1.5 && !classes.ShowClass{
+                        self.MainTab = CGSize.zero
+                        classes.ShowClass = true
                     }
                     
                 }

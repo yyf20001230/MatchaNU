@@ -18,6 +18,7 @@ struct UserClassList: View {
                         Button(action: {
                             classes.detail.removeAll()
                             classes.detail.append(i)
+                            classes.showUserClass = true
                         }){
                             VStack (alignment: .leading, spacing: 10){
                                 HStack{
