@@ -11,6 +11,7 @@ struct UserClassList: View {
     @EnvironmentObject var classes: ClassLocations
     
     var body: some View {
+        if classes.userClass.count != 0{
         ScrollView(showsIndicators: false){
             VStack{
             ForEach(classes.userClass){ i in
@@ -66,6 +67,7 @@ struct UserClassList: View {
         Rectangle()
             .frame(height: 200)
             .foregroundColor(Color("SearchbarColor"))
+        }
     }
 }
 

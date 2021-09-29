@@ -88,6 +88,7 @@ struct ClassList: View{
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .padding(.horizontal)
+                    .multilineTextAlignment(.leading)
                     
                     Rectangle()
                         .foregroundColor(Color("SearchbarColor"))
@@ -188,3 +189,4 @@ struct ClassInfo: Identifiable, Codable, Equatable{
     var School: String
     var Section: String
 }
+

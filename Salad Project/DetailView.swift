@@ -94,10 +94,11 @@ struct DetailView: View {
                         
                         Button(action: {
                             if classes.userClass.contains(classes.detail[0]){
-                                classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
+                                classes.userClass = classes.userClass.filter{$0 != classes.detail[0]} 
                                 self.showAlert = true
                             } else{
                                 classes.userClass.append(self.classes.detail[0])
+                                
                                 self.showAlert = true
                             }
                         }){

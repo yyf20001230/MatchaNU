@@ -8,15 +8,37 @@
 import SwiftUI
 import MapKit
 import CoreLocation
+import Combine
+
+private var cancellables = [String:AnyCancellable]()
+//extension Published{
+//    init(wrappedValue value: Value, key: String)
+//    {
+//        let value = UserDefaults.standard.object(forKey: key) as? Value ?? value
+//        self.init(initialValue: value)
+//        cancellables[key] = projectedValue.sink { val in
+//            UserDefaults.standard.set(val, forKey: key)
+//        }
+//
+//
+//    }
+//}
+
+
+
 
 class ClassLocations: ObservableObject{
-    @Published var userClass: [ClassInfo] = []
+    
+    @Published var userClass : [ClassInfo] = []
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
     @Published var showUserClass = false
     @Published var showRoute = false
     @Published var showUserLocation = false
+    
 }
+
+
 
 class appSettings: ObservableObject{
     
@@ -42,10 +64,11 @@ struct ContentView: View {
     @StateObject var classes = ClassLocations()
     @ObservedObject var datas = getClass()
     @ObservedObject var locationManager = LocationManager()
-    
     @StateObject var settings = appSettings()
     
     var body: some View {
+        
+        
         
         ZStack () {
             
@@ -200,24 +223,25 @@ struct ContentView: View {
                             .padding(.trailing)
                             .onTapGesture{
                                 self.ShowClass = true
-                                if self.classes.detail.isEmpty{
-                                    self.classes.Section = [ClassInfo]()
+                                if classes.detail.isEmpty{
+                                    classes.Section = [ClassInfo]()
                                     
                                 } else{
-                                    self.classes.detail.removeAll()
-                                    self.classes.showRoute = false
+                                    classes.detail.removeAll()
+                                    classes.showRoute = false
                                 }
                                 
                             }
                         
                         VStack (alignment: .leading, spacing: 4){
-                            Text(self.classes.Section[0].Major.components(separatedBy: " ")[0] + " " +  self.classes.Section[0].Class.components(separatedBy: " ")[0])
+                            let message = classes.detail.isEmpty ? "" : "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "")
+                            Text(classes.Section[0].Major.components(separatedBy: " ")[0] + " " +  classes.Section[0].Class.components(separatedBy: " ")[0] + message)
                                 .foregroundColor(Color("Default"))
                                 .font(.system(.body, design: .rounded))
                                 .fontWeight(.bold)
                                 .tracking(-0.5)
                                 .padding(.trailing)
-                            Text(self.classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                            Text(classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                 .foregroundColor(.secondary)
                                 .font(.system(.caption2, design: .rounded))
                                 .tracking(-0.5)
