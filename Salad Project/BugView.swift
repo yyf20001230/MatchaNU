@@ -8,15 +8,16 @@
 import SwiftUI
 import MessageUI
 
+
 struct BugView: View {
     init(){
-            UITableView.appearance().backgroundColor = .clear
-        }
+        UITableView.appearance().backgroundColor = .clear
+    }
     
     @State var BugTab = CGSize.zero
     @EnvironmentObject var settings: appSettings
     @EnvironmentObject var classes: ClassLocations
-
+    
     var body: some View {
         
         
@@ -28,7 +29,7 @@ struct BugView: View {
                 .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                 .offset(y: 10)
             
-            Text("Hi there! This is our first iteration of Matcha, we know a lot of things are not perfect yet. We still have a LOT of ideas in mind, and we welcome any feedback. To show our gratitude to comments, we will give out free Matcha boba teas (yes, we really love Matcha!) to the first 20 students who emailed us for suggestions! If you have a comment or even if you just want chat - please use the email below to reach out to us!")
+            Text("Hi there! This is our first iteration of Matcha, we know a lot of things are not perfect yet. We still have a LOT of ideas in mind, and we welcome any feedback. To show our gratitude to comments, we will give out free Matcha boba teas (yes, we really love Matcha!) to the first 20 students who emailed us for suggestions! If you have a comment or even if you just want to chat - please use the email below to reach out to us!")
                 .font(.system(.subheadline, design: .rounded))
                 .foregroundColor(.secondary)
                 .tracking(-0.5)
@@ -39,7 +40,7 @@ struct BugView: View {
                 .padding(.all)
             
             Button(action:{
-                
+                EmailHelper.shared.send(subject: "Test", body: "", to: ["northwesternmatcha@gmail.com"])
             }){
                 HStack{
                     Text("Contact Us")
@@ -62,18 +63,18 @@ struct BugView: View {
         .offset(y: self.BugTab.height)
         .gesture(
             DragGesture().onChanged { value in
-                self.BugTab = value.translation
-                if value.translation.height < -40 && settings.Bug
-                    || value.translation.height > 40 && !settings.Bug{
-                    self.BugTab = CGSize.zero
-                }
+            self.BugTab = value.translation
+            if value.translation.height < -40 && settings.Bug
+                || value.translation.height > 40 && !settings.Bug{
+                self.BugTab = CGSize.zero
             }
-            .onEnded{ value in
-                if value.translation.height > 80{
-                    settings.Bug = false
-                }
-                self.BugTab = CGSize.zero 
+        }
+                .onEnded{ value in
+            if value.translation.height > 80{
+                settings.Bug = false
             }
+            self.BugTab = CGSize.zero
+        }
         )
     }
 }
