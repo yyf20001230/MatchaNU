@@ -12,6 +12,7 @@ struct UserClassList: View {
     
     var body: some View {
         ScrollView(showsIndicators: false){
+            VStack{
             ForEach(classes.userClass){ i in
                 Button(action: {
                     classes.detail.removeAll()
@@ -55,6 +56,10 @@ struct UserClassList: View {
                 }
                 .background(Color("ClassColor"))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+                Rectangle()
+                    .frame(height: 100)
+                    .foregroundColor(Color("SearchbarColor"))
             }
         }
         

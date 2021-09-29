@@ -170,7 +170,7 @@ struct DetailView: View {
                     }
                     
                     Rectangle()
-                        .frame(height: 100)
+                        .frame(height: 150)
                         .foregroundColor(Color("SearchbarColor"))
                 }
                 .padding(.leading)

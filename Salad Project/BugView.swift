@@ -12,20 +12,21 @@ struct BugView: View {
     @EnvironmentObject var settings: appSettings
     var body: some View {
         VStack{
-            Text("What bugs did you encounter?")
-                .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-            
-            TextField("This feature doesn't seem to work!",text: $errorMessage)
-                .padding(.horizontal)
-                .background(Color(hue: 1.0, saturation: 0.0, brightness: 0.869))
-                .multilineTextAlignment(.center)
-                
-                
-            Button(action:{submitError(error_message: errorMessage)}){
-                Text("Send error message")
-                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-            }
-//            Text("Not Available yet. We are working hard on this!\n")
+//            Text("What bugs did you encounter?")
+//                .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+//
+//            TextField("This feature doesn't seem to work!",text: $errorMessage)
+//                .padding(.horizontal)
+//                .background(Color(hue: 1.0, saturation: 0.0, brightness: 0.869))
+//                .multilineTextAlignment(.center)
+//
+//
+//            Button(action:{submitError(error_message: errorMessage)}){
+//                Text("Send error message")
+//                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+//            }
+            Text("Not Available yet. We are working hard on this!\n")
+                .foregroundColor(.white)
         }
         VStack{
             HStack(spacing:0){
