@@ -12,7 +12,6 @@ struct ClassList: View{
     @Binding var txt: String
     @Binding var datas: [ClassInfo]
     @Binding var uniqueData: [ClassInfo]
-    @State private var showAlert = false
     @EnvironmentObject var classes: ClassLocations
     var body: some View{
         
@@ -104,9 +103,6 @@ struct ClassList: View{
                             Button(action: {
                                 self.classes.detail.removeAll()
                                 self.classes.detail.append(i)
-                                if i.ClassLocation[0] == -1 && i.ClassLocation[1] == -1{
-                                    self.showAlert = true
-                                }
                             })
                             {
                                 HStack (spacing: 20.0){
@@ -136,17 +132,15 @@ struct ClassList: View{
                                 Spacer()
                             }
                             
-                            
-                            
                         }
                     }
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .padding(.horizontal)
                     
                     Rectangle()
                         .foregroundColor(Color("SearchbarColor"))
                         .frame(height: 120)
                 }
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             }
             
         }
