@@ -52,7 +52,7 @@ class appSettings: ObservableObject{
     @Published var Settings = false
     @Published var About = false
     @Published var Bug = false
-   
+    
 }
 
 
@@ -146,11 +146,11 @@ struct ContentView: View {
                             
                             HStack {
                                 TextField("Add your class here...", text: $ClassName)
-                                    
+                                
                                     .onChange(of: ClassName){ value in
                                         classes.ShowClass = true
                                     }
-                                    
+                                
                                     .padding(.leading)
                                 
                                 Spacer()
@@ -260,8 +260,8 @@ struct ContentView: View {
                                 .padding(.top)
                                 .gesture(
                                     DragGesture().onChanged{ value in
-                                        self.MainTab = CGSize.zero
-                                    }
+                                    self.MainTab = CGSize.zero
+                                }
                                 )
                         } else {
                             UserClassList().environmentObject(classes)
@@ -283,29 +283,29 @@ struct ContentView: View {
             .offset(y: classes.ShowClass ? self.height / 6 : self.height / 1.22)
             .gesture(
                 DragGesture().onChanged { value in
-                    self.MainTab = value.translation
-                    if value.translation.height < -40 && classes.ShowClass
-                        || value.translation.height > 40 && !classes.ShowClass{
-                        self.MainTab = CGSize.zero
-                    }
-                    else if value.translation.height < -self.height / 1.5 && !classes.ShowClass{
-                        self.MainTab = CGSize.zero
-                        classes.ShowClass = true
-                    }
-                    
-                }
-                .onEnded{ value in
-                    if value.translation.height < -80{
-                        classes.ShowClass = true
-                    }
-                    else if value.translation.height > 80{
-                        classes.ShowClass = false
-                        hideKeyboard()
-                    }
-                    
+                self.MainTab = value.translation
+                if value.translation.height < -40 && classes.ShowClass
+                    || value.translation.height > 40 && !classes.ShowClass{
                     self.MainTab = CGSize.zero
-                    
                 }
+                else if value.translation.height < -self.height / 1.5 && !classes.ShowClass{
+                    self.MainTab = CGSize.zero
+                    classes.ShowClass = true
+                }
+                
+            }
+                    .onEnded{ value in
+                if value.translation.height < -80{
+                    classes.ShowClass = true
+                }
+                else if value.translation.height > 80{
+                    classes.ShowClass = false
+                    hideKeyboard()
+                }
+                
+                self.MainTab = CGSize.zero
+                
+            }
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
             
@@ -318,7 +318,7 @@ struct ContentView: View {
                 .onTapGesture(){
                     settings.Settings = false
                 }
-
+            
             
             ScheduleView()
                 .environmentObject(settings)
