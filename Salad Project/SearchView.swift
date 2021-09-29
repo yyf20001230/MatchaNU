@@ -164,10 +164,11 @@ class getClass: ObservableObject{
                 
                 self.data = datafromJson
                 for document in self.data{
-                    if self.uniquedata.filter({($0.Class + $0.Major).contains(document.Class + document.Major)}).count == 0 {
+                    if self.uniquedata.count == 0 || self.uniquedata.last!.Class + self.uniquedata.last!.Major != (document.Class + document.Major){
                         self.uniquedata.append(document)
                     }
                 }
+                
             }
             catch {
                 print(error)
@@ -177,7 +178,7 @@ class getClass: ObservableObject{
 }
 
 
-struct ClassInfo: Identifiable, Codable, Equatable{
+struct ClassInfo: Identifiable, Codable, Equatable, Hashable{
     let id = UUID()
     var Class: String
     var ClassLocation: [Double]
