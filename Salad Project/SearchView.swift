@@ -94,7 +94,7 @@ struct ClassList: View{
                 
                 Rectangle()
                     .foregroundColor(Color("SearchbarColor"))
-                    .frame(height: 120)
+                    .frame(height: 100)
             }
             
             
@@ -115,8 +115,8 @@ struct ClassList: View{
             }
             
             else if self.classes.Section.count == 0{
-                ScrollView(showsIndicators: false){
-                    ForEach(elements.prefix(20)){ i in
+               ScrollView(showsIndicators: false){
+                    ForEach(elements.prefix(12)){ i in
                         Button(action:{
                             self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
                             
@@ -150,14 +150,17 @@ struct ClassList: View{
                     }
                     .background(Color("ClassColor"))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
-                    
-                    
+
                 }
                 .padding(.horizontal)
                 
+                
+                
                 Rectangle()
-                    .frame(height: 120)
+                    .frame(height: 100)
                     .foregroundColor(Color("SearchbarColor"))
+                
+                
                 
                 
                 
@@ -205,7 +208,7 @@ struct ClassList: View{
                     
                     Rectangle()
                         .foregroundColor(Color("SearchbarColor"))
-                        .frame(height: 120)
+                        .frame(height: 100)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             }
