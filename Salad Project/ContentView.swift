@@ -227,6 +227,7 @@ struct ContentView: View {
                                 .foregroundColor(.secondary)
                                 .font(.system(.caption2, design: .rounded))
                                 .tracking(-0.5)
+                                .multilineTextAlignment(.leading)
                         }
                         
                         Spacer()
