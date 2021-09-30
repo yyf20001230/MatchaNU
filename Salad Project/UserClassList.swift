@@ -60,12 +60,16 @@ struct UserClassList: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                
+                
+                Rectangle()
+                    .frame(height: 120)
+                    .foregroundColor(Color("SearchbarColor"))
             }
             .padding(.all)
-            Rectangle()
-                .frame(height: 100)
-                .foregroundColor(Color("SearchbarColor"))
+            
+            
+            
         }
     }
 }

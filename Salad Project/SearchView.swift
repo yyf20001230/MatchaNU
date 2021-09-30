@@ -18,12 +18,25 @@ struct ClassList: View{
         
         if self.txt == ""{
             
-            VStack (alignment: .leading){
-                Text("Enrolled class")
+            if classes.userClass.count == 0{
+                Text("Keep Typing...")
+                    .font(.system(.body, design: .rounded))
                     .foregroundColor(.secondary)
-                    .font(.system(.subheadline, design: .rounded))
+                    .fontWeight(.bold)
                     .tracking(-0.5)
-                    .padding(.leading)
+                    .padding(.trailing)
+            }
+            
+            VStack (alignment: .leading){
+                
+                if classes.userClass.count != 0{
+                    Text("Enrolled class")
+                        .foregroundColor(.secondary)
+                        .font(.system(.subheadline, design: .rounded))
+                        .tracking(-0.5)
+                        .padding(.leading)
+                }
+               
                 
                 ScrollView(showsIndicators: false){
                     ForEach(classes.userClass){ i in
@@ -78,7 +91,6 @@ struct ClassList: View{
                 
                 }
                 .padding(.horizontal)
-                .clipShape(RoundedRectangle(cornerRadius: 12))
                 
                 Rectangle()
                     .foregroundColor(Color("SearchbarColor"))
@@ -140,13 +152,18 @@ struct ClassList: View{
                         }
                     }
                     .background(Color("ClassColor"))
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    
+                    
                 }
                 .padding(.horizontal)
                 
                 Rectangle()
-                    .foregroundColor(Color("SearchbarColor"))
                     .frame(height: 120)
+                    .foregroundColor(Color("SearchbarColor"))
+                
+                
+                
                 
             } else {
                 VStack{

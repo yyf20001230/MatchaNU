@@ -88,7 +88,7 @@ struct DetailView: View {
                         }
                         .alert(isPresented: $showNavigationAlert, content: {
                             let message = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0]
-                            return Alert(title: Text("No location found"), message: Text(message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is either online or its location is not determined yet"), dismissButton: .default(Text("Got it!")))
+                            return Alert(title: Text("No location found"), message: Text(message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is either online or its location is not determined yet or located outside of Evanston Campus"), dismissButton: .default(Text("Got it!")))
                         })
                         
                         

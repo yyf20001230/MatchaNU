@@ -141,7 +141,6 @@ struct ContentView: View {
                             Rectangle()
                                 .frame(height: 34)
                                 .cornerRadius(8)
-                                .multilineTextAlignment(.center)
                                 .foregroundColor(Color("TextbarColor"))
                             
                             HStack {
@@ -178,15 +177,6 @@ struct ContentView: View {
                         .padding([.leading, .trailing])
                     } else {
                         HStack{
-                            if !classes.detail.isEmpty {
-                                Image(systemName: "arrow.left")
-                                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                                    .padding(.trailing)
-                                    .onTapGesture{
-                                        classes.detail.removeAll()
-                                        classes.showRoute = false
-                                    }
-                            }
                             
                             VStack (alignment: .leading, spacing: 4){
                                 Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0])
@@ -199,9 +189,20 @@ struct ContentView: View {
                                     .font(.system(.caption2, design: .rounded))
                                     .tracking(-0.5)
                             }
-                            
-                            
+
                             Spacer()
+                            
+                            if !classes.detail.isEmpty {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.secondary)
+                                    .scaleEffect(1.2)
+                                    .padding(.trailing)
+                                    .padding(.trailing)
+                                    .onTapGesture{
+                                        classes.detail.removeAll()
+                                        classes.showRoute = false
+                                    }
+                            }
                         }
                         
                         .padding(.top, 6)
@@ -213,20 +214,6 @@ struct ContentView: View {
                 } else {
                     
                     HStack{
-                        Image(systemName: "arrow.left")
-                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                            .padding(.trailing)
-                            .onTapGesture{
-                                classes.ShowClass = true
-                                if classes.detail.isEmpty{
-                                    classes.Section = [ClassInfo]()
-                                    
-                                } else{
-                                    classes.detail.removeAll()
-                                    classes.showRoute = false
-                                }
-                                
-                            }
                         
                         VStack (alignment: .leading, spacing: 4){
                             let message = classes.detail.isEmpty ? "" : "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "")
@@ -243,6 +230,26 @@ struct ContentView: View {
                         }
                         
                         Spacer()
+                        
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.secondary)
+                            .scaleEffect(1.2)
+                            .padding(.trailing)
+                            .padding(.trailing)
+                            .onTapGesture{
+                                classes.ShowClass = true
+                                if classes.detail.isEmpty{
+                                    classes.Section = [ClassInfo]()
+                                    
+                                } else{
+                                    classes.detail.removeAll()
+                                    classes.showRoute = false
+                                }
+                                
+                            }
+                        
+                        
+                        
                         
                         
                     }
