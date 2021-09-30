@@ -30,7 +30,7 @@ struct ClassList: View{
             VStack (alignment: .leading){
                 
                 if classes.userClass.count != 0{
-                    Text("Enrolled class")
+                    Text("Enrolled class(es)")
                         .foregroundColor(.secondary)
                         .font(.system(.subheadline, design: .rounded))
                         .tracking(-0.5)
@@ -43,11 +43,9 @@ struct ClassList: View{
                         Button(action: {
                             classes.detail.removeAll()
                             classes.detail.append(i)
-                            
                         }){
                             VStack (alignment: .leading, spacing: 10){
-                                
-                                
+
                                 HStack{
                                     let message = i.Major.components(separatedBy: " ")[0] + " " + i.Class.components(separatedBy: " ")[0]
                                     Text(message + "-" + i.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
@@ -62,7 +60,7 @@ struct ClassList: View{
                                 
                                 HStack{
                                     VStack(alignment: .leading, spacing: 4.0){
-                                        Text(i.Instructor.dropLast())
+                                        Text(i.Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption2, design: .rounded))
                                             .tracking(-0.5)
@@ -94,7 +92,7 @@ struct ClassList: View{
                 
                 Rectangle()
                     .foregroundColor(Color("SearchbarColor"))
-                    .frame(height: 100)
+                    .frame(height: 120)
             }
             
             
@@ -141,6 +139,7 @@ struct ClassList: View{
                                         .foregroundColor(.secondary)
                                         .font(.system(.caption2, design: .rounded))
                                         .tracking(-0.5)
+                                        .multilineTextAlignment(.leading)
                                     
                                 }
                                 .padding(.all)
@@ -183,7 +182,7 @@ struct ClassList: View{
                                         .frame(width: 60)
                                     
                                     VStack(alignment: .leading, spacing: 4.0){
-                                        Text(i.Instructor.dropLast())
+                                        Text(i.Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption2, design: .rounded))
                                             .tracking(-0.5)
