@@ -237,7 +237,9 @@ struct ContentView: View {
                             .padding(.trailing)
                             .padding(.trailing)
                             .onTapGesture{
-                                classes.ShowClass = true
+                                if !classes.showRoute{
+                                    classes.ShowClass = true
+                                }
                                 if classes.detail.isEmpty{
                                     classes.Section = [ClassInfo]()
                                     

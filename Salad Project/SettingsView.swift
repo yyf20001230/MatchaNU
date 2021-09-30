@@ -90,8 +90,20 @@ struct SettingsView: View {
                 }
                 .padding(.all)
                 .alert(isPresented: $showAlert) {
-                    Alert(title: Text("Class Cleared"), message: Text("Your classes has been cleared"), dismissButton: .default(Text("Got it!")))
+                    Alert(
+                        title: Text("Warning"),
+                        message: Text("You are about to clear your classes. Are you sure?"),
+                        primaryButton: .default(Text("No"), action: {
+                            
+                        }),
+                        secondaryButton: .destructive(Text("Yes"), action: {
+                            classes.userClass.removeAll()
+                        })
+                        
+                        
+                    )
                 }
+                
                 
             }
             .background(Color("ClassColor"))
