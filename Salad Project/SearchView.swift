@@ -30,7 +30,7 @@ struct ClassList: View{
             VStack (alignment: .leading){
                 
                 if classes.userClass.count != 0{
-                    Text("Enrolled class")
+                    Text("Enrolled class(es)")
                         .foregroundColor(.secondary)
                         .font(.system(.subheadline, design: .rounded))
                         .tracking(-0.5)
@@ -43,7 +43,6 @@ struct ClassList: View{
                         Button(action: {
                             classes.detail.removeAll()
                             classes.detail.append(i)
-                            
                         }){
                             VStack (alignment: .leading, spacing: 10){
 
@@ -93,7 +92,7 @@ struct ClassList: View{
                 
                 Rectangle()
                     .foregroundColor(Color("SearchbarColor"))
-                    .frame(height: 100)
+                    .frame(height: 120)
             }
             
             

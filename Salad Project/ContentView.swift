@@ -179,7 +179,7 @@ struct ContentView: View {
                         HStack{
                             
                             VStack (alignment: .leading, spacing: 4){
-                                Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0])
+                                Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
                                     .font(.system(.body, design: .rounded))
                                     .fontWeight(.bold)
                                     .tracking(-0.5)
@@ -216,7 +216,7 @@ struct ContentView: View {
                     HStack{
                         
                         VStack (alignment: .leading, spacing: 4){
-                            let message = classes.detail.isEmpty ? "" : "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "")
+                            let message = classes.detail.isEmpty ? "" : ("-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
                             Text(classes.Section[0].Major.components(separatedBy: " ")[0] + " " +  classes.Section[0].Class.components(separatedBy: " ")[0] + message)
                                 .foregroundColor(Color("Default"))
                                 .font(.system(.body, design: .rounded))
