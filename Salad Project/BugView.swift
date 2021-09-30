@@ -40,7 +40,7 @@ struct BugView: View {
                 .padding(.all)
             
             Button(action:{
-                EmailHelper.shared.send(subject: "Test", body: "", to: ["northwesternmatcha@gmail.com"])
+                EmailHelper.shared.send(subject: "MatchaNU: I found a bug", body: "", to: ["northwesternmatcha@gmail.com"])
             }){
                 HStack{
                     Text("Contact Us")
