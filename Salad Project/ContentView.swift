@@ -22,6 +22,7 @@ class ClassLocations: ObservableObject{
     @Published var showRoute = false
     @Published var showUserLocation = false
     @Published var ShowClass = false
+    @Published var EditClass = false
     
     init(){
         getItems()
@@ -73,7 +74,6 @@ struct ContentView: View {
     var body: some View {
         
         ZStack () {
-            
             
             MapView().environmentObject(classes)
                 .ignoresSafeArea()
@@ -202,6 +202,17 @@ struct ContentView: View {
                                         classes.detail.removeAll()
                                         classes.showRoute = false
                                     }
+                            } else {
+                                Image(systemName: classes.EditClass ? "pencil.slash" : "square.and.pencil")
+                                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                    .scaleEffect(1.2)
+                                    .background(Color("SearchbarColor"))
+                                    .padding(.trailing)
+                                    .padding(.trailing)
+                                    .onTapGesture{
+                                        classes.ShowClass = true
+                                        classes.EditClass.toggle()
+                                    }
                             }
                         }
                         
@@ -274,7 +285,11 @@ struct ContentView: View {
                                 }
                                 )
                         } else {
-                            UserClassList().environmentObject(classes)
+                            if classes.EditClass{
+                                EditView().environmentObject(classes)
+                            } else {
+                                UserClassList().environmentObject(classes)
+                            }
                         }
                         
                         

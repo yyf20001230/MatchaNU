@@ -14,6 +14,7 @@ class LocationManager: NSObject, ObservableObject{
     
     private let locationManager = CLLocationManager()
     @Published var location: CLLocation? = nil
+    @Published var heading: CLHeading? = nil
     
     override init(){
         super.init()
@@ -22,6 +23,7 @@ class LocationManager: NSObject, ObservableObject{
         self.locationManager.distanceFilter = kCLDistanceFilterNone
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.startUpdatingLocation()
+        self.locationManager.startUpdatingHeading()
     }
     
 }
@@ -36,6 +38,13 @@ extension LocationManager: CLLocationManagerDelegate{
         guard let location = locations.last else { return }
         self.location = location
     }
+    
+    /*
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newheading: CLHeading){
+        self.heading = newheading
+    }
+    */
+    
     
 }
  
