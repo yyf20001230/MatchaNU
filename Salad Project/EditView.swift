@@ -41,10 +41,12 @@ struct EditView: View {
                         .foregroundColor(.secondary)
                         .font(.system(.caption2, design: .rounded))
                         .tracking(-0.5)
+
                     Text("Meeting Info: " + (MeetingInfo.isEmpty ? "Default meeting info" : "\(MeetingInfo)"))
                         .foregroundColor(.secondary)
                         .font(.system(.caption2, design: .rounded))
                         .tracking(-0.5)
+                    
                     Text("Instructor: " + (Instructor.isEmpty ? "Default instructor" : "\(Instructor)"))
                         .foregroundColor(.secondary)
                         .font(.system(.caption2, design: .rounded))
