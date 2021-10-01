@@ -93,12 +93,10 @@ struct SettingsView: View {
                     Alert(
                         title: Text("Warning"),
                         message: Text("You are about to clear your classes. Are you sure?"),
-                        primaryButton: .default(Text("No"), action: {
-                            
-                        }),
-                        secondaryButton: .destructive(Text("Yes"), action: {
+                        primaryButton: .destructive(Text("Yes"), action: {
                             classes.userClass.removeAll()
-                        })
+                        }),
+                        secondaryButton: .default(Text("No"))
                         
                         
                     )

@@ -13,6 +13,7 @@
 		014F85B92702E46A00F7ED0E /* UserClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014F85B82702E46A00F7ED0E /* UserClassView.swift */; };
 		014F85BB2702EA0F00F7ED0E /* UserClassList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014F85BA2702EA0F00F7ED0E /* UserClassList.swift */; };
 		01531DDF26D713F600A8CEFD /* SideButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01531DDE26D713F600A8CEFD /* SideButtonView.swift */; };
+		016BB1292706BB89003DCD6A /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016BB1282706BB89003DCD6A /* EditView.swift */; };
 		0175756A26D8D2FA00757862 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0175756926D8D2FA00757862 /* LocationManager.swift */; };
 		0175756C26D8D45C00757862 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0175756B26D8D45C00757862 /* MapView.swift */; };
 		019CB4D326D60F8E00577EBF /* Salad_ProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019CB4D226D60F8E00577EBF /* Salad_ProjectApp.swift */; };
@@ -54,6 +55,7 @@
 		014F85B82702E46A00F7ED0E /* UserClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClassView.swift; sourceTree = "<group>"; };
 		014F85BA2702EA0F00F7ED0E /* UserClassList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClassList.swift; sourceTree = "<group>"; };
 		01531DDE26D713F600A8CEFD /* SideButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideButtonView.swift; sourceTree = "<group>"; };
+		016BB1282706BB89003DCD6A /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		0175756926D8D2FA00757862 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		0175756B26D8D45C00757862 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		019CB4CF26D60F8E00577EBF /* Salad Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Salad Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +133,7 @@
 				2B44E67C26E0D14C002531C7 /* AboutView.swift */,
 				019CB4D426D60F8E00577EBF /* ContentView.swift */,
 				014F85B82702E46A00F7ED0E /* UserClassView.swift */,
+				016BB1282706BB89003DCD6A /* EditView.swift */,
 				0110BF2F26FAF14A00255FE6 /* DetailView.swift */,
 				01531DDE26D713F600A8CEFD /* SideButtonView.swift */,
 				014F85BA2702EA0F00F7ED0E /* UserClassList.swift */,
@@ -320,6 +323,7 @@
 				2B44E6A026E0DD68002531C7 /* ScheduleView.swift in Sources */,
 				0175756C26D8D45C00757862 /* MapView.swift in Sources */,
 				2B44E67D26E0D14C002531C7 /* AboutView.swift in Sources */,
+				016BB1292706BB89003DCD6A /* EditView.swift in Sources */,
 				01531DDF26D713F600A8CEFD /* SideButtonView.swift in Sources */,
 				014F85BB2702EA0F00F7ED0E /* UserClassList.swift in Sources */,
 				014F85B92702E46A00F7ED0E /* UserClassView.swift in Sources */,
@@ -411,7 +415,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -466,7 +470,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

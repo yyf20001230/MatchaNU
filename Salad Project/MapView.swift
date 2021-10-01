@@ -23,6 +23,7 @@ struct MapView: UIViewRepresentable {
         let map = MKMapView()
         map.showsUserLocation = false
         map.delegate = context.coordinator
+        
         map.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 42.055984, longitude: -87.675171), span: MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)),
                       animated: true)
         return map
@@ -30,7 +31,7 @@ struct MapView: UIViewRepresentable {
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
         uiView.showsUserLocation = true
-        
+
         if !self.classes.detail.isEmpty{
             uiView.removeAnnotations(uiView.annotations)
             if self.classes.detail[0].ClassLocation[0] != -1{
@@ -38,6 +39,7 @@ struct MapView: UIViewRepresentable {
                 let destination = MKPointAnnotation()
                 destination.coordinate.latitude = classes.detail[0].ClassLocation[0]
                 destination.coordinate.longitude = classes.detail[0].ClassLocation[1]
+                
                 destination.title = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + "\n"
                 destination.subtitle = classes.detail[0].MeetingInfo + "\n\n"
                 uiView.addAnnotation(destination)
@@ -69,6 +71,7 @@ struct MapView: UIViewRepresentable {
         else {
             uiView.removeOverlays(uiView.overlays)
             uiView.removeAnnotations(uiView.annotations)
+            
             if self.classes.userClass.count != 0{
                 var zoomRect = MKMapRect.null
                 for classinfo in self.classes.userClass{
@@ -124,8 +127,7 @@ struct MapView: UIViewRepresentable {
             renderer.lineCap = .round
             return renderer
         }
+    
     }
-    
-    
 }
  
