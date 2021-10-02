@@ -76,7 +76,6 @@ struct SettingsView: View {
                 
                 Button(action:{
                     self.showAlert = true
-                    classes.userClass.removeAll()
                 }){
                     HStack{
                         Text("Clear Classes")

@@ -68,8 +68,6 @@ struct UserClassList: View {
             }
             .padding(.all)
             
-            
-            
         }
     }
 }

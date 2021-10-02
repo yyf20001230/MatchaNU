@@ -42433,13 +42433,13 @@
 },{
     "Class": "202-0 Introduction to Microeconomics", 
     "ClassLocation": [
-        42.0564594, 
-        -87.67526699999999
+        42.05780619999999,
+        -87.67587739999999
     ], 
     "ClassOverview": "This is an introductory course that covers the fundamentals of microeconomics. We will study the behavior of individuals and firms in a world of limited resources, and the interactions between the two in many different markets. With an emphasis on economic principles, students will be introduced to core terminology and modes of analysis for studying the production and distribution of goods and services in the economy. An overarching goal is to gain insight into how, when, and why markets fail or succeed. Specific topics include supply and demand, market equilibrium, elasticity, costs of production, different degrees of competition (including perfect competition and monopoly), and government interventions (price controls, taxes). You will get started thinking about the three fundamental questions in economics: (i) what goods and services should be produced?, (ii) how do we produce those goods and services?, and (iii) who gets those goods and services? This course is aimed at potential economics majors and students who are curious about having a better understanding of the popular press, or analyzing and comparing different government policies.",
     "Instructor": "Sara Hernandez-Saborit|",
     "Major": "ECON - Economics", 
-    "MeetingInfo": "Location of Midterm TBD: Thurs,  6:30PM - 8:30PMLocation of Midterm TBD: Thurs,  6:30PM - 8:30PMTech Institute Lecture Room 2: Tues, Thurs,  12:30PM - 1:50PM",
+    "MeetingInfo": "Tech Institute Lecture Room 2: Tues, Thurs,  12:30PM - 1:50PM",
     "School": "Weinberg College of Arts and Sciences", 
     "Section": "20: Introduction to Microeconomics"
 },{
@@ -51751,7 +51751,7 @@
     "ClassOverview": "Limits. Differentiation. Linear approximation and related rates. Extreme value theorem, mean value theorem, and curve-sketching. Optimization. Students may not receive credit for both MATH 220-1 and any of MATH 211-0 or MATH 218-1 or MATH 218-2.",
     "Instructor": "Charles Henry Stibitz|", 
     "Major": "MATH - Mathematics", 
-    "MeetingInfo": "Lunt 105: Mon, Wed, Fri,  8:00AM - 8:50AM",
+    "MeetingInfo": "Lunt Hall 105: Mon, Wed, Fri,  8:00AM - 8:50AM",
     "School": "Weinberg College of Arts and Sciences", 
     "Section": "21: Single-Variable Differential Calculus"
 },{
@@ -51769,8 +51769,8 @@
 },{
     "Class": "220-1 Single-Variable Differential Calculus", 
     "ClassLocation": [
-        42.058083879834456,
-        -87.67600858675706
+        42.05780619999999,
+        -87.67587739999999
     ], 
     "ClassOverview": "Limits. Differentiation. Linear approximation and related rates. Extreme value theorem, mean value theorem, and curve-sketching. Optimization. Students may not receive credit for both MATH 220-1 and any of MATH 211-0 or MATH 218-1 or MATH 218-2.",
     "Instructor": "Cristina Elena Korb|", 
@@ -51793,8 +51793,8 @@
 },{
     "Class": "220-1 Single-Variable Differential Calculus", 
     "ClassLocation": [
-        42.058083879834456,
-        -87.67600858675706
+        42.05780619999999,
+        -87.67587739999999
     ], 
     "ClassOverview": "Limits. Differentiation. Linear approximation and related rates. Extreme value theorem, mean value theorem, and curve-sketching. Optimization. Students may not receive credit for both MATH 220-1 and any of MATH 211-0 or MATH 218-1 or MATH 218-2.",
     "Instructor": "Thomas Dietmar Hille|", 
@@ -51829,8 +51829,8 @@
 },{
     "Class": "220-1 Single-Variable Differential Calculus", 
     "ClassLocation": [
-        42.058083879834456,
-        -87.67600858675706
+        42.05780619999999,
+        -87.67587739999999
     ], 
     "ClassOverview": "Limits. Differentiation. Linear approximation and related rates. Extreme value theorem, mean value theorem, and curve-sketching. Optimization. Students may not receive credit for both MATH 220-1 and any of MATH 211-0 or MATH 218-1 or MATH 218-2.",
     "Instructor": "Hang Yuan|",
@@ -51841,8 +51841,8 @@
 },{
     "Class": "220-1 Single-Variable Differential Calculus", 
     "ClassLocation": [
-        42.058083879834456,
-        -87.67600858675706
+        42.05780619999999,
+        -87.67587739999999
     ], 
     "ClassOverview": "Limits. Differentiation. Linear approximation and related rates. Extreme value theorem, mean value theorem, and curve-sketching. Optimization. Students may not receive credit for both MATH 220-1 and any of MATH 211-0 or MATH 218-1 or MATH 218-2.",
     "Instructor": "Yotam Israel Hendel|", 
@@ -51865,8 +51865,8 @@
 },{
     "Class": "220-1 Single-Variable Differential Calculus", 
     "ClassLocation": [
-        42.05806859014304,
-        -87.67585413839993
+        42.05780619999999,
+        -87.67587739999999
     ], 
     "ClassOverview": "Limits. Differentiation. Linear approximation and related rates. Extreme value theorem, mean value theorem, and curve-sketching. Optimization. Students may not receive credit for both MATH 220-1 and any of MATH 211-0 or MATH 218-1 or MATH 218-2.",
     "Instructor": "Yotam Israel Hendel|", 
@@ -51895,7 +51895,7 @@
     "ClassOverview": "Definite integrals, antiderivatives, and the fundamental theorem of calculus. Transcendental and inverse functions. Areas and volumes. Techniques of integration, numerical integration, and improper integrals. First-order linear and separable ordinary differential equations. Students may not receive credit for both MATH 220-2 and MATH 218-3. Prerequisite: MATH 218-2 or MATH 220-1.",
     "Instructor": "John N K Francis|", 
     "Major": "MATH - Mathematics", 
-    "MeetingInfo": "Location of Midterm TBD: Tues,  6:20PM - 7:50PMLocation of Midterm TBD: Tues,  6:20PM - 7:20PMLocy Hall 111: Mon, Wed, Fri,  9:00AM - 9:50AM",
+    "MeetingInfo": "Locy Hall 111: Mon, Wed, Fri,  9:00AM - 9:50AM",
     "School": "Weinberg College of Arts and Sciences", 
     "Section": "31: Single-Variable Integral Calculus"
 },{
@@ -51907,7 +51907,7 @@
     "ClassOverview": "Definite integrals, antiderivatives, and the fundamental theorem of calculus. Transcendental and inverse functions. Areas and volumes. Techniques of integration, numerical integration, and improper integrals. First-order linear and separable ordinary differential equations. Students may not receive credit for both MATH 220-2 and MATH 218-3. Prerequisite: MATH 218-2 or MATH 220-1.",
     "Instructor": "Aaron Greicius|",
     "Major": "MATH - Mathematics", 
-    "MeetingInfo": "Location of Midterm TBD: Tues,  6:20PM - 7:50PMLocation of Midterm TBD: Tues,  6:20PM - 7:50PMLocy Hall 111: Mon, Wed, Fri,  10:00AM - 10:50AM",
+    "MeetingInfo": "Locy Hall 111: Mon, Wed, Fri,  10:00AM - 10:50AM",
     "School": "Weinberg College of Arts and Sciences", 
     "Section": "41: Single-Variable Integral Calculus"
 },{
@@ -51919,7 +51919,7 @@
     "ClassOverview": "Definite integrals, antiderivatives, and the fundamental theorem of calculus. Transcendental and inverse functions. Areas and volumes. Techniques of integration, numerical integration, and improper integrals. First-order linear and separable ordinary differential equations. Students may not receive credit for both MATH 220-2 and MATH 218-3. Prerequisite: MATH 218-2 or MATH 220-1.",
     "Instructor": "Aaron Greicius|",
     "Major": "MATH - Mathematics", 
-    "MeetingInfo": "Location of Midterm TBD: Tues,  6:20PM - 7:50PMLocation of Midterm TBD: Tues,  6:20PM - 7:50PMLocy Hall 111: Mon, Wed, Fri,  10:00AM - 10:50AM",
+    "MeetingInfo": "Locy Hall 111: Mon, Wed, Fri,  10:00AM - 10:50AM",
     "School": "Weinberg College of Arts and Sciences", 
     "Section": "43: Single-Variable Integral Calculus"
 },{
@@ -51931,31 +51931,31 @@
     "ClassOverview": "Definite integrals, antiderivatives, and the fundamental theorem of calculus. Transcendental and inverse functions. Areas and volumes. Techniques of integration, numerical integration, and improper integrals. First-order linear and separable ordinary differential equations. Students may not receive credit for both MATH 220-2 and MATH 218-3. Prerequisite: MATH 218-2 or MATH 220-1.",
     "Instructor": "Aaron Greicius|",
     "Major": "MATH - Mathematics", 
-    "MeetingInfo": "Location of Midterm TBD: Tues,  6:20PM - 7:50PMLocation of Midterm TBD: Tues,  6:20PM - 7:50PMLocy Hall 111: Mon, Wed, Fri,  11:00AM - 11:50AM",
+    "MeetingInfo": "Locy Hall 111: Mon, Wed, Fri,  11:00AM - 11:50AM",
     "School": "Weinberg College of Arts and Sciences", 
     "Section": "51: Single-Variable Integral Calculus"
 },{
     "Class": "220-2 Single-Variable Integral Calculus", 
     "ClassLocation": [
-        42.0564594, 
-        -87.67526699999999
+        42.05780619999999,
+        -87.67587739999999
     ], 
     "ClassOverview": "Definite integrals, antiderivatives, and the fundamental theorem of calculus. Transcendental and inverse functions. Areas and volumes. Techniques of integration, numerical integration, and improper integrals. First-order linear and separable ordinary differential equations. Students may not receive credit for both MATH 220-2 and MATH 218-3. Prerequisite: MATH 218-2 or MATH 220-1.",
     "Instructor": "Dogancan Karabas|",
     "Major": "MATH - Mathematics", 
-    "MeetingInfo": "Location of Midterm TBD: Tues,  6:20PM - 7:50PMLocation of Midterm TBD: Tues,  6:20PM - 7:50PMTechnological Institute M128: Mon, Wed, Fri,  1:00PM - 1:50PM",
+    "MeetingInfo": "Technological Institute M128: Mon, Wed, Fri,  1:00PM - 1:50PM",
     "School": "Weinberg College of Arts and Sciences", 
     "Section": "71: Single-Variable Integral Calculus"
 },{
     "Class": "220-2 Single-Variable Integral Calculus", 
     "ClassLocation": [
-        42.0564594, 
-        -87.67526699999999
+        42.05780619999999,
+        -87.67587739999999
     ], 
     "ClassOverview": "Definite integrals, antiderivatives, and the fundamental theorem of calculus. Transcendental and inverse functions. Areas and volumes. Techniques of integration, numerical integration, and improper integrals. First-order linear and separable ordinary differential equations. Students may not receive credit for both MATH 220-2 and MATH 218-3. Prerequisite: MATH 218-2 or MATH 220-1.",
     "Instructor": "Dogancan Karabas|",
     "Major": "MATH - Mathematics", 
-    "MeetingInfo": "Location of Midterm TBD: Tues,  6:20PM - 7:50PMLocation of Midterm TBD: Tues,  6:20PM - 7:50PMTechnological Institute M128: Mon, Wed, Fri,  2:00PM - 2:50PM",
+    "MeetingInfo": "Technological Institute M128: Mon, Wed, Fri,  2:00PM - 2:50PM",
     "School": "Weinberg College of Arts and Sciences", 
     "Section": "81: Single-Variable Integral Calculus"
 },{

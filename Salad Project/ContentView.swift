@@ -177,21 +177,41 @@ struct ContentView: View {
                         .padding([.leading, .trailing])
                     } else {
                         HStack{
-                            
-                            VStack (alignment: .leading, spacing: 4){
-                                Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
-                                    .font(.system(.body, design: .rounded))
-                                    .fontWeight(.bold)
-                                    .tracking(-0.5)
-                                    .padding(.trailing)
-                                Text(classes.detail.isEmpty ? "You have \(classes.userClass.count) class(es)" : classes.detail[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
-                                    .foregroundColor(.secondary)
-                                    .font(.system(.caption2, design: .rounded))
-                                    .tracking(-0.5)
+                            if classes.EditClass{
+                                
+                                VStack (alignment: .leading, spacing: 4){
+                                    
+                                    Text("Customize your Matcha!")
+                                        .font(.system(.body, design: .rounded))
+                                        .fontWeight(.bold)
+                                        .tracking(-0.5)
+                                        .padding(.trailing)
+                                    
+                                    Text("Your class will show up as:")
+                                        .foregroundColor(.secondary)
+                                        .font(.system(.caption2, design: .rounded))
+                                        .tracking(-0.5)
+                                }
+                                
+                                Spacer()
+                                
+                            } else {
+                                
+                                VStack (alignment: .leading, spacing: 4){
+                                    Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
+                                        .font(.system(.body, design: .rounded))
+                                        .fontWeight(.bold)
+                                        .tracking(-0.5)
+                                        .padding(.trailing)
+                                    Text(classes.detail.isEmpty ? "You have \(classes.userClass.count) class(es)" : classes.detail[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
+                                        .foregroundColor(.secondary)
+                                        .font(.system(.caption2, design: .rounded))
+                                        .tracking(-0.5)
+                                }
+
+                                Spacer()
                             }
 
-                            Spacer()
-                            
                             if !classes.detail.isEmpty {
                                 Image(systemName: "xmark.circle.fill")
                                     .foregroundColor(.secondary)
@@ -204,7 +224,7 @@ struct ContentView: View {
                                     }
                             } else {
                                 Image(systemName: classes.EditClass ? "pencil.slash" : "square.and.pencil")
-                                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                    .foregroundColor(classes.EditClass ? Color("Red") :Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                                     .scaleEffect(1.2)
                                     .background(Color("SearchbarColor"))
                                     .padding(.trailing)
@@ -303,7 +323,6 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.all)
             .background(Color("SearchbarColor"))
             .cornerRadius(8.0)
-            .shadow(color: .black, radius: 8, x: 5, y: 10)
             .offset(y: self.MainTab.height)
             .offset(y: classes.ShowClass ? self.height / 6 : self.height / 1.22)
             .gesture(
