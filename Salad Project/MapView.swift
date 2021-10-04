@@ -75,8 +75,8 @@ struct MapView: UIViewRepresentable {
             if self.classes.userClass.count != 0{
                 var zoomRect = MKMapRect.null
                 for classinfo in self.classes.userClass{
-                    if classinfo.ClassLocation[0] != -1{
-                        
+                    if classinfo.ClassLocation[0] != -1 {
+
                         let classlocation = MKPointAnnotation()
                         classlocation.coordinate.latitude = classinfo.ClassLocation[0]
                         classlocation.coordinate.longitude = classinfo.ClassLocation[1]
@@ -99,8 +99,10 @@ struct MapView: UIViewRepresentable {
                         }
                     }
                 }
-                if classes.showUserLocation || zoomRect.isNull{
+                if classes.showUserLocation{
                     uiView.setRegion(MKCoordinateRegion(center: uiView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
+                } else if zoomRect.isNull{
+                    uiView.setRegion(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 42.055984, longitude: -87.675171), span: MKCoordinateSpan(latitudeDelta: 0.012, longitudeDelta: 0.012)), animated: true)
                 } else {
                     uiView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
                 }

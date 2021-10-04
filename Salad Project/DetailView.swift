@@ -128,6 +128,8 @@ struct DetailView: View {
                         
                         Button(action: {
                             classes.EditClass = true
+                            classes.Section.removeAll()
+                            classes.Section.append(classes.detail[0])
                         }){
                             VStack{
                                 Image(systemName: "pencil.circle.fill")

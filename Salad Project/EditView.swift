@@ -11,16 +11,17 @@ struct EditView: View {
     
     @EnvironmentObject var classes: ClassLocations
     @Binding var datas: [ClassInfo]
+    @Binding var uniqueProf: [ClassInfo]
     
-    @State var Class = ""
     @State var Latitude = 0.0
     @State var Longitude = 0.0
-    @State var ClassOverview = ""
-    @State var Instructor = ""
     @State var MeetingInfo = ""
+    
     @State var ClassLocation = ""
-    @State var ClassName = ""
-    @State var Section = ""
+    @State var EditClassLocation = ""
+    @State var Instructor = ""
+    @State var EditInstructor = ""
+
     
     @State private var selectedSection = 0
     @State private var showAlert = false
@@ -28,7 +29,7 @@ struct EditView: View {
     
     var body: some View {
         
-        if !classes.detail.isEmpty && selectedSection != 0{
+        if !classes.detail.isEmpty && selectedSection == 2{
             VStack (alignment: .leading, spacing: 10){
                 
                     HStack{
@@ -69,33 +70,38 @@ struct EditView: View {
             .padding(.horizontal)
             .padding(.all)
         }
+        
+       
             
         VStack (alignment: .leading){
             if selectedSection == 0{
                 
+                Text("1. First, let's edit location")
+                    .foregroundColor(Color("Theme"))
+                    .font(.system(.subheadline, design: .rounded))
+                    .fontWeight(.bold)
+                    .tracking(-0.5)
+                
+                Divider()
+                
                 TextField("Enter class location", text: $ClassLocation)
                     .foregroundColor(Color("Default"))
-                    .font(.system(.caption2, design: .rounded))
+                    .font(.system(.subheadline, design: .rounded))
                     .onChange(of: ClassLocation){ value in
-                        if !selected{
-                            selected = true
-                        }
+                        selected = false
                     }
                 
-                let elements = self.datas.filter({$0.MeetingInfo.components(separatedBy: ": ")[0].lowercased().contains(self.ClassLocation.lowercased().replacingOccurrences(of:"_", with: ""))})
-                if !elements.isEmpty && self.selected{
+                let elements = datas.filter({$0.MeetingInfo.components(separatedBy: ": ")[0].lowercased().contains(ClassLocation.lowercased().replacingOccurrences(of:"_", with: ""))})
+                if !elements.isEmpty && !selected{
                     ScrollView(showsIndicators: false){
                         ForEach(elements.prefix(20)){ i in
-                            
                             Button(action:{
-                                self.selected = false
-                                self.Latitude = i.ClassLocation[0]
-                                self.Longitude = i.ClassLocation[1]
-                                self.ClassName = i.Class
-                                self.Section = i.Section
-                                self.MeetingInfo = i.MeetingInfo
-                                self.ClassOverview = i.ClassOverview
-                                self.ClassLocation = i.MeetingInfo.components(separatedBy: ": ")[0]
+                                selected = true
+                                Latitude = i.ClassLocation[0]
+                                Longitude = i.ClassLocation[1]
+                                MeetingInfo = i.MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: "")
+                                ClassLocation = i.MeetingInfo.components(separatedBy: ": ")[0]
+                                
                             }) {
                                 VStack(alignment: .leading) {
                                     Text(i.MeetingInfo.components(separatedBy: ": ")[0])
@@ -105,7 +111,7 @@ struct EditView: View {
                                         .multilineTextAlignment(.leading)
                                     
                                 }
-                                .padding(.all)
+                                .padding(.vertical)
                                 Spacer()
                             }
                             
@@ -114,40 +120,63 @@ struct EditView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         
                     }
-                    .padding(.horizontal)
+                    .padding(.trailing)
                     .frame(height: 160)
                 }
                 
             } else if selectedSection == 1{
-                Text("2. Now, let's enter course info")
+                Text("2. Now, let's edit course info")
                     .foregroundColor(Color("Theme"))
                     .font(.system(.subheadline, design: .rounded))
                     .fontWeight(.bold)
                     .tracking(-0.5)
-                    .padding(.bottom)
                 
-                TextField("Enter meeting info (e.x. Mon, Tue, 11:00AM - 11:50AM)", text: $MeetingInfo)
+                Divider()
+                
+                TextField("Meeting time (Tue, 11:00AM - 11:50AM)", text: $MeetingInfo)
                     .foregroundColor(Color("Default"))
                     .font(.system(.subheadline, design: .rounded))
+                    
                 
                 Divider()
                 
                 TextField("Enter instructor name", text: $Instructor)
                     .foregroundColor(Color("Default"))
                     .font(.system(.subheadline, design: .rounded))
+                    .onChange(of: Instructor){ value in
+                        selected = false
+                    }
                 
+                let elements = uniqueProf.filter({$0.Instructor.components(separatedBy: ": ")[0].lowercased().replacingOccurrences(of: "|", with: ",").dropLast().contains(Instructor.lowercased())})
+                if !elements.isEmpty && !selected{
+                    ScrollView(showsIndicators: false){
+                        ForEach(elements.prefix(20)){ i in
+                            Button(action:{
+                                selected = true
+                                Instructor = String(i.Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
+                                
+                            }) {
+                                VStack(alignment: .leading) {
+                                    Text(i.Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
+                                        .foregroundColor(.secondary)
+                                        .font(.system(.caption2, design: .rounded))
+                                        .tracking(-0.5)
+                                        .multilineTextAlignment(.leading)
+                                    
+                                }
+                                .padding(.vertical)
+                                Spacer()
+                            }
+                            
+                        }
+                        .background(Color("ClassColor"))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                    }
+                    .padding(.trailing)
+                    .frame(height: 160)
+                }
                 
-            } else {
-                Text("3. Finally, enter some detail")
-                    .foregroundColor(Color("Theme"))
-                    .font(.system(.subheadline, design: .rounded))
-                    .fontWeight(.bold)
-                    .tracking(-0.5)
-                    .padding(.bottom)
-                
-                TextField("Comment on your class", text: $ClassOverview)
-                    .foregroundColor(Color("Default"))
-                    .font(.system(.subheadline, design: .rounded))
                 
             }
         }
@@ -155,7 +184,7 @@ struct EditView: View {
         .background(Color("ClassColor"))
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(.horizontal)
-        .padding([.horizontal, .bottom])
+        .padding(.all)
         
         HStack{
             if selectedSection != 0{
@@ -172,51 +201,46 @@ struct EditView: View {
                 }
             }
             
-            if !selected && !ClassLocation.isEmpty{
+            if selected{
                 Button(action: {
 
-                    if selectedSection != 2{
+                    if selectedSection != 1{
                         selectedSection += 1
+                        selected = false
                     }
                     else {
                         selectedSection = 0
+                        
                         if (Latitude > 42.05712) && (Latitude < 42.05851) && (Longitude < -87.67495) && (Longitude > -87.67675){
                             Latitude = 42.0578383
                             Longitude = -87.6761566
                         }
                         
-                        MeetingInfo = (MeetingInfo.isEmpty ? "TBA" : MeetingInfo)
-                        ClassOverview = (ClassOverview.isEmpty ? "Default overview" : ClassOverview)
-                        ClassLocation = (ClassLocation.isEmpty ? "TBA" : ClassLocation)
-                        Section = (Section.isEmpty ? "0" : Section)
-                        Instructor = (Instructor.isEmpty ? "TBA" : Instructor)
+                        MeetingInfo = (MeetingInfo.isEmpty ? classes.detail[0].MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: "") : MeetingInfo)
+                        ClassLocation = (ClassLocation.isEmpty ? classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0] : ClassLocation)
                         
-                        classes.userClass.append(ClassInfo(Class: classes.detail[0].Class, ClassLocation: [Latitude, Longitude], ClassOverview: ClassOverview, Instructor: Instructor + " ", Major: classes.detail[0].Major, MeetingInfo: MeetingInfo, School: classes.detail[0].School, Section: Section))
+                        classes.userClass.append(ClassInfo(Class: classes.detail[0].Class, ClassLocation: [Latitude, Longitude], ClassOverview: classes.detail[0].ClassOverview, Instructor: Instructor + " ", Major: classes.detail[0].Major, MeetingInfo: ClassLocation + ": " + MeetingInfo, School: classes.detail[0].School, Section: classes.detail[0].Section))
                         
                         Latitude = 0
                         Longitude = 0
-                        ClassOverview = ""
                         Instructor = ""
                         MeetingInfo = ""
                         ClassLocation = ""
-                        ClassName = ""
-                        Section = ""
-                        
+                        classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
                         showAlert = true
-
                     }
                     
                 }){
-                    Text((selectedSection == 2) ? "Add Classes" : "Next")
+                    Text((selectedSection == 1) ? "Add Classes" : "Next")
                         .font(.system(.subheadline, design: .rounded))
                         .frame(width: 120, height: 40, alignment: .center)
-                        .background((selectedSection == 2) ? Color("Theme").opacity(0.7) : Color("ClassColor"))
-                        .foregroundColor((selectedSection == 2) ? Color("ClassColor") : Color("Theme"))
+                        .background((selectedSection == 1) ? Color("Theme").opacity(0.7) : Color("ClassColor"))
+                        .foregroundColor((selectedSection == 1) ? Color("ClassColor") : Color("Theme"))
                         .cornerRadius(12)
                         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 2, y: 2)
                 }
                 .alert(isPresented: $showAlert, content: {
-                    Alert(title: Text("Congrats"), message: Text("Your custom class is added"), dismissButton: .default(Text("Yay!")))
+                    Alert(title: Text("Congrats"), message: Text("Your custom class is edited"), dismissButton: .default(Text("Yay!")))
                 })
             }
            

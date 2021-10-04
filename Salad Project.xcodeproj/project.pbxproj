@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0110BF3026FAF14A00255FE6 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0110BF2F26FAF14A00255FE6 /* DetailView.swift */; };
 		0142828926F0032800E0949E /* BugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142828826F0032800E0949E /* BugView.swift */; };
-		014F85B72702D90400F7ED0E /* Matcha.json in Resources */ = {isa = PBXBuildFile; fileRef = 014F85B62702D90400F7ED0E /* Matcha.json */; };
 		014F85B92702E46A00F7ED0E /* UserClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014F85B82702E46A00F7ED0E /* UserClassView.swift */; };
 		014F85BB2702EA0F00F7ED0E /* UserClassList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014F85BA2702EA0F00F7ED0E /* UserClassList.swift */; };
 		01531DDF26D713F600A8CEFD /* SideButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01531DDE26D713F600A8CEFD /* SideButtonView.swift */; };
@@ -52,7 +51,6 @@
 /* Begin PBXFileReference section */
 		0110BF2F26FAF14A00255FE6 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		0142828826F0032800E0949E /* BugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugView.swift; sourceTree = "<group>"; };
-		014F85B62702D90400F7ED0E /* Matcha.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Matcha.json; sourceTree = "<group>"; };
 		014F85B82702E46A00F7ED0E /* UserClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClassView.swift; sourceTree = "<group>"; };
 		014F85BA2702EA0F00F7ED0E /* UserClassList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClassList.swift; sourceTree = "<group>"; };
 		01531DDE26D713F600A8CEFD /* SideButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideButtonView.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 				2B4A8B052704DA0E0076C32D /* EmailHelper.swift */,
 				01CFC76C26D7909C00497454 /* CornerButtonView.swift */,
 				01DFC94A270ACBEC0089DC45 /* Matcha4.json */,
-				014F85B62702D90400F7ED0E /* Matcha.json */,
 				0175756926D8D2FA00757862 /* LocationManager.swift */,
 				0175756B26D8D45C00757862 /* MapView.swift */,
 				01FEC9DA26DB412D004B506F /* SearchView.swift */,
@@ -290,7 +287,6 @@
 			files = (
 				01DFC94B270ACBEC0089DC45 /* Matcha4.json in Resources */,
 				019EFA1E26F1C14400C83E00 /* Launch Screen.storyboard in Resources */,
-				014F85B72702D90400F7ED0E /* Matcha.json in Resources */,
 				019CB4D726D60F9000577EBF /* Assets.xcassets in Resources */,
 				01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */,
 			);
