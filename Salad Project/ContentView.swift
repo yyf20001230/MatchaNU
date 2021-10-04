@@ -270,7 +270,7 @@ struct ContentView: View {
                     } else {
                         if classes.detail.isEmpty{
                             if !classes.showUserClass{
-                                ClassList(txt: $ClassName, datas: $datas.data, uniqueData: $datas.uniquedata).environmentObject(classes)
+                                ClassList(txt: $ClassName, datas: $datas.data, uniqueData: $datas.uniquedata, uniqueProf: $datas.uniqueprof).environmentObject(classes)
                                     .environmentObject(settings)
                                     .padding(.top)
                                     .gesture(
