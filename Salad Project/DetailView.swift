@@ -76,13 +76,13 @@ struct DetailView: View {
                                     .scaleEffect(1.5)
                                     .scaledToFill()
                                     .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                                Text(classes.showRoute ? "Stop" : "Navigate")
+                                Text(classes.showRoute ? "Stop" : "Route")
                                     .padding(.all)
                                     .font(.system(.caption2, design: .rounded))
                             }
                             
-                            .accentColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                            .frame(width: UIScreen.main.bounds.width / 3.7)
+                            .accentColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
+                            .frame(width: UIScreen.main.bounds.width / 5.1)
                             .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
@@ -111,12 +111,12 @@ struct DetailView: View {
                                     .scaleEffect(1.5)
                                     .scaledToFill()
                                     .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                                Text(classes.userClass.contains(classes.detail[0]) ? "DROP" : "ADD")
+                                Text(classes.userClass.contains(classes.detail[0]) ? "Drop" : "Add")
                                     .padding(.all)
                                     .font(.system(.caption2, design: .rounded))
                             }
-                            .accentColor(classes.userClass.contains(classes.detail[0]) ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                            .frame(width: UIScreen.main.bounds.width / 3.7)
+                            .accentColor(classes.userClass.contains(classes.detail[0]) ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
+                            .frame(width: UIScreen.main.bounds.width / 5.1)
                             .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                             
@@ -126,8 +126,30 @@ struct DetailView: View {
                             return Alert(title: Text(classes.userClass.contains(classes.detail[0]) ? "Class Added" : "Class Dropped"), message: Text(classes.userClass.contains(classes.detail[0]) ? message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is added to your schedule" : message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is dropped out of your schedule"), dismissButton: .default(Text("Got it!")))
                         })
                         
+                        Button(action: {
+                            classes.EditClass = true
+                        }){
+                            VStack{
+                                Image(systemName: "pencil.circle.fill")
+                                    .padding(.top)
+                                    .padding(.horizontal, 24)
+                                    .scaleEffect(1.5)
+                                    .scaledToFill()
+                                    .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
+                                Text("Edit")
+                                    .padding(.all)
+                                    .font(.system(.caption2, design: .rounded))
+                            }
+                            .accentColor(Color("Theme"))
+                            .frame(width: UIScreen.main.bounds.width / 5.1)
+                            .background(Color("ClassColor"))
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                            
+                        }
                         
-                        if self.classes.detail[0].ClassLocation == [42.05780619999999,-87.67587739999999]{
+                        
+                        
+                        if self.classes.detail[0].ClassLocation == [42.0578383,-87.6761566]{
                             Link(destination: URL(string: "https://www.mccormick.northwestern.edu/contact/tech-room-finder.html")!, label: {
                                 VStack{
                                     Image(systemName: "viewfinder.circle.fill")
@@ -136,12 +158,12 @@ struct DetailView: View {
                                         .scaleEffect(1.5)
                                         .scaledToFill()
                                         .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                                    Text("Tech Room")
+                                    Text("Finder")
                                         .padding(.all)
                                         .font(.system(.caption2, design: .rounded))
                                 }
-                                .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                                .frame(width: UIScreen.main.bounds.width / 3.7)
+                                .accentColor(Color("Theme"))
+                                .frame(width: UIScreen.main.bounds.width / 5.1)
                                 .background(Color("ClassColor"))
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                             })

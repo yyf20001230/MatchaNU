@@ -12,6 +12,7 @@ struct ClassList: View{
     @Binding var txt: String
     @Binding var datas: [ClassInfo]
     @Binding var uniqueData: [ClassInfo]
+    @Binding var uniqueProf: [ClassInfo]
     @EnvironmentObject var classes: ClassLocations
     
     var body: some View{
@@ -97,15 +98,17 @@ struct ClassList: View{
             
         } else {
             
-            let elements = (self.txt.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: " ").replacingOccurrences(of:" ", with: "").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: ""))}).count != 0)
+            let text = self.txt.lowercased().replacingOccurrences(of:"_", with: "")
+            let elements = (text.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: " ").replacingOccurrences(of:" ", with: "").prefix(self.txt.count).contains(text.replacingOccurrences(of:" ", with: ""))}).count != 0)
             
                 ?
             
-            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: ""))})
+            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").prefix(self.txt.count).contains(text.replacingOccurrences(of:" ", with: ""))})
             
                 :
             
-            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + $0.Class.lowercased().components(separatedBy: " ")[0] + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: ""))})
+            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + $0.Class.lowercased().components(separatedBy: " ")[0] + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").contains(text.replacingOccurrences(of:" ", with: ""))}) + self.uniqueProf.filter({($0.Instructor).lowercased().contains(text)})
+            
             
             if elements.count == 0{
                 if self.txt.replacingOccurrences(of: " ", with: "").count != 0{
@@ -136,7 +139,7 @@ struct ClassList: View{
                                     .resizable()
                                     .scaledToFit()
                                     .frame(height: 25)
-                                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                    .foregroundColor(Color("Theme"))
                                     .padding(.leading)
                                     .padding(.leading)
                                 
@@ -237,9 +240,10 @@ class getClass: ObservableObject{
     
     @Published var data = [ClassInfo]()
     @Published var uniquedata = [ClassInfo]()
+    @Published var uniqueprof = [ClassInfo]()
     
     init(){
-        if let fileLocation = Bundle.main.url(forResource: "Matcha", withExtension: "json") {
+        if let fileLocation = Bundle.main.url(forResource: "Matcha4", withExtension: "json") {
             do {
                 let classData = try Data(contentsOf: fileLocation)
                 let jsonDecoder = JSONDecoder()
@@ -249,6 +253,9 @@ class getClass: ObservableObject{
                 for document in self.data{
                     if self.uniquedata.count == 0 || self.uniquedata.last!.Class + self.uniquedata.last!.Major != (document.Class + document.Major){
                         self.uniquedata.append(document)
+                    }
+                    if self.uniqueprof.count == 0 || self.uniqueprof.last!.Instructor != (document.Instructor){
+                        self.uniqueprof.append(document)
                     }
                 }
                 

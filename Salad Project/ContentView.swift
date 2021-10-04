@@ -32,7 +32,7 @@ class ClassLocations: ObservableObject{
         guard let data = UserDefaults.standard.data(forKey: "UserClassFile") else { return }
         guard let savedItems = try? JSONDecoder().decode([ClassInfo].self, from: data) else { return }
         
-        self.userClass = savedItems
+        userClass = savedItems
     }
     
     func savedItems(){
@@ -77,7 +77,7 @@ struct ContentView: View {
             
             MapView().environmentObject(classes)
                 .ignoresSafeArea()
-                .accentColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                .accentColor(Color("Theme"))
             
             VStack{
                 VStack{
@@ -86,22 +86,22 @@ struct ContentView: View {
                         SideButtonView()
                             .environmentObject(settings)
                             .padding(.trailing)
-                            .padding(.top, self.height / 18)
+                            .padding(.top, height / 18)
                     }
                     Spacer()
                 }
                 Spacer()
                 HStack {
-                    if self.MainTab.height >= 0 && !classes.ShowClass{
+                    if MainTab.height >= 0 && !classes.ShowClass{
                         CornerButtonView()
                             .environmentObject(classes)
                             .onTapGesture {
                                 classes.showUserLocation.toggle()
                             }
-                            .foregroundColor(self.classes.showUserLocation ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                            .offset(y: -self.height / 12 - 50)
+                            .foregroundColor(classes.showUserLocation ? Color("Red") : Color("Theme"))
+                            .offset(y: -height / 12 - 50)
                             .padding(.leading)
-                            .opacity(Double(1 + self.MainTab.height))
+                            .opacity(Double(1 + MainTab.height))
                         Spacer()
                         UserClassView().environmentObject(classes)
                             .onTapGesture {
@@ -113,10 +113,10 @@ struct ContentView: View {
                                 }
                                 
                             }
-                            .foregroundColor(self.classes.showUserClass ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                            .offset(y: -self.height / 12 - 50)
+                            .foregroundColor(classes.showUserClass ? Color("Red") : Color("Theme"))
+                            .offset(y: -height / 12 - 50)
                             .padding(.trailing)
-                            .opacity(Double(1 + self.MainTab.height))
+                            .opacity(Double(1 + MainTab.height))
                     }
                     
                 }
@@ -130,12 +130,12 @@ struct ContentView: View {
             VStack {
                 Rectangle()
                     .frame(width: 40.0, height: 4.0)
-                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                    .foregroundColor(Color("Theme"))
                     .cornerRadius(2.0)
                     .padding(.top, 10)
                 
                 
-                if self.classes.Section.count == 0{
+                if classes.Section.count == 0 && !classes.EditClass{
                     if classes.detail.isEmpty && !classes.showUserClass{
                         ZStack {
                             Rectangle()
@@ -153,9 +153,10 @@ struct ContentView: View {
                                     .padding(.leading)
                                 
                                 Spacer()
-                                if self.ClassName != ""{
+                                
+                                if ClassName != ""{
                                     Button(action: {
-                                        self.ClassName = ""
+                                        ClassName = ""
                                     }){
                                         Image(systemName: "xmark.circle.fill")
                                             .padding(.trailing)
@@ -163,7 +164,7 @@ struct ContentView: View {
                                     .foregroundColor(.black)
                                 } else{
                                     Image(systemName:"magnifyingglass")
-                                        .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                        .foregroundColor(Color("Theme"))
                                         .padding(.trailing)
                                     
                                 }
@@ -175,28 +176,10 @@ struct ContentView: View {
                             
                         }
                         .padding([.leading, .trailing])
+                        
                     } else {
-                        HStack{
-                            if classes.EditClass{
-                                
-                                VStack (alignment: .leading, spacing: 4){
-                                    
-                                    Text("Customize your Matcha!")
-                                        .font(.system(.body, design: .rounded))
-                                        .fontWeight(.bold)
-                                        .tracking(-0.5)
-                                        .padding(.trailing)
-                                    
-                                    Text("Your class will show up as:")
-                                        .foregroundColor(.secondary)
-                                        .font(.system(.caption2, design: .rounded))
-                                        .tracking(-0.5)
-                                }
-                                
-                                Spacer()
-                                
-                            } else {
-                                
+                        VStack (alignment: .leading){
+                            HStack{
                                 VStack (alignment: .leading, spacing: 4){
                                     Text(classes.detail.isEmpty ? "Your Class" : classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
                                         .font(.system(.body, design: .rounded))
@@ -208,42 +191,33 @@ struct ContentView: View {
                                         .font(.system(.caption2, design: .rounded))
                                         .tracking(-0.5)
                                 }
-
+                                
                                 Spacer()
+                                
+                                if (!classes.showUserClass && !classes.detail.isEmpty) || classes.EditClass{
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.secondary)
+                                        .scaleEffect(1.2)
+                                        .padding(.trailing)
+                                        .padding(.trailing)
+                                        .onTapGesture{
+                                            classes.detail.removeAll()
+                                            classes.showRoute = false
+                                            classes.EditClass = false
+                                        }
+                                }
                             }
-
-                            if !classes.detail.isEmpty {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.secondary)
-                                    .scaleEffect(1.2)
-                                    .padding(.trailing)
-                                    .padding(.trailing)
-                                    .onTapGesture{
-                                        classes.detail.removeAll()
-                                        classes.showRoute = false
-                                    }
-                            } else {
-                                Image(systemName: classes.EditClass ? "pencil.slash" : "square.and.pencil")
-                                    .foregroundColor(classes.EditClass ? Color("Red") :Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                                    .scaleEffect(1.2)
-                                    .background(Color("SearchbarColor"))
-                                    .padding(.trailing)
-                                    .padding(.trailing)
-                                    .onTapGesture{
-                                        classes.ShowClass = true
-                                        classes.EditClass.toggle()
-                                    }
-                            }
+                            
+                            .padding(.top, 6)
+                            .padding(.leading)
+                            .padding(.leading)
                         }
                         
-                        .padding(.top, 6)
-                        .padding(.leading)
-                        .padding(.leading)
                     }
+                       
                     
                     
                 } else {
-                    
                     HStack{
                         
                         VStack (alignment: .leading, spacing: 4){
@@ -261,6 +235,7 @@ struct ContentView: View {
                                 .multilineTextAlignment(.leading)
                         }
                         
+
                         Spacer()
                         
                         Image(systemName: "xmark.circle.fill")
@@ -269,6 +244,7 @@ struct ContentView: View {
                             .padding(.trailing)
                             .padding(.trailing)
                             .onTapGesture{
+                                classes.EditClass = false
                                 if !classes.showRoute{
                                     classes.ShowClass = true
                                 }
@@ -281,11 +257,6 @@ struct ContentView: View {
                                 }
                                 
                             }
-                        
-                        
-                        
-                        
-                        
                     }
                     .padding(.top, 6)
                     .padding(.leading)
@@ -293,29 +264,28 @@ struct ContentView: View {
                     
                 }
                 
-                if self.MainTab.height < -20 || classes.ShowClass{
-                    if self.classes.detail.isEmpty{
-                        if !classes.showUserClass{
-                            ClassList(txt: self.$ClassName, datas: self.$datas.data, uniqueData: self.$datas.uniquedata).environmentObject(classes)
-                                .environmentObject(settings)
-                                .padding(.top)
-                                .gesture(
-                                    DragGesture().onChanged{ value in
-                                    self.MainTab = CGSize.zero
-                                }
-                                )
-                        } else {
-                            if classes.EditClass{
-                                EditView().environmentObject(classes)
+                if MainTab.height < -20 || classes.ShowClass{
+                    if classes.EditClass{
+                        EditView(datas: $datas.data).environmentObject(classes)
+                    } else {
+                        if classes.detail.isEmpty{
+                            if !classes.showUserClass{
+                                ClassList(txt: $ClassName, datas: $datas.data, uniqueData: $datas.uniquedata, uniqueProf: $datas.uniqueprof).environmentObject(classes)
+                                    .environmentObject(settings)
+                                    .padding(.top)
+                                    .gesture(
+                                        DragGesture().onChanged{ value in
+                                            MainTab = CGSize.zero
+                                        }
+                                    )
                             } else {
                                 UserClassList().environmentObject(classes)
                             }
+                        } else {
+                            DetailView().environmentObject(classes)
                         }
-                        
-                        
-                    } else {
-                        DetailView().environmentObject(classes)
                     }
+                   
                 }
                 Spacer()
                 
@@ -323,17 +293,18 @@ struct ContentView: View {
             .edgesIgnoringSafeArea(.all)
             .background(Color("SearchbarColor"))
             .cornerRadius(8.0)
-            .offset(y: self.MainTab.height)
-            .offset(y: classes.ShowClass ? self.height / 6 : self.height / 1.22)
+            .offset(y: MainTab.height)
+            .offset(y: classes.ShowClass ? height / 6 : height / 1.22)
+            .shadow(color: Color("Default").opacity(0.2), radius: 6, x: 3, y: 3)
             .gesture(
                 DragGesture().onChanged { value in
-                self.MainTab = value.translation
+                MainTab = value.translation
                 if value.translation.height < -40 && classes.ShowClass
                     || value.translation.height > 40 && !classes.ShowClass{
-                    self.MainTab = CGSize.zero
+                    MainTab = CGSize.zero
                 }
-                else if value.translation.height < -self.height / 1.5 && !classes.ShowClass{
-                    self.MainTab = CGSize.zero
+                else if value.translation.height < -height / 1.5 && !classes.ShowClass{
+                    MainTab = CGSize.zero
                     classes.ShowClass = true
                 }
                 
@@ -347,7 +318,7 @@ struct ContentView: View {
                     hideKeyboard()
                 }
                 
-                self.MainTab = CGSize.zero
+                MainTab = CGSize.zero
                 
             }
             )
@@ -358,7 +329,7 @@ struct ContentView: View {
                 .foregroundColor(Color.black)
                 .opacity(0.7)
                 .ignoresSafeArea()
-                .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : self.height)
+                .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : height)
                 .onTapGesture(){
                     settings.Settings = false
                 }
@@ -366,23 +337,23 @@ struct ContentView: View {
             
             ScheduleView()
                 .environmentObject(settings)
-                .offset(y: settings.Schedule ?  0 : self.height)
+                .offset(y: settings.Schedule ?  0 : height)
                 .animation(.spring())
             
             SettingsView()
                 .environmentObject(settings)
                 .environmentObject(classes)
-                .offset(y: settings.Settings ? self.height / 3.2 : self.height)
+                .offset(y: settings.Settings ? height / 3.2 : height)
                 .animation(.spring())
             
             AboutView()
                 .environmentObject(settings)
-                .offset(y: settings.About ?  0 : self.height)
+                .offset(y: settings.About ?  0 : height)
                 .animation(.spring())
             
             BugView()
                 .environmentObject(settings)
-                .offset(y: settings.Bug ?  self.height / 4.8 : self.height)
+                .offset(y: settings.Bug ?  height / 4.8 : height)
                 .animation(.spring())
             
             
