@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct EditView: View {
+    
     @EnvironmentObject var classes: ClassLocations
+    @Binding var datas: [ClassInfo]
+    
     @State var Number = ""
     @State var Latitude = ""
     @State var Longitude = ""
@@ -24,71 +27,83 @@ struct EditView: View {
     @State private var errorMessage = ""
     
     var body: some View {
-
-        VStack (alignment: .leading, spacing: 10){
-            HStack{
-                Text(((Number + Section).isEmpty) ? "Default 0" : Number + ((Section.isEmpty || Number == "Default 0") ? "" : "-") + Section)
-                    .foregroundColor(.primary)
-                    .font(.system(.subheadline, design: .rounded))
-                    .fontWeight(.bold)
-                    .tracking(-0.5)
-                Spacer()
-            }
-            
-            HStack{
-                VStack(alignment: .leading, spacing: 4.0){
-                    Text("Meeting Location: " + (ClassLocation.isEmpty ? "Default location" : "\(ClassLocation)"))
-                        .foregroundColor(.secondary)
-                        .font(.system(.caption2, design: .rounded))
-                        .tracking(-0.5)
-
-                    Text("Meeting Info: " + (MeetingInfo.isEmpty ? "Default meeting info" : "\(MeetingInfo)"))
-                        .foregroundColor(.secondary)
-                        .font(.system(.caption2, design: .rounded))
-                        .tracking(-0.5)
-                    
-                    Text("Instructor: " + (Instructor.isEmpty ? "Default instructor" : "\(Instructor)"))
-                        .foregroundColor(.secondary)
-                        .font(.system(.caption2, design: .rounded))
-                        .tracking(-0.5)
-                }
-                
-                Spacer()
-            }
-            
-        }
-        .padding(.all)
-        .background(Color("ClassColor"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.all)
         
+        if !classes.detail.isEmpty && selectedSection != 0{
+            VStack (alignment: .leading, spacing: 10){
+                
+                    HStack{
+                        Text(classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
+                            .foregroundColor(.primary)
+                            .font(.system(.subheadline, design: .rounded))
+                            .fontWeight(.bold)
+                            .tracking(-0.5)
+                        Spacer()
+                    }
+                    
+                    HStack{
+                        VStack(alignment: .leading, spacing: 4.0){
+                            Text("Meeting Location: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0])
+                                .foregroundColor(.secondary)
+                                .font(.system(.caption2, design: .rounded))
+                                .tracking(-0.5)
+                            
+                            Text("Meeting Info: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[1])
+                                .foregroundColor(.secondary)
+                                .font(.system(.caption2, design: .rounded))
+                                .tracking(-0.5)
+                            
+                            Text("Instructor: " + classes.detail[0].Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
+                                .foregroundColor(.secondary)
+                                .font(.system(.caption2, design: .rounded))
+                                .tracking(-0.5)
+                        }
+                        
+                        Spacer()
+                        
+                    }
+                
+            }
+            .padding(.all)
+            .background(Color("ClassColor"))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.horizontal)
+            .padding(.all)
+        }
+            
         VStack (alignment: .leading){
             if selectedSection == 0{
-                Text("1. Let's start with location info")
-                    .foregroundColor(Color("Theme"))
-                    .font(.system(.subheadline, design: .rounded))
-                    .fontWeight(.bold)
-                    .tracking(-0.5)
-                    .padding(.bottom)
-                    
-                TextField("*Enter coordinate latitude (e.x.: 42.0572)", text: $Latitude)
-                    .foregroundColor(Color("Default"))
-                    .font(.system(.subheadline, design: .rounded))
-                
-                Divider()
-                
-                TextField("*Enter coordinate longitude (e.x.: -87.6753)", text: $Longitude)
-                    .foregroundColor(Color("Default"))
-                    .font(.system(.subheadline, design: .rounded))
-
-                Divider()
                 
                 TextField("Enter class location", text: $ClassLocation)
                     .foregroundColor(Color("Default"))
-                    .font(.system(.subheadline, design: .rounded))
-
+                    .font(.system(.caption2, design: .rounded))
                 
+                let elements = self.datas.filter({$0.MeetingInfo.components(separatedBy: ": ")[0].lowercased().contains(self.ClassLocation.lowercased().replacingOccurrences(of:"_", with: ""))})
                 
+                if !elements.isEmpty{
+                    ScrollView(showsIndicators: false){
+                        ForEach(elements.prefix(5)){ i in
+                            Button(action:{
+                                
+                            }) {
+                                VStack(alignment: .leading) {
+                                    Text(i.MeetingInfo)
+                                        .foregroundColor(.secondary)
+                                        .font(.system(.caption2, design: .rounded))
+                                        .tracking(-0.5)
+                                        .multilineTextAlignment(.leading)
+                                    
+                                }
+                                .padding(.all)
+                                Spacer()
+                            }
+                        }
+                        .background(Color("ClassColor"))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                    }
+                    .padding(.horizontal)
+                    .frame(height: 160)
+                }
                 
             } else if selectedSection == 1{
                 Text("2. Now, let's enter course info")
@@ -144,6 +159,7 @@ struct EditView: View {
         .padding(.all)
         .background(Color("ClassColor"))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.horizontal)
         .padding([.horizontal, .bottom])
         
         HStack{
@@ -201,7 +217,7 @@ struct EditView: View {
                     ClassLocation = (ClassLocation.isEmpty ? "TBA" : ClassLocation)
                     Section = (Section.isEmpty ? "0" : Section)
                     Instructor = (Instructor.isEmpty ? "TBA" : Instructor)
-                        
+                    
                     classes.userClass.append(ClassInfo(Class: Number.components(separatedBy: " ").dropFirst().joined(separator: " ") + " " + ClassName, ClassLocation: geolocation, ClassOverview: ClassOverview, Instructor: Instructor + " ", Major: Number.components(separatedBy: " ")[0] + " - your Major", MeetingInfo: ClassLocation + ": " + MeetingInfo, School: "", Section: Section + ": your section"))
                     
                     Number = ""
@@ -232,13 +248,9 @@ struct EditView: View {
             })
         }
         
-
+        
         
     }
 }
 
-struct EditView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditView()
-    }
-}
+

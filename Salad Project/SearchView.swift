@@ -97,15 +97,17 @@ struct ClassList: View{
             
         } else {
             
-            let elements = (self.txt.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: " ").replacingOccurrences(of:" ", with: "").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: ""))}).count != 0)
+            let text = self.txt.lowercased().replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "")
+            let elements = (text.count < 7 && self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: " ").replacingOccurrences(of:" ", with: "").prefix(self.txt.count).contains(text)}).count != 0)
             
                 ?
             
-            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").prefix(self.txt.count).contains(self.txt.lowercased().replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: ""))})
+            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0]).replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").prefix(self.txt.count).contains(text)})
             
                 :
             
-            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + $0.Class.lowercased().components(separatedBy: " ")[0] + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").contains(self.txt.lowercased().replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: ""))})
+            self.uniqueData.filter({($0.Major.lowercased().components(separatedBy: " ")[0] + $0.Class.lowercased().components(separatedBy: " ")[0] + $0.Class.lowercased().components(separatedBy: " ").dropFirst().joined(separator: " ")).replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").contains(text)}) + self.datas.filter({($0.Instructor).lowercased().replacingOccurrences(of:"_", with: "").replacingOccurrences(of:" ", with: "").contains(text)})
+            
             
             if elements.count == 0{
                 if self.txt.replacingOccurrences(of: " ", with: "").count != 0{
@@ -136,7 +138,7 @@ struct ClassList: View{
                                     .resizable()
                                     .scaledToFit()
                                     .frame(height: 25)
-                                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                                    .foregroundColor(Color("Theme"))
                                     .padding(.leading)
                                     .padding(.leading)
                                 
@@ -239,7 +241,7 @@ class getClass: ObservableObject{
     @Published var uniquedata = [ClassInfo]()
     
     init(){
-        if let fileLocation = Bundle.main.url(forResource: "Matcha", withExtension: "json") {
+        if let fileLocation = Bundle.main.url(forResource: "Matcha2", withExtension: "json") {
             do {
                 let classData = try Data(contentsOf: fileLocation)
                 let jsonDecoder = JSONDecoder()
