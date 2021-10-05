@@ -122,7 +122,7 @@ struct EditView: View {
                                 VStack(alignment: .leading) {
                                     Text(i)
                                         .foregroundColor(.secondary)
-                                        .font(.system(.caption2, design: .rounded))
+                                        .font(.system(.subheadline, design: .rounded))
                                         .tracking(-0.5)
                                         .multilineTextAlignment(.leading)
                                     
@@ -180,7 +180,7 @@ struct EditView: View {
                                 VStack(alignment: .leading) {
                                     Text(i)
                                         .foregroundColor(.secondary)
-                                        .font(.system(.caption2, design: .rounded))
+                                        .font(.system(.subheadline, design: .rounded))
                                         .tracking(-0.5)
                                         .multilineTextAlignment(.leading)
                                     
