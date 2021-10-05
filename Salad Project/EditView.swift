@@ -31,7 +31,7 @@ struct EditView: View {
         
         let data = datas
         let locations = Array(Set(data.map({$0.MeetingInfo.components(separatedBy: ": ")[0]})))
-        let profs = Array(Set(data.map({$0.Instructor})))
+        let profs = Array(Set(data.map({$0.Instructor.replacingOccurrences(of: "|", with: ",").dropLast()})))
         
         if !classes.detail.isEmpty && selectedSection == 2{
             VStack (alignment: .leading, spacing: 10){
@@ -159,11 +159,11 @@ struct EditView: View {
                         ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
                                 selected = true
-                                Instructor = i.replacingOccurrences(of: "|", with: ",")
+                                Instructor = String(i)
                                 
                             }) {
                                 VStack(alignment: .leading) {
-                                    Text(i.replacingOccurrences(of: "|", with: ",").dropLast())
+                                    Text(i)
                                         .foregroundColor(.secondary)
                                         .font(.system(.caption2, design: .rounded))
                                         .tracking(-0.5)
