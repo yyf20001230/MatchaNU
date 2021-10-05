@@ -194,7 +194,7 @@ struct ContentView: View {
                                 
                                 Spacer()
                                 
-                                if (!classes.showUserClass && !classes.detail.isEmpty) || classes.EditClass{
+                                if !classes.detail.isEmpty || classes.EditClass{
                                     Image(systemName: "xmark.circle.fill")
                                         .foregroundColor(.secondary)
                                         .scaleEffect(1.2)

@@ -111,9 +111,12 @@ struct EditView: View {
                                 
                                 Latitude = data.first(where: {$0.MeetingInfo.contains(i)})!.ClassLocation[0]
                                 Longitude = data.first(where: {$0.MeetingInfo.contains(i)})!.ClassLocation[1]
-                                foundLocation = true
+
                                 MeetingInfo = classes.detail[0].MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: " ")
+                                Instructor = String(classes.detail[0].Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
                                 ClassLocation = i
+                                
+                                foundLocation = true
                                 selected = true
                             }) {
                                 VStack(alignment: .leading) {
@@ -171,8 +174,8 @@ struct EditView: View {
                         ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
                                 foundLocation = true
-                                Instructor = String(i)
                                 selected = true
+                                Instructor = String(i)
                             }) {
                                 VStack(alignment: .leading) {
                                     Text(i)
@@ -210,6 +213,7 @@ struct EditView: View {
                 Button(action: {
                     selectedSection = selectedSection - 1
                     enteredNextPage = false
+                    selected = true
                 
                 }){
                     Text("back")
