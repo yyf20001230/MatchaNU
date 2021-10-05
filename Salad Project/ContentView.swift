@@ -265,7 +265,7 @@ struct ContentView: View {
                 
                 if MainTab.height < -20 || classes.ShowClass{
                     if classes.EditClass{
-                        EditView(datas: $datas.data, uniqueProf: $datas.uniqueprof).environmentObject(classes)
+                        EditView(datas: datas.data, uniqueProf: datas.uniqueprof).environmentObject(classes)
                     } else {
                         if classes.detail.isEmpty{
                             if !classes.showUserClass{
