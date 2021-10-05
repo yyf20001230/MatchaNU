@@ -254,7 +254,7 @@ struct EditView: View {
                         ClassLocation = ""
                         showAlert = true
                         classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
-                        classes.detail.removeAll()
+                        //classes.detail.removeAll()
                     }
                     
                 }){
