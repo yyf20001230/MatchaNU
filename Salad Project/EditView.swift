@@ -10,8 +10,8 @@ import SwiftUI
 struct EditView: View {
     
     @EnvironmentObject var classes: ClassLocations
-    @Binding var datas: [ClassInfo]
-    @Binding var uniqueProf: [ClassInfo]
+    @State var datas: [ClassInfo]
+    @State var uniqueProf: [ClassInfo]
     
     @State var Latitude = 0.0
     @State var Longitude = 0.0
@@ -28,6 +28,10 @@ struct EditView: View {
     @State private var selected = false
     
     var body: some View {
+        
+        let data = datas
+        let locations = Array(Set(data.map({$0.MeetingInfo.components(separatedBy: ": ")[0]})))
+        let profs = Array(Set(data.map({$0.Instructor})))
         
         if !classes.detail.isEmpty && selectedSection == 2{
             VStack (alignment: .leading, spacing: 10){
@@ -91,20 +95,22 @@ struct EditView: View {
                         selected = false
                     }
                 
-                let elements = datas.filter({$0.MeetingInfo.components(separatedBy: ": ")[0].lowercased().contains(ClassLocation.lowercased().replacingOccurrences(of:"_", with: ""))})
+                
+                let elements = locations.filter({$0.lowercased().contains(ClassLocation.lowercased())})
+                
                 if !elements.isEmpty && !selected{
                     ScrollView(showsIndicators: false){
-                        ForEach(elements.prefix(20)){ i in
+                        ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
                                 selected = true
-                                Latitude = i.ClassLocation[0]
-                                Longitude = i.ClassLocation[1]
-                                MeetingInfo = i.MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: "")
-                                ClassLocation = i.MeetingInfo.components(separatedBy: ": ")[0]
+                                //Latitude = i.ClassLocation[0]
+                                //Longitude = i.ClassLocation[1]
+                                MeetingInfo = classes.detail[0].MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: " ")
+                                ClassLocation = i
                                 
                             }) {
                                 VStack(alignment: .leading) {
-                                    Text(i.MeetingInfo.components(separatedBy: ": ")[0])
+                                    Text(i)
                                         .foregroundColor(.secondary)
                                         .font(.system(.caption2, design: .rounded))
                                         .tracking(-0.5)
@@ -150,10 +156,10 @@ struct EditView: View {
                 let elements = uniqueProf.filter({$0.Instructor.components(separatedBy: ": ")[0].lowercased().replacingOccurrences(of: "|", with: ",").dropLast().contains(Instructor.lowercased())})
                 if !elements.isEmpty && !selected{
                     ScrollView(showsIndicators: false){
-                        ForEach(elements.prefix(20)){ i in
+                        ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
                                 selected = true
-                                Instructor = String(i.Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
+                                Instructor = String(i)
                                 
                             }) {
                                 VStack(alignment: .leading) {
@@ -185,6 +191,7 @@ struct EditView: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(.horizontal)
         .padding(.all)
+        
         
         HStack{
             if selectedSection != 0{
