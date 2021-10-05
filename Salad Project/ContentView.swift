@@ -219,7 +219,6 @@ struct ContentView: View {
                     
                 } else {
                     HStack{
-                        
                         VStack (alignment: .leading, spacing: 4){
                             let message = classes.detail.isEmpty ? "" : ("-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
                             Text(classes.Section[0].Major.components(separatedBy: " ")[0] + " " +  classes.Section[0].Class.components(separatedBy: " ")[0] + message)
@@ -266,7 +265,7 @@ struct ContentView: View {
                 
                 if MainTab.height < -20 || classes.ShowClass{
                     if classes.EditClass{
-                        EditView(datas: $datas.data).environmentObject(classes)
+                        EditView(datas: $datas.data, uniqueProf: $datas.uniqueprof).environmentObject(classes)
                     } else {
                         if classes.detail.isEmpty{
                             if !classes.showUserClass{
