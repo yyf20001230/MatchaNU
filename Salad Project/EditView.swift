@@ -153,17 +153,17 @@ struct EditView: View {
                         selected = false
                     }
                 
-                let elements = uniqueProf.filter({$0.Instructor.components(separatedBy: ": ")[0].lowercased().replacingOccurrences(of: "|", with: ",").dropLast().contains(Instructor.lowercased())})
+                let elements = profs.filter({$0.lowercased().contains(Instructor.lowercased())})
                 if !elements.isEmpty && !selected{
                     ScrollView(showsIndicators: false){
                         ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
                                 selected = true
-                                Instructor = String(i)
+                                Instructor = i.replacingOccurrences(of: "|", with: ",")
                                 
                             }) {
                                 VStack(alignment: .leading) {
-                                    Text(i.Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
+                                    Text(i.replacingOccurrences(of: "|", with: ",").dropLast())
                                         .foregroundColor(.secondary)
                                         .font(.system(.caption2, design: .rounded))
                                         .tracking(-0.5)
