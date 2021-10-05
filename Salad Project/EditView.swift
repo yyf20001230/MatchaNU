@@ -97,6 +97,7 @@ struct EditView: View {
                             selected = false
                             foundLocation = false
                         }
+                        foundLocation = false
                     }
                 
                 
