@@ -26,6 +26,7 @@ struct EditView: View {
     @State private var selectedSection = 0
     @State private var showAlert = false
     @State private var selected = false
+    @State private var foundLocation = false
     
     var body: some View {
         
@@ -92,7 +93,10 @@ struct EditView: View {
                     .foregroundColor(Color("Default"))
                     .font(.system(.subheadline, design: .rounded))
                     .onChange(of: ClassLocation){ value in
-                        selected = false
+                        if !foundLocation{
+                            selected = false
+                            foundLocation = false
+                        }
                     }
                 
                 
@@ -102,12 +106,13 @@ struct EditView: View {
                     ScrollView(showsIndicators: false){
                         ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
-                                selected = true
+                                
                                 //Latitude = i.ClassLocation[0]
                                 //Longitude = i.ClassLocation[1]
+                                foundLocation = true
                                 MeetingInfo = classes.detail[0].MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: " ")
                                 ClassLocation = i
-                                
+                                selected = true
                             }) {
                                 VStack(alignment: .leading) {
                                     Text(i)
