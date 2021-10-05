@@ -103,20 +103,23 @@ struct ContentView: View {
                             .padding(.leading)
                             .opacity(Double(1 + MainTab.height))
                         Spacer()
-                        UserClassView().environmentObject(classes)
-                            .onTapGesture {
-                                classes.showUserClass.toggle()
-                                classes.detail.removeAll()
-                                classes.Section.removeAll()
-                                if classes.showUserClass {
-                                    classes.ShowClass = true
+                        
+                        if !classes.EditClass{
+                            UserClassView().environmentObject(classes)
+                                .onTapGesture {
+                                    classes.showUserClass.toggle()
+                                    classes.detail.removeAll()
+                                    classes.Section.removeAll()
+                                    if classes.showUserClass {
+                                        classes.ShowClass = true
+                                    }
+                                    
                                 }
-                                
-                            }
-                            .foregroundColor(classes.showUserClass ? Color("Red") : Color("Theme"))
-                            .offset(y: -height / 12 - 50)
-                            .padding(.trailing)
-                            .opacity(Double(1 + MainTab.height))
+                                .foregroundColor(classes.showUserClass ? Color("Red") : Color("Theme"))
+                                .offset(y: -height / 12 - 50)
+                                .padding(.trailing)
+                                .opacity(Double(1 + MainTab.height))
+                        }
                     }
                     
                 }
@@ -251,9 +254,10 @@ struct ContentView: View {
                                     classes.Section = [ClassInfo]()
                                     
                                 } else{
-                                    classes.detail.removeAll()
                                     classes.showRoute = false
                                 }
+                                
+                                classes.detail.removeAll()
                                 
                             }
                     }

@@ -211,7 +211,10 @@ struct EditView: View {
         HStack{
             if selectedSection != 0{
                 Button(action: {
-                    selectedSection = selectedSection - 1
+                    if selectedSection == 1{
+                        selectedSection = selectedSection - 1
+                    }
+                    
                     enteredNextPage = false
                     selected = true
                 
@@ -254,7 +257,6 @@ struct EditView: View {
                         ClassLocation = ""
                         showAlert = true
                         classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
-                        //classes.detail.removeAll()
                     }
                     
                 }){
