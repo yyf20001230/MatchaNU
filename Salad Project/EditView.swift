@@ -107,8 +107,8 @@ struct EditView: View {
                         ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
                                 
-                                //Latitude = i.ClassLocation[0]
-                                //Longitude = i.ClassLocation[1]
+                                Latitude = data.first(where: {$0.MeetingInfo.contains(i)})!.ClassLocation[0]
+                                Longitude = data.first(where: {$0.MeetingInfo.contains(i)})!.ClassLocation[1]
                                 foundLocation = true
                                 MeetingInfo = classes.detail[0].MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: " ")
                                 ClassLocation = i
@@ -154,16 +154,12 @@ struct EditView: View {
                 TextField("Enter instructor name", text: $Instructor)
                     .foregroundColor(Color("Default"))
                     .font(.system(.subheadline, design: .rounded))
-                    .onChange(of: Instructor){ value in
-                        selected = false
-                    }
                 
                 let elements = profs.filter({$0.lowercased().contains(Instructor.lowercased())})
-                if !elements.isEmpty && !selected{
+                if !elements.isEmpty{
                     ScrollView(showsIndicators: false){
                         ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
-                                selected = true
                                 Instructor = String(i)
                                 
                             }) {
@@ -218,7 +214,7 @@ struct EditView: View {
 
                     if selectedSection != 1{
                         selectedSection += 1
-                        selected = false
+                        selected = true
                     }
                     else {
                         selectedSection = 0
@@ -238,8 +234,10 @@ struct EditView: View {
                         Instructor = ""
                         MeetingInfo = ""
                         ClassLocation = ""
-                        classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
                         showAlert = true
+                        
+                        classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
+                        classes.detail.removeAll()
                     }
                     
                 }){
