@@ -27,7 +27,7 @@ struct EditView: View {
     @State private var showAlert = false
     @State private var selected = false
     @State private var foundLocation = false
-    
+    @State private var enteredNextPage = false
     var body: some View {
         
         let data = datas
@@ -166,7 +166,6 @@ struct EditView: View {
                             Button(action:{
                                 selected = true
                                 Instructor = String(i)
-                                
                             }) {
                                 VStack(alignment: .leading) {
                                     Text(i)
@@ -203,6 +202,8 @@ struct EditView: View {
             if selectedSection != 0{
                 Button(action: {
                     selectedSection = selectedSection - 1
+                    enteredNextPage = false
+                
                 }){
                     Text("back")
                         .font(.system(.subheadline, design: .rounded))
@@ -214,11 +215,12 @@ struct EditView: View {
                 }
             }
             
-            if selected{
+            if selected || enteredNextPage{
                 Button(action: {
-
+                    enteredNextPage = true
                     if selectedSection != 1{
                         selectedSection += 1
+                        
                         selected = false
                     }
                     else {
