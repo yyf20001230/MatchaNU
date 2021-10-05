@@ -243,7 +243,7 @@ class getClass: ObservableObject{
     @Published var uniqueprof = [ClassInfo]()
     
     init(){
-        if let fileLocation = Bundle.main.url(forResource: "Matcha4", withExtension: "json") {
+        if let fileLocation = Bundle.main.url(forResource: "Matcha5", withExtension: "json") {
             do {
                 let classData = try Data(contentsOf: fileLocation)
                 let jsonDecoder = JSONDecoder()

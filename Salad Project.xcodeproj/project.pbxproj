@@ -21,6 +21,7 @@
 		019CB4E526D60F9000577EBF /* Salad_ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019CB4E426D60F9000577EBF /* Salad_ProjectTests.swift */; };
 		019CB4F026D60F9000577EBF /* Salad_ProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019CB4EF26D60F9000577EBF /* Salad_ProjectUITests.swift */; };
 		019EFA1E26F1C14400C83E00 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */; };
+		01AFF214270C093300661805 /* Matcha5.json in Resources */ = {isa = PBXBuildFile; fileRef = 01AFF213270C093300661805 /* Matcha5.json */; };
 		01CFC76D26D7909C00497454 /* CornerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CFC76C26D7909C00497454 /* CornerButtonView.swift */; };
 		01DFC94B270ACBEC0089DC45 /* Matcha4.json in Resources */ = {isa = PBXBuildFile; fileRef = 01DFC94A270ACBEC0089DC45 /* Matcha4.json */; };
 		01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EF57E826DAF19000005597 /* GoogleService-Info.plist */; };
@@ -69,6 +70,7 @@
 		019CB4EF26D60F9000577EBF /* Salad_ProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salad_ProjectUITests.swift; sourceTree = "<group>"; };
 		019CB4F126D60F9000577EBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		01AFF213270C093300661805 /* Matcha5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Matcha5.json; sourceTree = "<group>"; };
 		01CFC76C26D7909C00497454 /* CornerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerButtonView.swift; sourceTree = "<group>"; };
 		01DFC94A270ACBEC0089DC45 /* Matcha4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Matcha4.json; sourceTree = "<group>"; };
 		01EF57E826DAF19000005597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				2B4A8B052704DA0E0076C32D /* EmailHelper.swift */,
 				01CFC76C26D7909C00497454 /* CornerButtonView.swift */,
 				01DFC94A270ACBEC0089DC45 /* Matcha4.json */,
+				01AFF213270C093300661805 /* Matcha5.json */,
 				0175756926D8D2FA00757862 /* LocationManager.swift */,
 				0175756B26D8D45C00757862 /* MapView.swift */,
 				01FEC9DA26DB412D004B506F /* SearchView.swift */,
@@ -287,6 +290,7 @@
 			files = (
 				01DFC94B270ACBEC0089DC45 /* Matcha4.json in Resources */,
 				019EFA1E26F1C14400C83E00 /* Launch Screen.storyboard in Resources */,
+				01AFF214270C093300661805 /* Matcha5.json in Resources */,
 				019CB4D726D60F9000577EBF /* Assets.xcassets in Resources */,
 				01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */,
 			);

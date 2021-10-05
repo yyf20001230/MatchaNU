@@ -28,6 +28,7 @@ struct EditView: View {
     @State private var selected = false
     @State private var foundLocation = false
     
+    
     var body: some View {
         
         let data = datas
@@ -35,6 +36,7 @@ struct EditView: View {
         let profs = Array(Set(data.map({$0.Instructor.replacingOccurrences(of: "|", with: ",").dropLast()})))
         
         if !classes.detail.isEmpty && selectedSection == 2{
+            
             VStack (alignment: .leading, spacing: 10){
                 
                     HStack{
@@ -199,6 +201,7 @@ struct EditView: View {
             if selectedSection != 0{
                 Button(action: {
                     selectedSection = selectedSection - 1
+        
                 }){
                     Text("back")
                         .font(.system(.subheadline, design: .rounded))
@@ -242,11 +245,11 @@ struct EditView: View {
                     }
                     
                 }){
-                    Text((selectedSection == 1) ? "Add Classes" : "Next")
+                    Text((selectedSection == 1) ? "Submit" : "next")
                         .font(.system(.subheadline, design: .rounded))
                         .frame(width: 120, height: 40, alignment: .center)
                         .background((selectedSection == 1) ? Color("Theme").opacity(0.7) : Color("ClassColor"))
-                        .foregroundColor((selectedSection == 1) ? Color("ClassColor") : Color("Theme"))
+                        .foregroundColor((selectedSection == 1) ? Color.white : Color("Theme"))
                         .cornerRadius(12)
                         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 2, y: 2)
                 }
