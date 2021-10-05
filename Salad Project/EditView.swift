@@ -27,8 +27,7 @@ struct EditView: View {
     @State private var showAlert = false
     @State private var selected = false
     @State private var foundLocation = false
-    
-    
+    @State private var enteredNextPage = false
     var body: some View {
         
         let data = datas
@@ -157,14 +156,23 @@ struct EditView: View {
                 TextField("Enter instructor name", text: $Instructor)
                     .foregroundColor(Color("Default"))
                     .font(.system(.subheadline, design: .rounded))
+                    .onChange(of: Instructor){ value in
+                        if !foundLocation{
+                            selected = false
+                            foundLocation = false
+                        }
+                        foundLocation = false
+                    }
+                    
                 
                 let elements = profs.filter({$0.lowercased().contains(Instructor.lowercased())})
-                if !elements.isEmpty{
+                if !elements.isEmpty && !selected {
                     ScrollView(showsIndicators: false){
                         ForEach(elements.prefix(20), id: \.self){ i in
                             Button(action:{
+                                foundLocation = true
                                 Instructor = String(i)
-                                
+                                selected = true
                             }) {
                                 VStack(alignment: .leading) {
                                     Text(i)
@@ -201,7 +209,8 @@ struct EditView: View {
             if selectedSection != 0{
                 Button(action: {
                     selectedSection = selectedSection - 1
-        
+                    enteredNextPage = false
+                
                 }){
                     Text("back")
                         .font(.system(.subheadline, design: .rounded))
@@ -213,11 +222,12 @@ struct EditView: View {
                 }
             }
             
-            if selected{
+            if selected || enteredNextPage{
                 Button(action: {
-
+                    enteredNextPage = true
                     if selectedSection != 1{
                         selectedSection += 1
+                        
                         selected = true
                     }
                     else {
@@ -239,7 +249,6 @@ struct EditView: View {
                         MeetingInfo = ""
                         ClassLocation = ""
                         showAlert = true
-                        
                         classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
                         classes.detail.removeAll()
                     }
