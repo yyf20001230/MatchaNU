@@ -78,7 +78,6 @@ func timeWithDelay(timeList: [Int], delay: Int) -> [Int]{
         newList.append(timeList[1] - delay)
     }
     
-    print(newList)
     return newList
     
 }

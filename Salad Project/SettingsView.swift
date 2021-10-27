@@ -16,7 +16,6 @@ struct SettingsView: View {
     @State var SettingTab = CGSize.zero
     @EnvironmentObject var settings: appSettings
     @EnvironmentObject var classes: ClassLocations
-    @State private var darkMode = false
     @State private var showAlert = false
 
     
@@ -29,10 +28,11 @@ struct SettingsView: View {
                 .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                 .offset(y: 10)
             VStack(spacing: 8.0) {
-                Toggle("Toggle Dark Mode", isOn: $darkMode)
-                    .onChange(of: darkMode) {value in
-                        if (darkMode == true){
+                Toggle("Toggle Dark Mode", isOn: $settings.isDarkMode)
+                    .onChange(of: settings.isDarkMode) {value in
+                        if (settings.isDarkMode == true){
                             settings.currentSystemScheme = .dark
+                            
                         }
                         else{
                             settings.currentSystemScheme = .light

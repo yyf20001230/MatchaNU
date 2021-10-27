@@ -55,11 +55,7 @@ final class NotificationManager: ObservableObject{
         UNUserNotificationCenter.current().add(request, withCompletionHandler: completion)
         
         
-        print(title)
         print(body)
-        print(hour)
-        print(min)
-        print(weekday)
         
     }
     

@@ -48,30 +48,50 @@ class ClassLocations: ObservableObject{
 class appSettings: ObservableObject{
     
     @Published var currentSystemScheme = schemeTransform(userInterfaceStyle: UITraitCollection.current.userInterfaceStyle)
-    @Published var isDarkMode = false
+    @Published var isDarkMode: Bool = false {
+        didSet{
+            saveDarkMode()
+        }
+    }
     @Published var Schedule = false
     @Published var Settings = false
     @Published var About = false
     @Published var Bug = false
-    @Published var TimeInAdvance: Int = 10{
+    @Published var TimeInAdvance: Int = 10 {
         didSet{
-            savedItems()
+            saveTime()
         }
     }
     
     init(){
-        getItems()
+        getTime()
+        getDarkMode()
+        
     }
     
-    func getItems(){
+    func getTime(){
         TimeInAdvance = UserDefaults.standard.integer(forKey: "TimeInAdvance")
         
         print("TimeInAdvance:" + String(TimeInAdvance))
     }
     
-    func savedItems(){
+    func saveTime(){
         UserDefaults.standard.set(TimeInAdvance, forKey: "TimeInAdvance")
-        print("saved!")
+        print("timesaved")
+    }
+    
+    func getDarkMode(){
+        isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        
+        if isDarkMode{
+            currentSystemScheme = .dark
+        } else {
+            currentSystemScheme = .light
+        }
+    }
+    
+    func saveDarkMode(){
+        UserDefaults.standard.set(isDarkMode, forKey: "isDarkMode")
     }
     
 }
