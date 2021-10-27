@@ -1,9 +1,3 @@
-//
-//  Dates.swift
-//  Salad Project
-//
-//  Created by Kevin Su on 26/10/2021.
-//
 
 import Foundation
 //TESTING
@@ -22,7 +16,7 @@ func compile() -> String{
     
     
     let startTime = newDate(inString: startString)
-    let endTime = newDate(inString: endString)
+    let endTime = newDate(inString: endString) 
     
     var dateString = ""
     
@@ -32,7 +26,24 @@ func compile() -> String{
         dateString = dateString + item
     }
     
-    return "Times: " + dateFormatter.string(from: startTime) + " to " + dateFormatter.string(from: endTime) + "\n" +  "Classroom: " + classroom + "\n" + "Days of week: " + dateString
+
+    //return "Times: " + dateFormatter.string(from: startTime) + " to " + dateFormatter.string(from: endTime) + "\n" +  "Classroom: " + classroom + "\n" + "Days of week: " + dateString
+
+    
+    var outputString = ""
+    let list = separateHourMinute(scrapedString: startString)
+    for num in list{
+        outputString.append(String(num))
+        outputString.append(" ")
+    }
+    
+    var dowString = ""
+    let dowList = switchDaysWithInt(dowList: datesList)
+    for dow in dowList{
+        dowString = dowString + String(dow)
+    }
+    
+    return outputString + "\n" + dowString
 }
 
 //    func allTimes(startTime: Date, endTime:Date, classroom: String) -> MeetingTimes{
@@ -42,6 +53,7 @@ func compile() -> String{
 
 //Turns valid date string into Date object
 func newDate(inString: String) -> Date{
+    
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "hh:mma"
     dateFormatter.locale = Locale(identifier: "en_US")
@@ -49,14 +61,25 @@ func newDate(inString: String) -> Date{
     
     guard let new_date = dateFormatter.date(from: inString) else { return (dateFormatter.date(from: "00:00AM")!) }
     
-//        guard let new_end_date = dateFormatter.date(from: endString) else { return "failed" }
-    
-    //dateFormatter.dateFormat = "hh:mm"
-    //new_end_date.dateFormat = "HH:mm"
     
     return new_date
 }
 
+func timeWithDelay(timeList: [Int], delay: Int) -> [Int]{
+    var newList: [Int] = []
+    if (delay > timeList[1]){
+        newList[0] = timeList[0] - 1
+        newList[1] = timeList[1] + 60
+        newList[1] -= delay
+    }
+    else{
+        newList[0] = timeList[0]
+        newList[1] = timeList[1] - delay
+    }
+    
+    return timeList
+    
+}
 
 func separateHourMinute(scrapedString: String) -> [Int]{
     if scrapedString.contains("TBA"){
@@ -170,7 +193,23 @@ func scrapeDatesOfWeek(rawString: String) -> [String] {
     return datesList
 }
 
-//Get classroom from Non-TBA MeetingInfo
+func switchDaysWithInt(dowList: [String]) -> [Int]{
+    var intList:[Int] = []
+    let switchDict = ["su": 1,
+                      "mo": 2,
+                      "tu": 3,
+                      "we": 4,
+                      "th": 5,
+                      "fr": 6,
+                      "sa": 7]
+    for dow in dowList{
+        var inString = dow
+        inString = String(inString.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).prefix(2))
+        intList.append(switchDict[inString] ?? -1)
+    }
+    return intList
+}
+
 func scrapeClassroom(rawString: String) -> String{
     let firstColon = rawString.firstIndex(of: ":")
     let newString = String(rawString[...rawString.index(before: firstColon!)])
