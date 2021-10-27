@@ -368,7 +368,6 @@ struct ContentView: View {
             notificationManager.emptyLocalNotifications()
             ForEach (classes.userClass, id: \.self){ classInfo in
                 let hours = scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo)
-                
             }
             notificationManager.createNotification(title: "You have an upcoming class", body: "Your class is happening in 10 minutes", hour: 1, min: 11){error in
                 if error != nil{

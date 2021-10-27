@@ -81,6 +81,7 @@ func scrapeStartHoursMinutes(rawString: String) -> String{
     let finalString = String(newString[...newString.index(after: firstLetterIndex!)])
     
     //finalString = finalString +  String(newString[firstLetterIndex!...newString.index(after: firstLetterIndex!)])
+    print(finalString)
     return finalString
 }
 
