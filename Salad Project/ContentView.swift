@@ -69,6 +69,7 @@ struct ContentView: View {
     @StateObject var classes = ClassLocations()
     @ObservedObject var datas = getClass()
     @ObservedObject var locationManager = LocationManager()
+    @ObservedObject var notificationManager = NotificationManager()
     @StateObject var settings = appSettings()
     
     var body: some View {
@@ -362,6 +363,36 @@ struct ContentView: View {
             
         }
         .preferredColorScheme(settings.currentSystemScheme)
+        .onAppear{
+            notificationManager.reloadAuthorizationStatus()
+            notificationManager.emptyLocalNotifications()
+            ForEach (classes.userClass, id: \.self){ classInfo in
+                let hours = scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo)
+                
+            }
+            notificationManager.createNotification(title: "You have an upcoming class", body: "Your class is happening in 10 minutes", hour: 1, min: 11){error in
+                if error != nil{
+                    return
+                }
+            }
+        }
+        .onChange(of: notificationManager.authorizationStatus){ authorizationStatus in
+            switch authorizationStatus {
+            case .notDetermined:
+                notificationManager.requestAuthorization()
+            case .authorized:
+                notificationManager.reloadLocalNotifications()
+                break
+            default:
+                break
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)){_ in
+            notificationManager.reloadAuthorizationStatus()
+        }
+        .onDisappear{
+            notificationManager.reloadLocalNotifications()
+        }
         
         
         
