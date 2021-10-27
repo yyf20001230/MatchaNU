@@ -266,6 +266,7 @@ class getClass: ObservableObject{
                     if self.uniqueprof.count == 0 || self.uniqueprof.last!.Instructor != (document.Instructor){
                         self.uniqueprof.append(document)
                     }
+                    
                 }
                 
             }
