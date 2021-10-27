@@ -1,3 +1,6 @@
+
+import Foundation
+
 func compile() -> String{
     
     let dateFormatter = DateFormatter()
@@ -13,7 +16,7 @@ func compile() -> String{
     
     
     let startTime = newDate(inString: startString)
-    let endTime = newDate(inString: endString)
+    let endTime = newDate(inString: endString) 
     
     var dateString = ""
     
@@ -23,6 +26,7 @@ func compile() -> String{
         dateString = dateString + item
     }
     
+
     //return "Times: " + dateFormatter.string(from: startTime) + " to " + dateFormatter.string(from: endTime) + "\n" +  "Classroom: " + classroom + "\n" + "Days of week: " + dateString
 
     
