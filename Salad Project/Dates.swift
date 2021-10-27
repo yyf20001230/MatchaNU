@@ -27,9 +27,9 @@ func compile() -> String{
     }
     
 
-    //return "Times: " + dateFormatter.string(from: startTime) + " to " + dateFormatter.string(from: endTime) + "\n" +  "Classroom: " + classroom + "\n" + "Days of week: " + dateString
+    return "Times: " + dateFormatter.string(from: startTime) + " to " + dateFormatter.string(from: endTime) + "\n" +  "Classroom: " + classroom + "\n" + "Days of week: " + dateString
 
-    
+    /*
     var outputString = ""
     let list = separateHourMinute(scrapedString: startString)
     for num in list{
@@ -44,6 +44,7 @@ func compile() -> String{
     }
     
     return outputString + "\n" + dowString
+    */
 }
 
 //    func allTimes(startTime: Date, endTime:Date, classroom: String) -> MeetingTimes{
@@ -68,21 +69,26 @@ func newDate(inString: String) -> Date{
 func timeWithDelay(timeList: [Int], delay: Int) -> [Int]{
     var newList: [Int] = []
     if (delay > timeList[1]){
-        newList[0] = timeList[0] - 1
-        newList[1] = timeList[1] + 60
+        newList.append(timeList[0] - 1)
+        newList.append(timeList[1] + 60)
         newList[1] -= delay
     }
     else{
-        newList[0] = timeList[0]
-        newList[1] = timeList[1] - delay
+        newList.append(timeList[0])
+        newList.append(timeList[1] - delay)
     }
     
-    return timeList
+    print(newList)
+    return newList
     
 }
 
 func separateHourMinute(scrapedString: String) -> [Int]{
     if scrapedString.contains("TBA"){
+        return [-1,-1]
+    }
+    
+    if !scrapedString.contains("PM") && !scrapedString.contains("AM"){
         return [-1,-1]
     }
     
@@ -108,6 +114,7 @@ func separateHourMinute(scrapedString: String) -> [Int]{
     var hour_int: Int = Int(hour) ?? -1
     let minute_int: Int = Int(minute) ?? -1
     
+    
     if firstLetter == "P"{
         if hour_int == 12{
             hour_int += 0
@@ -120,7 +127,6 @@ func separateHourMinute(scrapedString: String) -> [Int]{
     timeList.append(hour_int)
     timeList.append(minute_int)
     
-    print(timeList)
     return timeList
 }
 
@@ -144,7 +150,10 @@ func scrapeStartHoursMinutes(rawString: String) -> String{
         }
     }
     let firstLetterIndex = newString.firstIndex(of: firstLetter)
-    
+    if (firstLetterIndex == nil){
+        return "TBA"
+    }
+         
     let finalString = String(newString[...newString.index(after: firstLetterIndex!)])
     
     //finalString = finalString +  String(newString[firstLetterIndex!...newString.index(after: firstLetterIndex!)])

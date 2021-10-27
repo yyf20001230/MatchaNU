@@ -18,6 +18,7 @@ struct SettingsView: View {
     @EnvironmentObject var classes: ClassLocations
     @State private var darkMode = false
     @State private var showAlert = false
+
     
     var body: some View {
         
@@ -42,6 +43,22 @@ struct SettingsView: View {
                     .foregroundColor(Color("Default"))
                     .padding([.horizontal,.top])
                 
+                HStack{
+                    Text("Notification in advance")
+                        .foregroundColor(Color("Default"))
+                    Spacer()
+                    Picker("Notification in advance", selection: $settings.TimeInAdvance){
+                        ForEach(1...60, id: \.self){
+                            Text("\($0)")
+                                .foregroundColor(Color("Default"))
+                        }
+                    }
+                        
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 4)
+                
+                
                 Button(action:{
                     settings.About.toggle()
                     settings.Settings = false
@@ -56,7 +73,7 @@ struct SettingsView: View {
                     }
                 }
                 
-                .padding([.horizontal,.top])
+                .padding(.horizontal)
                 
                 Button(action:{
                     settings.Bug.toggle()
@@ -79,7 +96,7 @@ struct SettingsView: View {
                 }){
                     HStack{
                         Text("Clear Classes")
-                            .foregroundColor(Color("Default"))
+                            .foregroundColor(Color("Red"))
                         Spacer()
                         Image(systemName: "arrow.right")
                             .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)

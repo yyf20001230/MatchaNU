@@ -53,7 +53,26 @@ class appSettings: ObservableObject{
     @Published var Settings = false
     @Published var About = false
     @Published var Bug = false
-    @Published var TimeInAdvance = 10
+    @Published var TimeInAdvance: Int = 10{
+        didSet{
+            savedItems()
+        }
+    }
+    
+    init(){
+        getItems()
+    }
+    
+    func getItems(){
+        TimeInAdvance = UserDefaults.standard.integer(forKey: "TimeInAdvance")
+        
+        print("TimeInAdvance:" + String(TimeInAdvance))
+    }
+    
+    func savedItems(){
+        UserDefaults.standard.set(TimeInAdvance, forKey: "TimeInAdvance")
+        print("saved!")
+    }
     
 }
 
@@ -369,20 +388,29 @@ struct ContentView: View {
             notificationManager.emptyLocalNotifications()
             for classInfo in classes.userClass{
                 
-                let start = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo))
+                var start = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo))
+                if !start.contains(-1){
+                    start = timeWithDelay(timeList: start, delay: settings.TimeInAdvance)
+                }
                 let startHours = start[0]
                 let startMinutes = start[1]
                 
                 let notificationBody = classInfo.Major.components(separatedBy: " ")[0] + " " + classInfo.Class.components(separatedBy: " ")[0] + "-" + classInfo.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "")
                 
-                notificationManager.createNotification(title: "You have an upcoming class", body: "\(notificationBody) is happening in \(settings.TimeInAdvance) minutes", hour: startHours, min: startMinutes, weekday: 4){error in
-                    if error != nil{
-                        return 
+                let location = classInfo.MeetingInfo.components(separatedBy: ": ")[0]
+                
+                let dow = switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classInfo.MeetingInfo))
+                
+                if !dow.contains(-1) && startHours != -1 && startMinutes != -1 {
+                    for weekday in dow{
+                        notificationManager.createNotification(title: "You have an upcoming class", body: "\(notificationBody) at \(location) is in \(settings.TimeInAdvance) minutes", hour: startHours, min: startMinutes, weekday: weekday){error in
+                            if error != nil{
+                                return
+                            }
+                        }
                     }
                 }
             }
-            
-            
         }
         .onChange(of: notificationManager.authorizationStatus){ authorizationStatus in
             switch authorizationStatus {
@@ -398,15 +426,7 @@ struct ContentView: View {
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)){_ in
             notificationManager.reloadAuthorizationStatus()
         }
-        .onDisappear{
-            notificationManager.reloadLocalNotifications()
-        }
-        
-        
-        
-        
-        
-        
+  
     }
     
 }
