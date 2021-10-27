@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0110BF3026FAF14A00255FE6 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0110BF2F26FAF14A00255FE6 /* DetailView.swift */; };
+		012D259A2729008E00545F30 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012D25992729008E00545F30 /* NotificationManager.swift */; };
 		0142828926F0032800E0949E /* BugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142828826F0032800E0949E /* BugView.swift */; };
 		014F85B92702E46A00F7ED0E /* UserClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014F85B82702E46A00F7ED0E /* UserClassView.swift */; };
 		014F85BB2702EA0F00F7ED0E /* UserClassList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014F85BA2702EA0F00F7ED0E /* UserClassList.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		0110BF2F26FAF14A00255FE6 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		012D25992729008E00545F30 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		0142828826F0032800E0949E /* BugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugView.swift; sourceTree = "<group>"; };
 		014F85B82702E46A00F7ED0E /* UserClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClassView.swift; sourceTree = "<group>"; };
 		014F85BA2702EA0F00F7ED0E /* UserClassList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClassList.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				0142828826F0032800E0949E /* BugView.swift */,
 				2B4A8B052704DA0E0076C32D /* EmailHelper.swift */,
 				01CFC76C26D7909C00497454 /* CornerButtonView.swift */,
+				012D25992729008E00545F30 /* NotificationManager.swift */,
 				01AFF213270C093300661805 /* Matcha5.json */,
 				2B6E94962728FAE0003B1820 /* Dates.swift */,
 				0175756926D8D2FA00757862 /* LocationManager.swift */,
@@ -328,6 +331,7 @@
 				0175756C26D8D45C00757862 /* MapView.swift in Sources */,
 				2B44E67D26E0D14C002531C7 /* AboutView.swift in Sources */,
 				016BB1292706BB89003DCD6A /* EditView.swift in Sources */,
+				012D259A2729008E00545F30 /* NotificationManager.swift in Sources */,
 				01531DDF26D713F600A8CEFD /* SideButtonView.swift in Sources */,
 				014F85BB2702EA0F00F7ED0E /* UserClassList.swift in Sources */,
 				014F85B92702E46A00F7ED0E /* UserClassView.swift in Sources */,

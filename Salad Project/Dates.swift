@@ -1,6 +1,6 @@
 
 import Foundation
-
+//TESTING
 func compile() -> String{
     
     let dateFormatter = DateFormatter()
@@ -51,6 +51,7 @@ func compile() -> String{
 //
 //    }
 
+//Turns valid date string into Date object
 func newDate(inString: String) -> Date{
     
     let dateFormatter = DateFormatter()
@@ -129,8 +130,9 @@ func getTime(rawString: String) -> String{
     return newString
 }
 
+//Get start time from Non-TBA MeetingInfo
 func scrapeStartHoursMinutes(rawString: String) -> String{
-    var newString = getTime(rawString: rawString)
+    let newString = getTime(rawString: rawString)
     var firstLetter: Character = "Z"
     for char in newString{
         if char.isLetter{
@@ -140,24 +142,27 @@ func scrapeStartHoursMinutes(rawString: String) -> String{
     }
     let firstLetterIndex = newString.firstIndex(of: firstLetter)
     
-    var finalString = String(newString[...newString.index(after: firstLetterIndex!)])
+    let finalString = String(newString[...newString.index(after: firstLetterIndex!)])
     
     //finalString = finalString +  String(newString[firstLetterIndex!...newString.index(after: firstLetterIndex!)])
     return finalString
 }
 
+//Get end time from Non-TBA MeetingInfo
 func scrapeEndHoursMinutes(rawString: String) -> String{
     var newString = getTime(rawString: rawString)
     let hyphenIndex = newString.firstIndex(of: "-")
     newString = String(newString[newString.index(after: hyphenIndex!)...])
     
     
-    var finalString = String(newString)
+    let finalString = String(newString)
     
     //finalString = finalString + String(newString[firstLetterIndex!...])
     
     return finalString
 }
+
+//Get list of dates in week from Non-TBA MeetingInfo
 
 func scrapeDatesOfWeek(rawString: String) -> [String] {
     let startIndex = rawString.index(after: rawString.firstIndex(of: ":")!)
@@ -204,8 +209,7 @@ func switchDaysWithInt(dowList: [String]) -> [Int]{
 
 func scrapeClassroom(rawString: String) -> String{
     let firstColon = rawString.firstIndex(of: ":")
-    
-    var newString = String(rawString[...rawString.index(before: firstColon!)])
+    let newString = String(rawString[...rawString.index(before: firstColon!)])
     
     return newString
 }

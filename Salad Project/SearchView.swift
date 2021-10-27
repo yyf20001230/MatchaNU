@@ -14,6 +14,7 @@ struct ClassList: View{
     @Binding var uniqueData: [ClassInfo]
     @Binding var uniqueProf: [ClassInfo]
     @EnvironmentObject var classes: ClassLocations
+    //@State var offset = CGSize.zero
     
     var body: some View{
         
@@ -84,6 +85,14 @@ struct ClassList: View{
                         }
                         .background(Color("ClassColor"))
                         .clipShape(RoundedRectangle(cornerRadius: 12))
+                        /*
+                        .gesture(
+                            DragGesture().onChanged{ value in
+                                offset = value.translation
+                            }
+                        )
+                        .offset(offset.x)
+                         */
                         
                     }
                     
