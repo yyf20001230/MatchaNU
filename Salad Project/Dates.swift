@@ -55,6 +55,47 @@ func newDate(inString: String) -> Date{
     return new_date
 }
 
+func separateHourMinute(scrapedString: String) -> [Int]{
+    if scrapedString.contains("TBA"){
+        return [-1,-1]
+    }
+    
+    var timeList: [Int] = []
+    
+    var firstLetter: Character = "Z"
+    for char in scrapedString{
+        if char.isLetter{
+            firstLetter = char
+            break
+        }
+    }
+    let firstLetterIndex = scrapedString.firstIndex(of: firstLetter)
+    
+    var hour =  String(scrapedString[...scrapedString.index(before: scrapedString.firstIndex(of: ":")!)]).trimmingCharacters(in: .whitespacesAndNewlines)
+    
+    let minute = String(scrapedString[scrapedString.index(after: scrapedString.firstIndex(of: ":")!)...scrapedString.index(before: firstLetterIndex!)]).trimmingCharacters(in: .whitespacesAndNewlines)
+    
+    if hour.first == "0"{
+        hour = String(hour.dropFirst(1))
+    }
+    
+    var hour_int: Int = Int(hour) ?? -1
+    let minute_int: Int = Int(minute) ?? -1
+    
+    if firstLetter == "P"{
+        if hour_int == 12{
+            hour_int += 0
+        }
+        else{
+            hour_int += 12
+        }
+    }
+    
+    timeList.append(hour_int)
+    timeList.append(minute_int)
+    return timeList
+}
+
 func getTime(rawString: String) -> String{
 
     var newString: String
