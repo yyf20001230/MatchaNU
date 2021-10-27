@@ -38,11 +38,11 @@ final class NotificationManager: ObservableObject{
         }
     }
     
-    func createNotification(title: String, body: String, hour: Int, min: Int ,completion: @escaping (Error?) -> Void){
+    func createNotification(title: String, body: String, hour: Int, min: Int, weekday: Int, completion: @escaping (Error?) -> Void){
         var dateComponents = DateComponents()
         dateComponents.hour = hour
         dateComponents.minute = min
-        dateComponents.weekday = 4
+        dateComponents.weekday = weekday
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         

@@ -53,6 +53,7 @@ class appSettings: ObservableObject{
     @Published var Settings = false
     @Published var About = false
     @Published var Bug = false
+    @Published var TimeInAdvance = 10
     
 }
 
@@ -64,7 +65,7 @@ struct ContentView: View {
     @State var ShowClass = false
     
     @State var ClassName = ""
-    
+
     
     @StateObject var classes = ClassLocations()
     @ObservedObject var datas = getClass()
@@ -73,7 +74,7 @@ struct ContentView: View {
     @StateObject var settings = appSettings()
     
     var body: some View {
-        
+
         ZStack () {
             
             MapView().environmentObject(classes)
@@ -366,14 +367,22 @@ struct ContentView: View {
         .onAppear{
             notificationManager.reloadAuthorizationStatus()
             notificationManager.emptyLocalNotifications()
-            ForEach (classes.userClass, id: \.self){ classInfo in
-                let hours = scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo)
-            }
-            notificationManager.createNotification(title: "You have an upcoming class", body: "Your class is happening in 10 minutes", hour: 1, min: 11){error in
-                if error != nil{
-                    return
+            for classInfo in classes.userClass{
+                
+                let start = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo))
+                let startHours = start[0]
+                let startMinutes = start[1]
+                
+                let notificationBody = classInfo.Major.components(separatedBy: " ")[0] + " " + classInfo.Class.components(separatedBy: " ")[0] + "-" + classInfo.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "")
+                
+                notificationManager.createNotification(title: "You have an upcoming class", body: "\(notificationBody) is happening in \(settings.TimeInAdvance) minutes", hour: startHours, min: startMinutes, weekday: 4){error in
+                    if error != nil{
+                        return 
+                    }
                 }
             }
+            
+            
         }
         .onChange(of: notificationManager.authorizationStatus){ authorizationStatus in
             switch authorizationStatus {
