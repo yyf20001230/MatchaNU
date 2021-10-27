@@ -6,8 +6,6 @@
 //
 
 import Foundation
-
-//For testing
 func compile() -> String{
     
     let dateFormatter = DateFormatter()
@@ -128,4 +126,3 @@ func scrapeClassroom(rawString: String) -> String{
     
     return newString
 }
-
