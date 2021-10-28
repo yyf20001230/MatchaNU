@@ -55,9 +55,10 @@ struct MapView: UIViewRepresentable {
                         guard let route = response?.routes.first else { return }
                         uiView.addOverlay(route.polyline)
                         uiView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80),animated: true)
-                        print(route.expectedTravelTime / 60)
-                        classes.Time = Int(route.expectedTravelTime / 60)
-                        return
+                        print(Int(route.expectedTravelTime / 60))
+                        if classes.Time == 0{
+                            classes.Time = Int(route.expectedTravelTime / 60)
+                        }
                     }
                 } else {
                     uiView.removeOverlays(uiView.overlays)
