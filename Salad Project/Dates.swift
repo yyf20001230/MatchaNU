@@ -178,7 +178,18 @@ func scrapeEndHoursMinutes(rawString: String) -> String{
 func scrapeDatesOfWeek(rawString: String) -> [String] {
     let startIndex = rawString.index(after: rawString.firstIndex(of: ":")!)
     var newString = String(rawString[startIndex...])
+    let validList = ["su","mo","tu","we","th","fr","sa"]
+    var isValid: Bool = false
     
+    for str in validList{
+        if newString.lowercased().contains(str){
+            isValid = true
+        }
+    }
+    
+    if !isValid || rawString == ""{
+        return []
+    }
     var firstNumber: Character = "Z"
     for char in newString{
         if char.isNumber{
@@ -186,18 +197,15 @@ func scrapeDatesOfWeek(rawString: String) -> [String] {
             break
         }
     }
-    let endIndex = newString.index(before: newString.firstIndex(of: firstNumber)!)
+    let endIndex = newString.index(before: newString.firstIndex(of: firstNumber) ?? newString.endIndex)
     
     
     newString = String(newString[...endIndex])
-    
-    //newString = newString.trimmingCharacters(in: .whitespacesAndNewlines)
     var datesList: [String] = []
     while (newString.firstIndex(of: ",") != nil){
         datesList.append(String(newString[...newString.index(before: newString.firstIndex(of: ",")!)]))
         newString = String(newString[newString.index(after:newString.firstIndex(of: ",")!)...])
     }
-    
     return datesList
 }
 

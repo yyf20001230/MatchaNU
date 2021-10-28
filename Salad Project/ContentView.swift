@@ -23,6 +23,7 @@ class ClassLocations: ObservableObject{
     @Published var showUserLocation = false
     @Published var ShowClass = false
     @Published var EditClass = false
+    @Published var Time = 0
     
     init(){
         getItems()
@@ -71,13 +72,10 @@ class appSettings: ObservableObject{
     
     func getTime(){
         TimeInAdvance = UserDefaults.standard.integer(forKey: "TimeInAdvance")
-        
-        print("TimeInAdvance:" + String(TimeInAdvance))
     }
     
     func saveTime(){
         UserDefaults.standard.set(TimeInAdvance, forKey: "TimeInAdvance")
-        print("timesaved")
     }
     
     func getDarkMode(){
@@ -384,10 +382,11 @@ struct ContentView: View {
                 .offset(y: settings.Schedule ?  0 : height)
                 .animation(.spring())
             
+            
             SettingsView()
                 .environmentObject(settings)
                 .environmentObject(classes)
-                .offset(y: settings.Settings ? height / 3.2 : height)
+                .offset(y: settings.Settings ? height / 3.2 : height * 2)
                 .animation(.spring())
             
             AboutView()
@@ -397,7 +396,7 @@ struct ContentView: View {
             
             BugView()
                 .environmentObject(settings)
-                .offset(y: settings.Bug ?  height / 4.8 : height)
+                .offset(y: settings.Bug ?  height / 4 : height * 2)
                 .animation(.spring())
             
             

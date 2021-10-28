@@ -25,9 +25,31 @@ struct SettingsView: View {
             Rectangle()
                 .frame(width: 40, height: 4)
                 .cornerRadius(2)
-                .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                .foregroundColor(Color("Theme"))
                 .offset(y: 10)
-            VStack(spacing: 8.0) {
+            
+            
+            VStack(spacing: 16.0) {
+                
+                if settings.Settings{
+                    HStack{
+                        Text("Notification in Advance")
+                            .foregroundColor(Color("Default"))
+                        Spacer()
+                        Picker("\(settings.TimeInAdvance) mins", selection: $settings.TimeInAdvance){
+                            ForEach([10,20,30,40,50,60], id: \.self){
+                                Text("\($0) mins")
+                            }
+                        }
+                        .accentColor(Color("Theme"))
+                        .pickerStyle(.menu)
+                    }
+                    .padding(.horizontal)
+                    .padding(.top)
+                }
+                
+                
+                
                 Toggle("Toggle Dark Mode", isOn: $settings.isDarkMode)
                     .onChange(of: settings.isDarkMode) {value in
                         if (settings.isDarkMode == true){
@@ -41,23 +63,8 @@ struct SettingsView: View {
                         
                     }
                     .foregroundColor(Color("Default"))
-                    .padding([.horizontal,.top])
-                
-                HStack{
-                    Text("Notification in advance")
-                        .foregroundColor(Color("Default"))
-                    Spacer()
-                    Picker("Notification in advance", selection: $settings.TimeInAdvance){
-                        ForEach(1...60, id: \.self){
-                            Text("\($0)")
-                                .foregroundColor(Color("Default"))
-                        }
-                    }
-                        
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 4)
-                
+                    .padding(.horizontal)
+                    .padding(.bottom, 4)
                 
                 Button(action:{
                     settings.About.toggle()
