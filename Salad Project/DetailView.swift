@@ -61,7 +61,7 @@ struct DetailView: View {
                     
                     HStack{
                         Button(action: {
-                            
+                            classes.Time = 0
                             if classes.detail[0].ClassLocation[0] == -1 && classes.detail[0].ClassLocation[1] == -1{
                                 self.showNavigationAlert = true
                             } else {
@@ -76,7 +76,7 @@ struct DetailView: View {
                                     .scaleEffect(1.5)
                                     .scaledToFill()
                                     .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                                Text(classes.showRoute ? "Stop" : "Route")
+                                Text(classes.showRoute ? String(classes.Time) : "Route")
                                     .padding(.all)
                                     .font(.system(.caption2, design: .rounded))
                             }
