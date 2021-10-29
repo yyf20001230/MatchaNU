@@ -22,27 +22,29 @@ struct DetailView: View {
                         .foregroundColor(Color("SearchBarColor"))
                     
                     Text("Class Info")
-                        .foregroundColor(.secondary)
+                        .fontWeight(.bold)
                         .font(.system(.subheadline, design: .rounded))
                         .tracking(-0.5)
                         .padding(.leading)
                     
                     VStack(alignment: .leading, spacing: 4.0){
                         HStack{
-                            Text("Meeting Location: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0])
+                            Text("Location: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0])
                                 .foregroundColor(.secondary)
-                                .font(.system(.caption2, design: .rounded))
+                                .font(.system(.caption, design: .rounded))
+                                .fontWeight(.semibold)
                                 .tracking(-0.5)
                             Spacer()
                         }
-                        
-                        Text("Meeting Info: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[1])
+                        Text("Info: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[1])
                             .foregroundColor(.secondary)
-                            .font(.system(.caption2, design: .rounded))
+                            .font(.system(.caption, design: .rounded))
+                            .fontWeight(.semibold)
                             .tracking(-0.5)
                         Text("Instructor: " + classes.detail[0].Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
                             .foregroundColor(.secondary)
-                            .font(.system(.caption2, design: .rounded))
+                            .font(.system(.caption, design: .rounded))
+                            .fontWeight(.semibold)
                             .tracking(-0.5)
                     }
                     .frame(width: UIScreen.main.bounds.width / 1.3)
@@ -51,31 +53,47 @@ struct DetailView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .padding([.leading,.bottom])
                     
+                    
                     Text("Routing")
-                        .foregroundColor(.secondary)
+                        .fontWeight(.bold)
                         .font(.system(.subheadline, design: .rounded))
                         .tracking(-0.5)
                         .padding(.leading)
                     
                     Button(action: {
-                        if classes.detail[0].ClassLocation[0] == -1 && classes.detail[0].ClassLocation[1] == -1{
+                        if classes.detail[0].ClassLocation[0] == -1 || classes.detail[0].ClassLocation[1] == -1{
                             self.showNavigationAlert = true
                         } else {
                             classes.ShowClass = false
                             classes.showRoute.toggle()
                         }
                     }){
+                        
                         VStack{
+                            
+                            
                             Image(systemName: "mappin.circle.fill")
                                 .padding(.top)
                                 .padding(.horizontal, 24)
                                 .scaleEffect(1.5)
                                 .scaledToFill()
                                 .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                            Text(String(classes.Time) + " mins by walking")
-                                .font(.system(.caption2, design: .rounded))
-                                .padding(.all)
-                                
+                            
+                            if classes.detail[0].ClassLocation[0] != -1 && classes.detail[0].ClassLocation[0] != -1{
+                                Text(String(classes.Time) + " mins by walking")
+                                    .font(.system(.footnote, design: .rounded))
+                                    .fontWeight(.semibold)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.all)
+                            } else {
+                                Text("Location unknown")
+                                    .font(.system(.footnote, design: .rounded))
+                                    .fontWeight(.semibold)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.all)
+                            }
+                            
+                            
                         }
                         
                         .accentColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
@@ -89,13 +107,12 @@ struct DetailView: View {
                         let message = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0]
                         return Alert(title: Text("No location found"), message: Text(message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is either online or its location is not determined yet or located outside of Evanston Campus"), dismissButton: .default(Text("Got it!")))
                     })
+                    .padding(.bottom)
                     
-                    
-                        
-                    
-                    
+
                     Text("Actions")
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.primary)
+                        .fontWeight(.bold)
                         .font(.system(.subheadline, design: .rounded))
                         .tracking(-0.5)
                         .padding(.leading)
@@ -121,8 +138,9 @@ struct DetailView: View {
                                     .scaledToFill()
                                     .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
                                 Text(classes.userClass.contains(classes.detail[0]) ? "Drop" : "Add")
+                                    .font(.system(.footnote, design: .rounded))
+                                    .fontWeight(.semibold)
                                     .padding(.all)
-                                    .font(.system(.caption2, design: .rounded))
                             }
                             .accentColor(classes.userClass.contains(classes.detail[0]) ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
                             .frame(width: UIScreen.main.bounds.width / 3.7)
@@ -148,8 +166,9 @@ struct DetailView: View {
                                     .scaledToFill()
                                     .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
                                 Text("Edit")
+                                    .font(.system(.footnote, design: .rounded))
+                                    .fontWeight(.semibold)
                                     .padding(.all)
-                                    .font(.system(.caption2, design: .rounded))
                             }
                             .accentColor(Color("Theme"))
                             .frame(width: UIScreen.main.bounds.width / 3.7)
@@ -170,8 +189,10 @@ struct DetailView: View {
                                         .scaledToFill()
                                         .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
                                     Text("Finder")
+                                        .font(.system(.footnote, design: .rounded))
+                                        .fontWeight(.semibold)
                                         .padding(.all)
-                                        .font(.system(.caption2, design: .rounded))
+                                        
                                 }
                                 .accentColor(Color("Theme"))
                                 .frame(width: UIScreen.main.bounds.width / 3.7)
@@ -186,7 +207,8 @@ struct DetailView: View {
                     
                     
                     Text("Class Overview")
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.primary)
+                        .fontWeight(.bold)
                         .font(.system(.subheadline, design: .rounded))
                         .tracking(-0.5)
                         .padding(.leading)
@@ -198,7 +220,8 @@ struct DetailView: View {
                             VStack(alignment: .leading){
                                 Text(self.classes.detail[0].ClassOverview)
                                     .foregroundColor(.secondary)
-                                    .font(.system(.caption2, design: .rounded))
+                                    .font(.system(.caption, design: .rounded))
+                                    .fontWeight(.semibold)
                                     .tracking(-0.5)
                                     .lineSpacing(4)
                                 

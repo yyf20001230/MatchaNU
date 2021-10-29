@@ -230,7 +230,8 @@ struct ContentView: View {
                                         .padding(.trailing)
                                     Text(classes.detail.isEmpty ? "You have \(classes.userClass.count) class(es)" : classes.detail[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                         .foregroundColor(.secondary)
-                                        .font(.system(.caption2, design: .rounded))
+                                        .fontWeight(.semibold)
+                                        .font(.system(.caption, design: .rounded))
                                         .tracking(-0.5)
                                 }
                                 
@@ -272,9 +273,10 @@ struct ContentView: View {
                                 .padding(.trailing)
                             Text(classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                 .foregroundColor(.secondary)
-                                .font(.system(.caption2, design: .rounded))
+                                .font(.system(.footnote, design: .rounded))
+                                .fontWeight(.semibold)
                                 .tracking(-0.5)
-                                .multilineTextAlignment(.leading)
+
                         }
                         
 
