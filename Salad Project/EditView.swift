@@ -10,6 +10,7 @@ import SwiftUI
 struct EditView: View {
     
     @EnvironmentObject var classes: ClassLocations
+    @ObservedObject var notificationManager = NotificationManager()
     @State var datas: [ClassInfo]
     @State var uniqueProf: [ClassInfo]
     

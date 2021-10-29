@@ -51,6 +51,48 @@ struct DetailView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .padding([.leading,.bottom])
                     
+                    Text("Routing")
+                        .foregroundColor(.secondary)
+                        .font(.system(.subheadline, design: .rounded))
+                        .tracking(-0.5)
+                        .padding(.leading)
+                    
+                    Button(action: {
+                        if classes.detail[0].ClassLocation[0] == -1 && classes.detail[0].ClassLocation[1] == -1{
+                            self.showNavigationAlert = true
+                        } else {
+                            classes.ShowClass = false
+                            classes.showRoute.toggle()
+                        }
+                    }){
+                        VStack{
+                            Image(systemName: "mappin.circle.fill")
+                                .padding(.top)
+                                .padding(.horizontal, 24)
+                                .scaleEffect(1.5)
+                                .scaledToFill()
+                                .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
+                            Text(String(classes.Time) + " mins by walking")
+                                .font(.system(.caption2, design: .rounded))
+                                .padding(.all)
+                                
+                        }
+                        
+                        .accentColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
+                        .frame(width: UIScreen.main.bounds.width / 1.3)
+                        .padding(.horizontal)
+                        .background(Color("ClassColor"))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .padding(.leading)
+                    }
+                    .alert(isPresented: $showNavigationAlert, content: {
+                        let message = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0]
+                        return Alert(title: Text("No location found"), message: Text(message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is either online or its location is not determined yet or located outside of Evanston Campus"), dismissButton: .default(Text("Got it!")))
+                    })
+                    
+                    
+                        
+                    
                     
                     Text("Actions")
                         .foregroundColor(.secondary)
@@ -58,41 +100,8 @@ struct DetailView: View {
                         .tracking(-0.5)
                         .padding(.leading)
                     
-                    
+
                     HStack{
-                        Button(action: {
-                            classes.Time = 0
-                            if classes.detail[0].ClassLocation[0] == -1 && classes.detail[0].ClassLocation[1] == -1{
-                                self.showNavigationAlert = true
-                            } else {
-                                classes.ShowClass = false
-                                classes.showRoute.toggle()
-                            }
-                        }){
-                            VStack{
-                                Image(systemName: "mappin.circle.fill")
-                                    .padding(.top)
-                                    .padding(.horizontal, 24)
-                                    .scaleEffect(1.5)
-                                    .scaledToFill()
-                                    .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
-                                Text(classes.showRoute ? String(classes.Time) + " mins" : "Route")
-                                    .padding(.all)
-                                    .font(.system(.caption2, design: .rounded))
-                            }
-                            
-                            .accentColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
-                            .frame(width: UIScreen.main.bounds.width / 5.1)
-                            .background(Color("ClassColor"))
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                        }
-                        .alert(isPresented: $showNavigationAlert, content: {
-                            let message = classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0]
-                            return Alert(title: Text("No location found"), message: Text(message + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: "") + " is either online or its location is not determined yet or located outside of Evanston Campus"), dismissButton: .default(Text("Got it!")))
-                        })
-                        
-                        
-                        
                         Button(action: {
                             if classes.userClass.contains(classes.detail[0]){
                                 classes.userClass = classes.userClass.filter{$0 != classes.detail[0]} 
@@ -116,7 +125,7 @@ struct DetailView: View {
                                     .font(.system(.caption2, design: .rounded))
                             }
                             .accentColor(classes.userClass.contains(classes.detail[0]) ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
-                            .frame(width: UIScreen.main.bounds.width / 5.1)
+                            .frame(width: UIScreen.main.bounds.width / 3.7)
                             .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                             
@@ -143,7 +152,7 @@ struct DetailView: View {
                                     .font(.system(.caption2, design: .rounded))
                             }
                             .accentColor(Color("Theme"))
-                            .frame(width: UIScreen.main.bounds.width / 5.1)
+                            .frame(width: UIScreen.main.bounds.width / 3.7)
                             .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                             
@@ -165,7 +174,7 @@ struct DetailView: View {
                                         .font(.system(.caption2, design: .rounded))
                                 }
                                 .accentColor(Color("Theme"))
-                                .frame(width: UIScreen.main.bounds.width / 5.1)
+                                .frame(width: UIScreen.main.bounds.width / 3.7)
                                 .background(Color("ClassColor"))
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                             })

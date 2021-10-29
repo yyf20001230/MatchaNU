@@ -246,6 +246,7 @@ struct ContentView: View {
                                             classes.detail.removeAll()
                                             classes.showRoute = false
                                             classes.EditClass = false
+                                            classes.Time = 0
                                         }
                                 }
                             }
@@ -295,7 +296,7 @@ struct ContentView: View {
                                 } else{
                                     classes.showRoute = false
                                 }
-                                
+                                classes.Time = 0
                                 classes.detail.removeAll()
                                 
                             }
