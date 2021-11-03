@@ -21,7 +21,9 @@ struct SettingsView: View {
     
     var body: some View {
         
+        
         VStack{
+            
             Rectangle()
                 .frame(width: 40, height: 4)
                 .cornerRadius(2)
@@ -46,86 +48,86 @@ struct SettingsView: View {
                     }
                     .padding(.horizontal)
                     .padding(.top)
-                    
-                    
-                    
-                    
-                    Toggle("Toggle Dark Mode", isOn: $settings.isDarkMode)
-                        .onChange(of: settings.isDarkMode) {value in
-                            if (settings.isDarkMode == true){
-                                settings.currentSystemScheme = .dark
-                                
-                            }
-                            else{
-                                settings.currentSystemScheme = .light
-                            }
-                            
+                }
+                
+                
+                
+                Toggle("Toggle Dark Mode", isOn: $settings.isDarkMode)
+                    .onChange(of: settings.isDarkMode) {value in
+                        if (settings.isDarkMode == true){
+                            settings.currentSystemScheme = .dark
                             
                         }
-                        .foregroundColor(Color("Default"))
-                        .padding(.horizontal)
-                        .padding(.bottom, 4)
-                    
-                    Button(action:{
-                        settings.About.toggle()
-                        settings.Settings = false
-                    }){
-                        HStack{
-                            Text("About this app")
-                                .foregroundColor(Color("Default"))
-                            Spacer()
-                            Image(systemName: "arrow.right")
-                                .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
-                                .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                        else{
+                            settings.currentSystemScheme = .light
                         }
+                        
+                        
                     }
-                    
+                    .foregroundColor(Color("Default"))
                     .padding(.horizontal)
-                    
-                    Button(action:{
-                        settings.Bug.toggle()
-                        settings.Settings = false
-                    }){
-                        HStack{
-                            Text("Report Bugs")
-                                .foregroundColor(Color("Default"))
-                            Spacer()
-                            Image(systemName: "arrow.right")
-                                .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
-                                .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                        }
-                        
+                    .padding(.bottom, 4)
+                
+                Button(action:{
+                    settings.About.toggle()
+                    settings.Settings = false
+                }){
+                    HStack{
+                        Text("About this app")
+                            .foregroundColor(Color("Default"))
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                            .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
+                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                     }
-                    .padding([.horizontal, .top])
-                    
-                    Button(action:{
-                        self.showAlert = true
-                    }){
-                        HStack{
-                            Text("Clear Classes")
-                                .foregroundColor(Color("Red"))
-                            Spacer()
-                            Image(systemName: "arrow.right")
-                                .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
-                                .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
-                        }
-                        
-                    }
-                    .padding(.all)
-                    .alert(isPresented: $showAlert) {
-                        Alert(
-                            title: Text("Warning"),
-                            message: Text("You are about to clear your classes. Are you sure?"),
-                            primaryButton: .destructive(Text("Yes"), action: {
-                                classes.userClass.removeAll()
-                            }),
-                            secondaryButton: .default(Text("No"))
-                            
-                            
-                        )
+                }
+                
+                .padding(.horizontal)
+                
+                Button(action:{
+                    settings.Bug.toggle()
+                    settings.Settings = false
+                }){
+                    HStack{
+                        Text("Report Bugs")
+                            .foregroundColor(Color("Default"))
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                            .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
+                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
                     }
                     
                 }
+                .padding([.horizontal, .top])
+                
+                Button(action:{
+                    self.showAlert = true
+                }){
+                    HStack{
+                        Text("Clear Classes")
+                            .foregroundColor(Color("Red"))
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                            .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
+                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                    }
+                    
+                }
+                .padding(.all)
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Warning"),
+                        message: Text("You are about to clear your classes. Are you sure?"),
+                        primaryButton: .destructive(Text("Yes"), action: {
+                            classes.userClass.removeAll()
+                        }),
+                        secondaryButton: .default(Text("No"))
+                        
+                        
+                    )
+                }
+                
+                
             }
             .background(Color("ClassColor"))
             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -135,6 +137,7 @@ struct SettingsView: View {
             Rectangle()
                 .frame(height: 200)
                 .foregroundColor(Color("SearchbarColor"))
+            
         }
         .background(Color("SearchbarColor"))
         .clipShape(RoundedRectangle(cornerRadius: 12))

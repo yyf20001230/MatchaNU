@@ -69,29 +69,38 @@ struct DetailView: View {
                         }
                     }){
                         
-                        VStack{
+                        HStack{
                             
                             
                             Image(systemName: "mappin.circle.fill")
-                                .padding(.top)
-                                .padding(.horizontal, 24)
+                                .padding(.horizontal, 16)
                                 .scaleEffect(1.5)
                                 .scaledToFill()
                                 .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
                             
-                            if classes.detail[0].ClassLocation[0] != -1 && classes.detail[0].ClassLocation[0] != -1{
-                                Text(String(classes.Time) + " mins by walking")
-                                    .font(.system(.footnote, design: .rounded))
-                                    .fontWeight(.semibold)
-                                    .multilineTextAlignment(.leading)
-                                    .padding(.all)
-                            } else {
-                                Text("Location unknown")
-                                    .font(.system(.footnote, design: .rounded))
-                                    .fontWeight(.semibold)
-                                    .multilineTextAlignment(.leading)
-                                    .padding(.all)
+                            VStack (alignment: .leading, spacing: 3.0){
+                                Text("Navigate:")
+                                    .foregroundColor(.secondary)
+                                    .font(.system(.subheadline, design: .rounded))
+                                    .fontWeight(.bold)
+                                    .padding([.horizontal, .top])
+                                
+                                if classes.detail[0].ClassLocation[0] != -1 && classes.detail[0].ClassLocation[0] != -1{
+                                    Text(String(classes.Time) + " mins by walking")
+                                        .font(.system(.footnote, design: .rounded))
+                                        .fontWeight(.semibold)
+                                        .multilineTextAlignment(.leading)
+                                        .padding([.horizontal,.bottom])
+                                } else {
+                                    Text("Location unknown")
+                                        .font(.system(.footnote, design: .rounded))
+                                        .fontWeight(.semibold)
+                                        .multilineTextAlignment(.leading)
+                                        .padding([.horizontal, .bottom])
+                                }
                             }
+                            
+                            
                             
                             
                         }
