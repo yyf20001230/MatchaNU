@@ -23,7 +23,9 @@ class ClassLocations: ObservableObject{
     @Published var showUserLocation = false
     @Published var ShowClass = false
     @Published var EditClass = false
+    @Published var quickNavigate = false
     @Published var Time = 0
+    
     
     init(){
         getItems()
@@ -402,10 +404,17 @@ struct ContentView: View {
                 .offset(y: settings.Bug ?  height / 4 : height * 2)
                 .animation(.spring())
             
+            if classes.quickNavigate{
+                QuickNavigationWindow()
+                    .environmentObject(classes)
+                    .animation(.spring())
+            }
+            
             
         }
         .preferredColorScheme(settings.currentSystemScheme)
         .onAppear{
+
             notificationManager.reloadAuthorizationStatus()
             notificationManager.emptyLocalNotifications()
             for classInfo in classes.userClass{
