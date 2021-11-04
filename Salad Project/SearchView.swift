@@ -33,6 +33,7 @@ struct ClassList: View{
                 if classes.userClass.count != 0{
                     Text("Enrolled class(es)")
                         .foregroundColor(.secondary)
+                        .fontWeight(.bold)
                         .font(.system(.subheadline, design: .rounded))
                         .tracking(-0.5)
                         .padding(.leading)
@@ -54,6 +55,7 @@ struct ClassList: View{
                                         .font(.system(.subheadline, design: .rounded))
                                         .fontWeight(.bold)
                                         .tracking(-0.5)
+                                        .multilineTextAlignment(.leading)
                                         .padding(.leading)
                                     
                                     Spacer()
@@ -63,16 +65,19 @@ struct ClassList: View{
                                     VStack(alignment: .leading, spacing: 4.0){
                                         Text(i.Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
                                             .foregroundColor(.secondary)
-                                            .font(.system(.caption2, design: .rounded))
+                                            .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[0])
                                             .foregroundColor(.secondary)
-                                            .font(.system(.caption2, design: .rounded))
+                                            .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[1])
                                             .foregroundColor(.secondary)
-                                            .font(.system(.caption2, design: .rounded))
+                                            .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                     }
                                     .padding(.leading)
                                     
@@ -126,12 +131,14 @@ struct ClassList: View{
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.bold)
                         .tracking(-0.5)
+                        .multilineTextAlignment(.leading)
                 } else {
                     Text("Keep Typing...")
                         .foregroundColor(.secondary)
                         .font(.system(.body, design: .rounded))
                         .fontWeight(.bold)
                         .tracking(-0.5)
+                        .multilineTextAlignment(.leading)
                 }
                 
             }
@@ -158,12 +165,15 @@ struct ClassList: View{
                                         .font(.system(.body, design: .rounded))
                                         .fontWeight(.bold)
                                         .tracking(-0.5)
+                                        .multilineTextAlignment(.leading)
                                     
                                     Text(i.Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                         .foregroundColor(.secondary)
-                                        .font(.system(.caption2, design: .rounded))
+                                        .font(.system(.caption, design: .rounded))
+                                        .fontWeight(.semibold)
                                         .tracking(-0.5)
                                         .multilineTextAlignment(.leading)
+
                                     
                                 }
                                 .padding(.all)
@@ -197,6 +207,7 @@ struct ClassList: View{
                                 self.classes.detail.append(i)
                             })
                             {
+                                
                                 HStack (spacing: 20.0){
                                     Text(i.Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
                                         .foregroundColor(Color("Default"))
@@ -209,31 +220,37 @@ struct ClassList: View{
                                         Text(i.Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption2, design: .rounded))
+                                            .fontWeight(.semibold)
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[0])
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption2, design: .rounded))
+                                            .fontWeight(.semibold)
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[1])
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption2, design: .rounded))
+                                            .fontWeight(.semibold)
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                     }
+                                    
+                                    Spacer()
                                 }
-                                .padding(.bottom)
+                                .padding(.all)
+                                .background(Color("ClassColor"))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
                                 
-                                Spacer()
                             }
-                            .padding(.bottom)
-                            
-                            
                         }
                     }
                     .padding(.horizontal)
                     
                     Rectangle()
                         .foregroundColor(Color("SearchbarColor"))
-                        .frame(height: 100)
+                        .frame(height: 120)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             }
@@ -252,7 +269,7 @@ class getClass: ObservableObject{
     @Published var uniqueprof = [ClassInfo]()
     
     init(){
-        if let fileLocation = Bundle.main.url(forResource: "Matcha5", withExtension: "json") {
+        if let fileLocation = Bundle.main.url(forResource: "Matcha_Winter", withExtension: "json") {
             do {
                 let classData = try Data(contentsOf: fileLocation)
                 let jsonDecoder = JSONDecoder()

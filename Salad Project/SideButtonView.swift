@@ -14,7 +14,10 @@ struct SideButtonView: View {
 
     var body: some View {
         VStack {
-            Button(action: {settings.Schedule.toggle()}) {
+            Button(action: {
+                settings.Schedule.toggle()
+                classes.quickNavigate = false
+            }) {
                 Image(systemName: "map")
                     .padding(.bottom,8)
                     .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))

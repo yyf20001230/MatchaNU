@@ -10,6 +10,7 @@ import SwiftUI
 struct EditView: View {
     
     @EnvironmentObject var classes: ClassLocations
+    @ObservedObject var notificationManager = NotificationManager()
     @State var datas: [ClassInfo]
     @State var uniqueProf: [ClassInfo]
     
@@ -49,20 +50,25 @@ struct EditView: View {
                     
                     HStack{
                         VStack(alignment: .leading, spacing: 4.0){
-                            Text("Meeting Location: " + MeetingInfo.components(separatedBy: ": ")[0])
+                            Text("Location: " + MeetingInfo.components(separatedBy: ": ")[0])
                                 .foregroundColor(.secondary)
-                                .font(.system(.caption2, design: .rounded))
+                                .font(.system(.footnote, design: .rounded))
+                                .fontWeight(.semibold)
                                 .tracking(-0.5)
                             
-                            Text("Meeting Info: " + MeetingInfo.components(separatedBy: ": ")[1])
+                            Text("Info: " + MeetingInfo.components(separatedBy: ": ")[1])
                                 .foregroundColor(.secondary)
-                                .font(.system(.caption2, design: .rounded))
+                                .font(.system(.footnote, design: .rounded))
+                                .fontWeight(.semibold)
                                 .tracking(-0.5)
+                                .multilineTextAlignment(.leading)
                             
                             Text("Instructor: " + classes.detail[0].Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
                                 .foregroundColor(.secondary)
-                                .font(.system(.caption2, design: .rounded))
+                                .font(.system(.footnote, design: .rounded))
+                                .fontWeight(.semibold)
                                 .tracking(-0.5)
+                                .multilineTextAlignment(.leading)
                         }
                         
                         Spacer()
@@ -122,9 +128,10 @@ struct EditView: View {
                                 VStack(alignment: .leading) {
                                     Text(i)
                                         .foregroundColor(.secondary)
-                                        .font(.system(.subheadline, design: .rounded))
+                                        .font(.system(.footnote, design: .rounded))
+                                        .fontWeight(.semibold)
                                         .tracking(-0.5)
-                                        .multilineTextAlignment(.leading)
+
                                     
                                 }
                                 .padding(.vertical)
@@ -180,7 +187,8 @@ struct EditView: View {
                                 VStack(alignment: .leading) {
                                     Text(i)
                                         .foregroundColor(.secondary)
-                                        .font(.system(.subheadline, design: .rounded))
+                                        .font(.system(.footnote, design: .rounded))
+                                        .fontWeight(.semibold)
                                         .tracking(-0.5)
                                         .multilineTextAlignment(.leading)
                                     

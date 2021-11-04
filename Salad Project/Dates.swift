@@ -66,6 +66,13 @@ func newDate(inString: String) -> Date{
     return new_date
 }
 
+func timeInterval (currentHour: Int, currentMinute: Int, classHour: Int, classMinute: Int)-> Int{
+    let currentTime = currentHour * 60 + currentMinute
+    let classTime = classHour * 60 + classMinute
+    print(classTime - currentTime)
+    return classTime - currentTime
+}
+
 func timeWithDelay(timeList: [Int], delay: Int) -> [Int]{
     var newList: [Int] = []
     if (delay > timeList[1]){

@@ -50,22 +50,22 @@ struct MapView: UIViewRepresentable {
                 
                 let directions = MKDirections(request: request)
                 
-                if classes.showRoute{
-                    directions.calculate{ response, error in
-                        guard let route = response?.routes.first else { return }
+                
+                directions.calculate{ response, error in
+                    guard let route = response?.routes.first else { return }
+                    if classes.Time == 0{
+                        classes.Time = Int(route.expectedTravelTime / 60)
+                    }
+                    if classes.showRoute{
                         uiView.addOverlay(route.polyline)
                         uiView.setVisibleMapRect(route.polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 80, left: 80, bottom: 160, right: 80),animated: true)
-                        print(Int(route.expectedTravelTime / 60))
-                        if classes.Time == 0{
-                            classes.Time = Int(route.expectedTravelTime / 60)
-                        }
-                    }
-                } else {
-                    uiView.removeOverlays(uiView.overlays)
-                    if classes.showUserLocation{
-                        uiView.setRegion(MKCoordinateRegion(center: uiView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
                     } else {
-                        uiView.setRegion(MKCoordinateRegion(center: destination.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
+                        uiView.removeOverlays(uiView.overlays)
+                        if classes.showUserLocation{
+                            uiView.setRegion(MKCoordinateRegion(center: uiView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
+                        } else {
+                            uiView.setRegion(MKCoordinateRegion(center: destination.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)), animated: true)
+                        }
                     }
                 }
             }

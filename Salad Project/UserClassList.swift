@@ -36,16 +36,19 @@ struct UserClassList: View {
                                     VStack(alignment: .leading, spacing: 4.0){
                                         Text(i.Instructor.dropLast())
                                             .foregroundColor(.secondary)
-                                            .font(.system(.caption2, design: .rounded))
+                                            .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[0])
                                             .foregroundColor(.secondary)
-                                            .font(.system(.caption2, design: .rounded))
+                                            .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                         Text(i.MeetingInfo.components(separatedBy: ": ")[1])
                                             .foregroundColor(.secondary)
-                                            .font(.system(.caption2, design: .rounded))
+                                            .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
+                                            .multilineTextAlignment(.leading)
                                     }
                                     .padding(.leading)
                                     

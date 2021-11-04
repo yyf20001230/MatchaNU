@@ -16,6 +16,7 @@ class ClassLocations: ObservableObject{
             savedItems()
         }
     }
+    
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
     @Published var showUserClass = false
@@ -24,6 +25,11 @@ class ClassLocations: ObservableObject{
     @Published var ShowClass = false
     @Published var EditClass = false
     @Published var Time = 0
+    
+    @Published var quickNavigate = false
+    @Published var quickNavigateTime = 31
+    @Published var quickNavigateclass: [ClassInfo] = []
+    
     
     init(){
         getItems()
@@ -136,6 +142,7 @@ struct ContentView: View {
                             .environmentObject(classes)
                             .onTapGesture {
                                 classes.showUserLocation.toggle()
+                                classes.quickNavigate = false
                             }
                             .foregroundColor(classes.showUserLocation ? Color("Red") : Color("Theme"))
                             .offset(y: -height / 12 - 50)
@@ -149,6 +156,7 @@ struct ContentView: View {
                                     classes.showUserClass.toggle()
                                     classes.detail.removeAll()
                                     classes.Section.removeAll()
+                                    classes.quickNavigate = false
                                     if classes.showUserClass {
                                         classes.ShowClass = true
                                     }
@@ -230,7 +238,8 @@ struct ContentView: View {
                                         .padding(.trailing)
                                     Text(classes.detail.isEmpty ? "You have \(classes.userClass.count) class(es)" : classes.detail[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                         .foregroundColor(.secondary)
-                                        .font(.system(.caption2, design: .rounded))
+                                        .fontWeight(.semibold)
+                                        .font(.system(.caption, design: .rounded))
                                         .tracking(-0.5)
                                 }
                                 
@@ -246,6 +255,7 @@ struct ContentView: View {
                                             classes.detail.removeAll()
                                             classes.showRoute = false
                                             classes.EditClass = false
+                                            classes.Time = 0
                                         }
                                 }
                             }
@@ -271,9 +281,10 @@ struct ContentView: View {
                                 .padding(.trailing)
                             Text(classes.Section[0].Class.components(separatedBy: " ").dropFirst().joined(separator: " "))
                                 .foregroundColor(.secondary)
-                                .font(.system(.caption2, design: .rounded))
+                                .font(.system(.footnote, design: .rounded))
+                                .fontWeight(.semibold)
                                 .tracking(-0.5)
-                                .multilineTextAlignment(.leading)
+
                         }
                         
 
@@ -295,7 +306,7 @@ struct ContentView: View {
                                 } else{
                                     classes.showRoute = false
                                 }
-                                
+                                classes.Time = 0
                                 classes.detail.removeAll()
                                 
                             }
@@ -340,29 +351,30 @@ struct ContentView: View {
             .shadow(color: Color("Default").opacity(0.2), radius: 6, x: 3, y: 3)
             .gesture(
                 DragGesture().onChanged { value in
-                MainTab = value.translation
-                if value.translation.height < -40 && classes.ShowClass
-                    || value.translation.height > 40 && !classes.ShowClass{
-                    MainTab = CGSize.zero
+                    MainTab = value.translation
+                    classes.quickNavigate = false
+                    if value.translation.height < -40 && classes.ShowClass
+                        || value.translation.height > 40 && !classes.ShowClass{
+                        MainTab = CGSize.zero
+                    }
+                    else if value.translation.height < -height / 1.5 && !classes.ShowClass{
+                        MainTab = CGSize.zero
+                        classes.ShowClass = true
+                    }
+                    
                 }
-                else if value.translation.height < -height / 1.5 && !classes.ShowClass{
-                    MainTab = CGSize.zero
-                    classes.ShowClass = true
-                }
-                
-            }
                     .onEnded{ value in
-                if value.translation.height < -80{
-                    classes.ShowClass = true
-                }
-                else if value.translation.height > 80{
-                    classes.ShowClass = false
-                    hideKeyboard()
-                }
-                
-                MainTab = CGSize.zero
-                
-            }
+                        if value.translation.height < -80{
+                            classes.ShowClass = true
+                        }
+                        else if value.translation.height > 80{
+                            classes.ShowClass = false
+                            hideKeyboard()
+                        }
+                        
+                        MainTab = CGSize.zero
+                        
+                    }
             )
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
             
@@ -380,7 +392,6 @@ struct ContentView: View {
             ScheduleView()
                 .environmentObject(settings)
                 .offset(y: settings.Schedule ?  0 : height)
-                .animation(.spring())
             
             
             SettingsView()
@@ -399,18 +410,36 @@ struct ContentView: View {
                 .offset(y: settings.Bug ?  height / 4 : height * 2)
                 .animation(.spring())
             
+            QuickNavigationWindow()
+                .environmentObject(classes)
+                .offset(y: classes.quickNavigate ?  0 : height * 2)
+                .animation(.spring())
             
         }
         .preferredColorScheme(settings.currentSystemScheme)
         .onAppear{
+            
+            let date = Date()
+            let hour = Calendar.current.component(.hour, from: date)
+            let minute = Calendar.current.component(.minute,from: date)
+            let week = Calendar.current.component(.weekday, from: date)
+            var maxInterval = settings.TimeInAdvance + 1
+            
             notificationManager.reloadAuthorizationStatus()
             notificationManager.emptyLocalNotifications()
+            
             for classInfo in classes.userClass{
-                
+
                 var start = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo))
-                if !start.contains(-1){
-                    start = timeWithDelay(timeList: start, delay: settings.TimeInAdvance)
+                
+                if start.contains(-1){
+                    continue
+                    
                 }
+                
+                let startHour = start[0]
+                let startMinute = start[1]
+                start = timeWithDelay(timeList: start, delay: settings.TimeInAdvance)
                 let startHours = start[0]
                 let startMinutes = start[1]
                 
@@ -427,8 +456,25 @@ struct ContentView: View {
                                 return
                             }
                         }
+                        if week == weekday{
+                            let interval = timeInterval(currentHour: hour, currentMinute: minute, classHour: startHour, classMinute: startMinute)
+                            if interval >= 0 && interval < maxInterval{
+                                maxInterval = interval
+                                if classes.quickNavigateclass.isEmpty{
+                                    classes.quickNavigateclass.append(classInfo)
+                                } else {
+                                    classes.quickNavigateclass[0] = classInfo
+                                }
+                            }
+                        }
                     }
                 }
+            }
+            
+            if maxInterval < settings.TimeInAdvance{
+                classes.quickNavigate = true
+                classes.quickNavigateTime = maxInterval
+                print(maxInterval)
             }
         }
         .onChange(of: notificationManager.authorizationStatus){ authorizationStatus in
