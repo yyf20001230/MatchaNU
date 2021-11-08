@@ -29,6 +29,9 @@ struct EditView: View {
     @State private var selected = false
     @State private var foundLocation = false
     @State private var enteredNextPage = false
+    @State private var startTime = Date()
+    @State private var endTime = Date()
+    @State private var daysOfWeek = "Monday"
     var body: some View {
         
         let data = datas
@@ -156,9 +159,31 @@ struct EditView: View {
                 
                 Divider()
                 
-                TextField("Meeting time (Tue, 11:00AM - 11:50AM)", text: $MeetingInfo)
-                    .foregroundColor(Color("Default"))
-                    .font(.system(.subheadline, design: .rounded))
+                DatePicker("Start time", selection: $startTime, displayedComponents: .hourAndMinute)
+                
+                Divider()
+                
+                DatePicker("End time", selection: $endTime, displayedComponents: .hourAndMinute)
+                
+                Divider()
+                
+//                Picker("Days of week", selection: $daysOfWeek){
+//                    Text("Monday")
+//                    Text("Tuesday")
+//                    Text("Wednesday")
+//                    Text("Thursday")
+//                    Text("Friday")
+//                    Text("Saturday")
+//                    Text("Sunday")
+//                }
+//
+//                Divider()
+                
+                //print(dateFormatter.string(from: startTime) + " " + dateFormatter.string(from: endTime))
+                
+//                TextField("Meeting time (Tue, 11:00AM - 11:50AM)", text: $MeetingInfo)
+//                    .foregroundColor(Color("Default"))
+//                    .font(.system(.subheadline, design: .rounded))
                     
                 
                 Divider()

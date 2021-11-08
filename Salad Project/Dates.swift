@@ -239,3 +239,7 @@ func scrapeClassroom(rawString: String) -> String{
     
     return newString
 }
+
+func combineTimes(startTime: Date, endTime: Date, daysOfWeek: [Int]){
+    
+}
