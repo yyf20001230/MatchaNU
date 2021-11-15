@@ -130,6 +130,7 @@ struct ContentView: View {
                         Spacer()
                         SideButtonView()
                             .environmentObject(settings)
+                            .environmentObject(classes)
                             .padding(.trailing)
                             .padding(.top, height / 18)
                     }

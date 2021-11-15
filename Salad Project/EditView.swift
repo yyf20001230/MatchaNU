@@ -22,72 +22,29 @@ struct EditView: View {
     @State var EditClassLocation = ""
     @State var Instructor = ""
     @State var EditInstructor = ""
-
+    
     
     @State private var selectedSection = 0
     @State private var showAlert = false
+    @State private var showEditAlert = false
     @State private var selected = false
     @State private var foundLocation = false
     @State private var enteredNextPage = false
     @State private var startTime = Date()
     @State private var endTime = Date()
-    @State private var daysOfWeek = "Monday"
+    @State private var daysOfWeek = [-1, -1, -1, -1, -1, -1, -1]
+    @State private var daysBoolean: [Bool] = [false, false, false, false, false, false, false]
     var body: some View {
         
         let data = datas
         let locations = Array(Set(data.map({$0.MeetingInfo.components(separatedBy: ": ")[0]})))
         let profs = Array(Set(data.map({$0.Instructor.replacingOccurrences(of: "|", with: ",").dropLast()})))
+        let displayDow = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
+        let finalDowList = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sa", "Sun"]
+        let dateFormatter = DateFormatter()
+        var finalDow = ""
+        var finalString = ""
         
-        if !classes.detail.isEmpty && selectedSection == 2{
-            
-            VStack (alignment: .leading, spacing: 10){
-                
-                    HStack{
-                        Text(classes.detail[0].Major.components(separatedBy: " ")[0] + " " + classes.detail[0].Class.components(separatedBy: " ")[0] + "-" + classes.detail[0].Section.components(separatedBy: " ")[0].replacingOccurrences(of: ":", with: ""))
-                            .foregroundColor(.primary)
-                            .font(.system(.subheadline, design: .rounded))
-                            .fontWeight(.bold)
-                            .tracking(-0.5)
-                        Spacer()
-                    }
-                    
-                    HStack{
-                        VStack(alignment: .leading, spacing: 4.0){
-                            Text("Location: " + MeetingInfo.components(separatedBy: ": ")[0])
-                                .foregroundColor(.secondary)
-                                .font(.system(.footnote, design: .rounded))
-                                .fontWeight(.semibold)
-                                .tracking(-0.5)
-                            
-                            Text("Info: " + MeetingInfo.components(separatedBy: ": ")[1])
-                                .foregroundColor(.secondary)
-                                .font(.system(.footnote, design: .rounded))
-                                .fontWeight(.semibold)
-                                .tracking(-0.5)
-                                .multilineTextAlignment(.leading)
-                            
-                            Text("Instructor: " + classes.detail[0].Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
-                                .foregroundColor(.secondary)
-                                .font(.system(.footnote, design: .rounded))
-                                .fontWeight(.semibold)
-                                .tracking(-0.5)
-                                .multilineTextAlignment(.leading)
-                        }
-                        
-                        Spacer()
-                        
-                    }
-                
-            }
-            .padding(.all)
-            .background(Color("ClassColor"))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding(.horizontal)
-            .padding(.all)
-        }
-        
-       
-            
         VStack (alignment: .leading){
             if selectedSection == 0{
                 
@@ -120,7 +77,7 @@ struct EditView: View {
                                 
                                 Latitude = data.first(where: {$0.MeetingInfo.contains(i)})!.ClassLocation[0]
                                 Longitude = data.first(where: {$0.MeetingInfo.contains(i)})!.ClassLocation[1]
-
+                                
                                 MeetingInfo = classes.detail[0].MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: " ")
                                 Instructor = String(classes.detail[0].Instructor.replacingOccurrences(of: "|", with: ",").dropLast())
                                 ClassLocation = i
@@ -134,7 +91,7 @@ struct EditView: View {
                                         .font(.system(.footnote, design: .rounded))
                                         .fontWeight(.semibold)
                                         .tracking(-0.5)
-
+                                    
                                     
                                 }
                                 .padding(.vertical)
@@ -151,13 +108,16 @@ struct EditView: View {
                 }
                 
             } else if selectedSection == 1{
+                
+                    
+                
                 Text("2. Now, let's edit course info")
                     .foregroundColor(Color("Theme"))
                     .font(.system(.subheadline, design: .rounded))
                     .fontWeight(.bold)
                     .tracking(-0.5)
                 
-                Divider()
+                
                 
                 DatePicker("Start time", selection: $startTime, displayedComponents: .hourAndMinute)
                 
@@ -165,28 +125,56 @@ struct EditView: View {
                 
                 DatePicker("End time", selection: $endTime, displayedComponents: .hourAndMinute)
                 
-                Divider()
                 
-//                Picker("Days of week", selection: $daysOfWeek){
-//                    Text("Monday")
-//                    Text("Tuesday")
-//                    Text("Wednesday")
-//                    Text("Thursday")
-//                    Text("Friday")
-//                    Text("Saturday")
-//                    Text("Sunday")
-//                }
-//
-//                Divider()
                 
-                //print(dateFormatter.string(from: startTime) + " " + dateFormatter.string(from: endTime))
                 
-//                TextField("Meeting time (Tue, 11:00AM - 11:50AM)", text: $MeetingInfo)
-//                    .foregroundColor(Color("Default"))
-//                    .font(.system(.subheadline, design: .rounded))
+                HStack{
+                    ForEach(0..<7){ i in
+                        Button(action: {
+                            daysBoolean[i].toggle()
+                            for j in 0..<7 {
+                                if daysBoolean[j]{
+                                    daysOfWeek[j] = i+1
+                                }
+                                else{
+                                    daysOfWeek[j] = -1
+                                }
+                            }
+                        }){
+                            Text(displayDow[i])
+                                .font(.subheadline)
+                                .foregroundColor(Color.white)
+                                .frame(width: 35, height: 30)
+                            
+                            
+                            
+                            
+                        }
+                        .background(daysBoolean[i] ? Color("Theme") : Color("Theme").opacity(0.5))
+                        .cornerRadius(22)
+                        
+                    }
+                    
+                    
+                }
+                
+            
+                
+                
+                
+                    
                     
                 
-                Divider()
+                
+            } else if selectedSection == 2{
+                
+                Text("3. Now, let's add your instructor")
+                    .foregroundColor(Color("Theme"))
+                    .font(.system(.subheadline, design: .rounded))
+                    .fontWeight(.bold)
+                    .tracking(-0.5)
+                
+                
                 
                 TextField("Enter instructor name", text: $Instructor)
                     .foregroundColor(Color("Default"))
@@ -198,7 +186,7 @@ struct EditView: View {
                         }
                         foundLocation = false
                     }
-                    
+                
                 
                 let elements = profs.filter({$0.lowercased().contains(Instructor.lowercased())})
                 if !elements.isEmpty && !selected {
@@ -233,6 +221,7 @@ struct EditView: View {
                 
                 
             }
+            
         }
         .padding(.all)
         .background(Color("ClassColor"))
@@ -244,13 +233,11 @@ struct EditView: View {
         HStack{
             if selectedSection != 0{
                 Button(action: {
-                    if selectedSection == 1{
-                        selectedSection = selectedSection - 1
-                    }
-                    
+                    selectedSection = selectedSection - 1
                     enteredNextPage = false
                     selected = true
-                
+                    showAlert = false
+                    showEditAlert = false
                 }){
                     Text("back")
                         .font(.system(.subheadline, design: .rounded))
@@ -261,56 +248,110 @@ struct EditView: View {
                         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 2, y: 2)
                 }
             }
-            
-            if selected || enteredNextPage{
+            if selectedSection != 2 && (selected || enteredNextPage){
                 Button(action: {
-                    enteredNextPage = true
-                    if selectedSection != 1{
-                        selectedSection += 1
-                        
-                        selected = true
-                    }
-                    else {
-                        selectedSection = 0
-                        
-                        if (Latitude > 42.05712) && (Latitude < 42.05851) && (Longitude < -87.67495) && (Longitude > -87.67675){
-                            Latitude = 42.0578383
-                            Longitude = -87.6761566
-                        }
-                        
-                        MeetingInfo = (MeetingInfo.isEmpty ? classes.detail[0].MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: "") : MeetingInfo)
-                        ClassLocation = (ClassLocation.isEmpty ? classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0] : ClassLocation)
-                        
-                        classes.userClass.append(ClassInfo(Class: classes.detail[0].Class, ClassLocation: [Latitude, Longitude], ClassOverview: classes.detail[0].ClassOverview, Instructor: Instructor + " ", Major: classes.detail[0].Major, MeetingInfo: ClassLocation + ": " + MeetingInfo, School: classes.detail[0].School, Section: classes.detail[0].Section))
-                        
-                        Latitude = 0
-                        Longitude = 0
-                        Instructor = ""
-                        MeetingInfo = ""
-                        ClassLocation = ""
-                        showAlert = true
-                        classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
-                    }
+                    enteredNextPage = false
+                    selected = true
                     
+                    
+                    var noDow = true
+                    for i in 0..<7{
+                        if daysBoolean[i]{
+                            noDow = false
+                        }
+                    }
+                    if noDow && selectedSection != 0{
+                        showAlert = true
+                        showEditAlert = true
+                    }
+                    if !showEditAlert{
+                        selectedSection = selectedSection + 1
+                    }
                 }){
-                    Text((selectedSection == 1) ? "Submit" : "next")
+                    Text("next")
                         .font(.system(.subheadline, design: .rounded))
                         .frame(width: 120, height: 40, alignment: .center)
-                        .background((selectedSection == 1) ? Color("Theme").opacity(0.7) : Color("ClassColor"))
-                        .foregroundColor((selectedSection == 1) ? Color.white : Color("Theme"))
+                        .background(Color("ClassColor"))
+                        .foregroundColor(Color("Theme"))
                         .cornerRadius(12)
                         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 2, y: 2)
                 }
-                .alert(isPresented: $showAlert, content: {
-                    Alert(title: Text("Congrats"), message: Text("Your custom class is edited"), dismissButton: .default(Text("Yay!")))
-                })
-            }
-           
-        }
-        
-        
-        
-    }
-}
+                .alert(isPresented: $showEditAlert, content: {
+                    Alert(title: Text("No days of week found"), message: Text("You didn't select days of week for this class, do you want to continue?"), primaryButton: .default(Text("No")),
+                     secondaryButton: .destructive(Text("Yes"), action: {
+                   selectedSection = selectedSection + 1
+                   showEditAlert = false
+                   showAlert = false
+                    }))})
+                
+                
+            }else if (selected || enteredNextPage){
+                Button(action: {
+                    dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                    dateFormatter.dateFormat = "h:mma"
+                    selectedSection = 0
+                    
+                    let startTimeString = dateFormatter.string(from: startTime)
+                    let endTimeString = dateFormatter.string(from: endTime)
+                    for i in 0..<7{
+                        if daysBoolean[i]{
+                            finalDow.append(finalDowList[i])
+                            finalDow.append(", ")
+                        }
+                    }
+                    if finalDow.count == 0{
+                        finalString = ClassLocation + ": TBA"
+                    }   else{
+                        finalString = ClassLocation + ": " + finalDow + startTimeString + " - " + endTimeString
+                    }
+                    
+                    
+                    
+                    if (Latitude > 42.05712) && (Latitude < 42.05851) && (Longitude < -87.67495) && (Longitude > -87.67675){
+                        Latitude = 42.0578383
+                        Longitude = -87.6761566
+                    }
+                    
+                    MeetingInfo = (MeetingInfo.isEmpty ? classes.detail[0].MeetingInfo.components(separatedBy: ": ").dropFirst().joined(separator: "") : MeetingInfo)
+                    ClassLocation = (ClassLocation.isEmpty ? classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0] : ClassLocation)
+                    
+                    classes.userClass.append(ClassInfo(Class: classes.detail[0].Class, ClassLocation: [Latitude, Longitude], ClassOverview: classes.detail[0].ClassOverview, Instructor: Instructor + " ", Major: classes.detail[0].Major, MeetingInfo: finalString, School: classes.detail[0].School, Section: classes.detail[0].Section))
+                    
+                    Latitude = 0
+                    Longitude = 0
+                    Instructor = ""
+                    MeetingInfo = ""
+                    ClassLocation = ""
+                    
+                    classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
+                    showAlert = true
+                    classes.EditClass = false
+                    print(showAlert)
+                    print(showEditAlert)
+                    
+                }){
+                    Text( "Submit")
+                        .font(.system(.subheadline, design: .rounded))
+                        .frame(width: 120, height: 40, alignment: .center)
+                        .background(Color("Theme").opacity(0.7))
+                        .foregroundColor(Color.white)
+                        .cornerRadius(12)
+                        .shadow(color: Color.black.opacity(0.05), radius: 4, x: 2, y: 2)
+                }
 
-
+                    
+                    
+                }
+                
+                       
+                       }
+                       
+                       }
+                       
+                       
+                       
+                       }
+                       
+                       
+                       
+                       
