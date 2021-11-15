@@ -30,20 +30,23 @@ struct EditView: View {
     @State private var selected = false
     @State private var foundLocation = false
     @State private var enteredNextPage = false
-    @State private var startTime = Date()
-    @State private var endTime = Date()
-    @State private var daysOfWeek = [-1, -1, -1, -1, -1, -1, -1]
-    @State private var daysBoolean: [Bool] = [false, false, false, false, false, false, false]
+    
+    @State var startTime = Date()
+    @State var endTime = Date()
+    @State var daysOfWeek = [-1, -1, -1, -1, -1, -1, -1]
+    @State var daysBoolean: [Bool] = [false, false, false, false, false, false, false]
     var body: some View {
         
         let data = datas
-        let locations = Array(Set(data.map({$0.MeetingInfo.components(separatedBy: ": ")[0]})))
-        let profs = Array(Set(data.map({$0.Instructor.replacingOccurrences(of: "|", with: ",").dropLast()})))
+        let locations = Array(Set(data.map({$0.MeetingInfo.components(separatedBy: ": ")[0]}))).sorted()
+        let profs = Array(Set(data.map({$0.Instructor.replacingOccurrences(of: "|", with: ",").dropLast()}))).sorted()
         let displayDow = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
         let finalDowList = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sa", "Sun"]
         let dateFormatter = DateFormatter()
         var finalDow = ""
         var finalString = ""
+        
+        
         
         VStack (alignment: .leading){
             if selectedSection == 0{
@@ -125,9 +128,14 @@ struct EditView: View {
                 
                 DatePicker("End time", selection: $endTime, displayedComponents: .hourAndMinute)
                 
+                Divider()
                 
                 
-                
+                Text("Meeting Time")
+                    .foregroundColor(.primary)
+                    .tracking(-0.5)
+                    .padding(.top, 4)
+                    
                 HStack{
                     ForEach(0..<7){ i in
                         Button(action: {
@@ -142,7 +150,7 @@ struct EditView: View {
                             }
                         }){
                             Text(displayDow[i])
-                                .font(.subheadline)
+                                .font(.caption2)
                                 .foregroundColor(Color.white)
                                 .frame(width: 35, height: 30)
                             
@@ -150,7 +158,7 @@ struct EditView: View {
                             
                             
                         }
-                        .background(daysBoolean[i] ? Color("Theme") : Color("Theme").opacity(0.5))
+                        .background(daysBoolean[i] ? Color("Theme") : Color("EditColor"))
                         .cornerRadius(22)
                         
                     }
@@ -158,12 +166,6 @@ struct EditView: View {
                     
                 }
                 
-            
-                
-                
-                
-                    
-                    
                 
                 
             } else if selectedSection == 2{
@@ -174,7 +176,7 @@ struct EditView: View {
                     .fontWeight(.bold)
                     .tracking(-0.5)
                 
-                
+                Divider()
                 
                 TextField("Enter instructor name", text: $Instructor)
                     .foregroundColor(Color("Default"))
@@ -231,7 +233,7 @@ struct EditView: View {
         
         
         HStack{
-            if selectedSection != 0{
+            if selectedSection != 0 && selectedSection != 3{
                 Button(action: {
                     selectedSection = selectedSection - 1
                     enteredNextPage = false
@@ -248,6 +250,7 @@ struct EditView: View {
                         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 2, y: 2)
                 }
             }
+            
             if selectedSection != 2 && (selected || enteredNextPage){
                 Button(action: {
                     enteredNextPage = false
@@ -266,6 +269,7 @@ struct EditView: View {
                     }
                     if !showEditAlert{
                         selectedSection = selectedSection + 1
+                        
                     }
                 }){
                     Text("next")
@@ -277,7 +281,8 @@ struct EditView: View {
                         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 2, y: 2)
                 }
                 .alert(isPresented: $showEditAlert, content: {
-                    Alert(title: Text("No days of week found"), message: Text("You didn't select days of week for this class, do you want to continue?"), primaryButton: .default(Text("No")),
+                    
+                    Alert(title: Text("No days of week found"), message: Text("You didn't select days of week for this class, your class meetingInfo will be 'TBA'. Wish to proceed?"), primaryButton: .default(Text("No")),
                      secondaryButton: .destructive(Text("Yes"), action: {
                    selectedSection = selectedSection + 1
                    showEditAlert = false
@@ -285,8 +290,11 @@ struct EditView: View {
                     }))})
                 
                 
-            }else if (selected || enteredNextPage){
+            }
+            if selectedSection == 2{
                 Button(action: {
+                    enteredNextPage = false
+                    selected = true
                     dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                     dateFormatter.dateFormat = "h:mma"
                     selectedSection = 0
@@ -325,12 +333,10 @@ struct EditView: View {
                     
                     classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
                     showAlert = true
-                    classes.EditClass = false
-                    print(showAlert)
-                    print(showEditAlert)
+                    selectedSection = 2
                     
                 }){
-                    Text( "Submit")
+                    Text("Submit")
                         .font(.system(.subheadline, design: .rounded))
                         .frame(width: 120, height: 40, alignment: .center)
                         .background(Color("Theme").opacity(0.7))
@@ -338,20 +344,20 @@ struct EditView: View {
                         .cornerRadius(12)
                         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 2, y: 2)
                 }
-
-                    
-                    
-                }
                 
-                       
-                       }
-                       
-                       }
-                       
-                       
-                       
-                       }
-                       
-                       
-                       
+                .alert(isPresented: $showAlert, content: {
+                    Alert(title: Text("Class Added"), message: Text("Your class is added!"), dismissButton: .default(Text("Yay!")))
+                })
+                
+            }
+        }
+        
+        
+    }
+    
+}
+
+
+
+
                        
