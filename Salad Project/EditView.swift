@@ -253,6 +253,24 @@ struct EditView: View {
                     enteredNextPage = false
                     selected = true
                     
+                    if selectedSection == 0{
+                        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                        dateFormatter.dateFormat = "h:mma"
+                        
+                        startTime = dateFormatter.date(from: scrapeStartHoursMinutes(rawString: MeetingInfo)) ?? Date()
+                        endTime = dateFormatter.date(from: scrapeEndHoursMinutes(rawString: MeetingInfo)) ?? Date()
+                        
+                        
+                        for i in 0..<7{
+                            if MeetingInfo.contains(finalDowList[i]){
+                                daysOfWeek[i] = i
+                                daysBoolean[i] = true
+                            }
+                            
+                        }
+                    
+                    }
+                    
                     
                     var noDow = true
                     for i in 0..<7{
