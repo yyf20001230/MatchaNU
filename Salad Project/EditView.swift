@@ -110,9 +110,7 @@ struct EditView: View {
                 }
                 
             } else if selectedSection == 1{
-                
-                    
-                
+
                 Text("2. Now, let's edit course info")
                     .foregroundColor(Color("Theme"))
                     .font(.system(.subheadline, design: .rounded))
@@ -134,6 +132,7 @@ struct EditView: View {
                     .foregroundColor(.primary)
                     .tracking(-0.5)
                     .padding(.top, 4)
+                    .padding(.bottom)
                     
                 HStack{
                     ForEach(0..<7){ i in

@@ -72,10 +72,12 @@ struct MapView: UIViewRepresentable {
         }
         
         else {
+            
+            uiView.removeOverlays(uiView.overlays)
+            uiView.removeAnnotations(uiView.annotations)
+            
             if !classes.ShowClass{
-                uiView.removeOverlays(uiView.overlays)
-                uiView.removeAnnotations(uiView.annotations)
-                
+
                 if self.classes.userClass.count != 0{
                     var zoomRect = MKMapRect.null
                     for classinfo in self.classes.userClass{
