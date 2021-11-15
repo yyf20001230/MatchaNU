@@ -41,11 +41,10 @@ struct EditView: View {
         let locations = Array(Set(data.map({$0.MeetingInfo.components(separatedBy: ": ")[0]}))).sorted()
         let profs = Array(Set(data.map({$0.Instructor.replacingOccurrences(of: "|", with: ",").dropLast()}))).sorted()
         let displayDow = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
-        let finalDowList = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sa", "Sun"]
+        let finalDowList = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
         let dateFormatter = DateFormatter()
         var finalDow = ""
         var finalString = ""
-        
         
         
         VStack (alignment: .leading){
