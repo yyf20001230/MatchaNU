@@ -10,6 +10,7 @@
 		0110BF3026FAF14A00255FE6 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0110BF2F26FAF14A00255FE6 /* DetailView.swift */; };
 		011318012742320100A708A6 /* Matcha_Winter_2.json in Resources */ = {isa = PBXBuildFile; fileRef = 011318002742320000A708A6 /* Matcha_Winter_2.json */; };
 		012D259A2729008E00545F30 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012D25992729008E00545F30 /* NotificationManager.swift */; };
+		0138F6C327B47ADA003549A4 /* Matcha_Spring.json in Resources */ = {isa = PBXBuildFile; fileRef = 0138F6C227B47ADA003549A4 /* Matcha_Spring.json */; };
 		0142828926F0032800E0949E /* BugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0142828826F0032800E0949E /* BugView.swift */; };
 		014F85B92702E46A00F7ED0E /* UserClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014F85B82702E46A00F7ED0E /* UserClassView.swift */; };
 		014F85BB2702EA0F00F7ED0E /* UserClassList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014F85BA2702EA0F00F7ED0E /* UserClassList.swift */; };
@@ -56,6 +57,7 @@
 		0110BF2F26FAF14A00255FE6 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		011318002742320000A708A6 /* Matcha_Winter_2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Matcha_Winter_2.json; sourceTree = "<group>"; };
 		012D25992729008E00545F30 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		0138F6C227B47ADA003549A4 /* Matcha_Spring.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Matcha_Spring.json; sourceTree = "<group>"; };
 		0142828826F0032800E0949E /* BugView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugView.swift; sourceTree = "<group>"; };
 		014F85B82702E46A00F7ED0E /* UserClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClassView.swift; sourceTree = "<group>"; };
 		014F85BA2702EA0F00F7ED0E /* UserClassList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserClassList.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				01AFF213270C093300661805 /* Matcha5.json */,
 				2B6E94962728FAE0003B1820 /* Dates.swift */,
 				0175756926D8D2FA00757862 /* LocationManager.swift */,
+				0138F6C227B47ADA003549A4 /* Matcha_Spring.json */,
 				0175756B26D8D45C00757862 /* MapView.swift */,
 				01FEC9DA26DB412D004B506F /* SearchView.swift */,
 				019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */,
@@ -299,6 +302,7 @@
 			files = (
 				019EFA1E26F1C14400C83E00 /* Launch Screen.storyboard in Resources */,
 				01AFF214270C093300661805 /* Matcha5.json in Resources */,
+				0138F6C327B47ADA003549A4 /* Matcha_Spring.json in Resources */,
 				019CB4D726D60F9000577EBF /* Assets.xcassets in Resources */,
 				01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */,
 				011318012742320100A708A6 /* Matcha_Winter_2.json in Resources */,
