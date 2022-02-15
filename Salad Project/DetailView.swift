@@ -60,6 +60,7 @@ struct DetailView: View {
                         .font(.system(.subheadline, design: .rounded))
                         .tracking(-0.5)
                         .padding(.leading)
+                        
                     
                     Button(action: {
                         if classes.detail[0].ClassLocation[0] == -1 || classes.detail[0].ClassLocation[1] == -1{
