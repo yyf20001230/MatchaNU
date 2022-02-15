@@ -10,6 +10,7 @@ import MapKit
 
 struct DetailView: View {
     @EnvironmentObject var classes: ClassLocations
+    @EnvironmentObject var settings: appSettings
     @State private var showAlert = false
     @State private var showNavigationAlert = false
     
@@ -29,14 +30,14 @@ struct DetailView: View {
                     
                     VStack(alignment: .leading, spacing: 4.0){
                         HStack{
-                            Text("Location: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0])
+                            Text(classes.detail[0].MeetingInfo.contains(": ") ? "Location: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0] : "Location: TBA")
                                 .foregroundColor(.secondary)
                                 .font(.system(.caption, design: .rounded))
                                 .fontWeight(.semibold)
                                 .tracking(-0.5)
                             Spacer()
                         }
-                        Text("Info: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[1])
+                        Text(classes.detail[0].MeetingInfo.contains(": ") ? "Info: " + classes.detail[0].MeetingInfo.components(separatedBy: ": ")[1] : "Info: TBA")
                             .foregroundColor(.secondary)
                             .font(.system(.caption, design: .rounded))
                             .fontWeight(.semibold)
@@ -66,10 +67,11 @@ struct DetailView: View {
                         } else {
                             classes.ShowClass = false
                             classes.showRoute.toggle()
+                            settings.Schedule = false
                         }
                     }){
                         
-                        HStack{
+                        HStack(alignment: .center){
                             
                             
                             Image(systemName: "mappin.circle.fill")
@@ -78,26 +80,35 @@ struct DetailView: View {
                                 .scaledToFill()
                                 .shadow(color: Color(red: 0.0, green: 0.0, blue: 0.0, opacity: 0.1), radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/, x: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/0.0/*@END_MENU_TOKEN@*/)
                             
-                            VStack (alignment: .leading, spacing: 3.0){
-                                Text("Navigate:")
+                            if settings.Schedule{
+                                Text("Navigate")
                                     .foregroundColor(.secondary)
                                     .font(.system(.subheadline, design: .rounded))
                                     .fontWeight(.bold)
-                                    .padding([.horizontal, .top])
-                                
-                                if classes.detail[0].ClassLocation[0] != -1 && classes.detail[0].ClassLocation[0] != -1{
-                                    Text(String(classes.Time) + " mins by walking")
-                                        .font(.system(.footnote, design: .rounded))
-                                        .fontWeight(.semibold)
-                                        .multilineTextAlignment(.leading)
-                                        .padding([.horizontal,.bottom])
-                                } else {
-                                    Text("Location unknown")
-                                        .font(.system(.footnote, design: .rounded))
-                                        .fontWeight(.semibold)
-                                        .multilineTextAlignment(.leading)
-                                        .padding([.horizontal, .bottom])
-                                }
+                                    .padding(.all)
+                            } else {
+                                VStack (alignment: .leading, spacing: 3.0){
+                                    Text("Navigate:")
+                                        .foregroundColor(.secondary)
+                                        .font(.system(.subheadline, design: .rounded))
+                                        .fontWeight(.bold)
+                                        .padding([.horizontal, .top])
+                                    
+                                    if classes.detail[0].ClassLocation[0] != -1 && classes.detail[0].ClassLocation[0] != -1{
+                                        Text(String(classes.Time) + " mins by walking")
+                                            .font(.system(.footnote, design: .rounded))
+                                            .fontWeight(.semibold)
+                                            .multilineTextAlignment(.leading)
+                                            .padding([.horizontal,.bottom])
+                                    } else {
+                                        Text("Location unknown")
+                                            .font(.system(.footnote, design: .rounded))
+                                            .fontWeight(.semibold)
+                                            .multilineTextAlignment(.leading)
+                                            .padding([.horizontal, .bottom])
+                                    }
+                            }
+                            
                             }
                             
                             
@@ -105,8 +116,8 @@ struct DetailView: View {
                             
                         }
                         
-                        .accentColor(self.classes.showRoute ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
-                        .frame(width: UIScreen.main.bounds.width / 1.3)
+                        .accentColor(self.classes.showRoute ? Color("Red") : Color("Theme"))
+                        .frame(width: UIScreen.main.bounds.width / 1.3, height: UIScreen.main.bounds.height * 0.08)
                         .padding(.horizontal)
                         .background(Color("ClassColor"))
                         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -130,11 +141,10 @@ struct DetailView: View {
                     HStack{
                         Button(action: {
                             if classes.userClass.contains(classes.detail[0]){
-                                classes.userClass = classes.userClass.filter{$0 != classes.detail[0]} 
+                                classes.userClass = classes.userClass.filter{$0 != classes.detail[0]}
                                 self.showAlert = true
                             } else{
                                 classes.userClass.append(self.classes.detail[0])
-                                
                                 self.showAlert = true
                             }
                         }){
@@ -151,7 +161,7 @@ struct DetailView: View {
                                     .fontWeight(.semibold)
                                     .padding(.all)
                             }
-                            .accentColor(classes.userClass.contains(classes.detail[0]) ? Color(#colorLiteral(red: 0.9176470588, green: 0.3450980392, blue: 0.3019607843, alpha: 1)) : Color("Theme"))
+                            .accentColor(classes.userClass.contains(classes.detail[0]) ? Color("Red") : Color("Theme"))
                             .frame(width: UIScreen.main.bounds.width / 3.7)
                             .background(Color("ClassColor"))
                             .clipShape(RoundedRectangle(cornerRadius: 5))

@@ -29,28 +29,8 @@ func compile() -> String{
 
     return "Times: " + dateFormatter.string(from: startTime) + " to " + dateFormatter.string(from: endTime) + "\n" +  "Classroom: " + classroom + "\n" + "Days of week: " + dateString
 
-    /*
-    var outputString = ""
-    let list = separateHourMinute(scrapedString: startString)
-    for num in list{
-        outputString.append(String(num))
-        outputString.append(" ")
-    }
-    
-    var dowString = ""
-    let dowList = switchDaysWithInt(dowList: datesList)
-    for dow in dowList{
-        dowString = dowString + String(dow)
-    }
-    
-    return outputString + "\n" + dowString
-    */
+   
 }
-
-//    func allTimes(startTime: Date, endTime:Date, classroom: String) -> MeetingTimes{
-//        return MeetingTimes{startTime: startTime, endTime: endTime, classroom: classroom}
-//
-//    }
 
 //Turns valid date string into Date object
 func newDate(inString: String) -> Date{
@@ -69,7 +49,6 @@ func newDate(inString: String) -> Date{
 func timeInterval (currentHour: Int, currentMinute: Int, classHour: Int, classMinute: Int)-> Int{
     let currentTime = currentHour * 60 + currentMinute
     let classTime = classHour * 60 + classMinute
-    print(classTime - currentTime)
     return classTime - currentTime
 }
 
@@ -138,45 +117,25 @@ func separateHourMinute(scrapedString: String) -> [Int]{
 
 //scrape helper
 func getTime(rawString: String) -> String{
-
-    var newString: String
-    let lastComma = rawString.lastIndex(of: ",") ?? rawString.startIndex
-    newString = String(rawString[rawString.index(after: lastComma)...])
+    
+    let newString: String
+    newString = rawString.contains(",") ? rawString.components(separatedBy: ",").last! : ""
     return newString
+    
 }
 
 //Get start time from Non-TBA MeetingInfo
 func scrapeStartHoursMinutes(rawString: String) -> String{
     let newString = getTime(rawString: rawString)
-    var firstLetter: Character = "Z"
-    for char in newString{
-        if char.isLetter{
-            firstLetter = char
-            break
-        }
-    }
-    let firstLetterIndex = newString.firstIndex(of: firstLetter)
-    if (firstLetterIndex == nil){
-        return "TBA"
-    }
-         
-    let finalString = String(newString[...newString.index(after: firstLetterIndex!)])
-    
-    //finalString = finalString +  String(newString[firstLetterIndex!...newString.index(after: firstLetterIndex!)])
+    let finalString = (newString == "" || !newString.contains("-")) ? "TBA" : newString.components(separatedBy: "-")[0]
     return finalString
 }
 
 
 //Get end time from Non-TBA MeetingInfo
 func scrapeEndHoursMinutes(rawString: String) -> String{
-    var newString = getTime(rawString: rawString)
-    let hyphenIndex = newString.firstIndex(of: "-")
-    newString = String(newString[newString.index(after: hyphenIndex!)...])
-    
-    
-    let finalString = String(newString)
-    
-    //finalString = finalString + String(newString[firstLetterIndex!...])
+    let newString = getTime(rawString: rawString)
+    let finalString = (newString == "" || !newString.contains("-")) ? "TBA" : newString.components(separatedBy: "-")[1]
     return finalString
 }
 
@@ -185,7 +144,7 @@ func scrapeEndHoursMinutes(rawString: String) -> String{
 func scrapeDatesOfWeek(rawString: String) -> [String] {
     let startIndex = rawString.index(after: rawString.firstIndex(of: ":")!)
     var newString = String(rawString[startIndex...])
-    let validList = ["su","mo","tu","we","th","fr","sa"]
+    let validList = ["mo","tu","we","th","fr"]
     var isValid: Bool = false
     
     for str in validList{
@@ -218,18 +177,18 @@ func scrapeDatesOfWeek(rawString: String) -> [String] {
 
 func switchDaysWithInt(dowList: [String]) -> [Int]{
     var intList:[Int] = []
-    let switchDict = ["su": 1,
+    let switchDict = [
                       "mo": 2,
                       "tu": 3,
                       "we": 4,
                       "th": 5,
-                      "fr": 6,
-                      "sa": 7]
+                      "fr": 6]
     for dow in dowList{
         var inString = dow
         inString = String(inString.lowercased().trimmingCharacters(in: .whitespacesAndNewlines).prefix(2))
         intList.append(switchDict[inString] ?? -1)
     }
+    
     return intList
 }
 
@@ -238,8 +197,4 @@ func scrapeClassroom(rawString: String) -> String{
     let newString = String(rawString[...rawString.index(before: firstColon!)])
     
     return newString
-}
-
-func combineTimes(startTime: Date, endTime: Date, daysOfWeek: [Int]){
-    
 }

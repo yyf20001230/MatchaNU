@@ -18,11 +18,10 @@ struct EditView: View {
     @State var Longitude = 0.0
     @State var MeetingInfo = ""
     
-    @State var ClassLocation = ""
     @State var EditClassLocation = ""
     @State var Instructor = ""
     @State var EditInstructor = ""
-    
+    @State var ClassLocation: String
     
     @State private var selectedSection = 0
     @State private var showAlert = false
@@ -31,17 +30,19 @@ struct EditView: View {
     @State private var foundLocation = false
     @State private var enteredNextPage = false
     
+    
     @State var startTime = Date()
     @State var endTime = Date()
-    @State var daysOfWeek = [-1, -1, -1, -1, -1, -1, -1]
-    @State var daysBoolean: [Bool] = [false, false, false, false, false, false, false]
+    @State var daysOfWeek = [-1, -1, -1, -1, -1]
+    @State var daysBoolean: [Bool] = [false, false, false, false, false]
+        
     var body: some View {
         
         let data = datas
         let locations = Array(Set(data.map({$0.MeetingInfo.components(separatedBy: ": ")[0]}))).sorted()
         let profs = Array(Set(data.map({$0.Instructor.replacingOccurrences(of: "|", with: ",").dropLast()}))).sorted()
-        let displayDow = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
-        let finalDowList = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
+        let displayDow = ["Mo", "Tu", "We", "Th", "Fr"]
+        let finalDowList = ["Mon", "Tues", "Wed", "Thurs", "Fri"]
         let dateFormatter = DateFormatter()
         var finalDow = ""
         var finalString = ""
@@ -135,10 +136,10 @@ struct EditView: View {
                     .padding(.bottom)
                     
                 HStack{
-                    ForEach(0..<7){ i in
+                    ForEach(0..<5){ i in
                         Button(action: {
                             daysBoolean[i].toggle()
-                            for j in 0..<7 {
+                            for j in 0..<5 {
                                 if daysBoolean[j]{
                                     daysOfWeek[j] = i+1
                                 }
@@ -258,11 +259,11 @@ struct EditView: View {
                         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                         dateFormatter.dateFormat = "h:mma"
                         
+                        
                         startTime = dateFormatter.date(from: scrapeStartHoursMinutes(rawString: MeetingInfo)) ?? Date()
                         endTime = dateFormatter.date(from: scrapeEndHoursMinutes(rawString: MeetingInfo)) ?? Date()
                         
-                        
-                        for i in 0..<7{
+                        for i in 0..<5{
                             if MeetingInfo.contains(finalDowList[i]){
                                 daysOfWeek[i] = i
                                 daysBoolean[i] = true
@@ -274,7 +275,7 @@ struct EditView: View {
                     
                     
                     var noDow = true
-                    for i in 0..<7{
+                    for i in 0..<5{
                         if daysBoolean[i]{
                             noDow = false
                         }
@@ -317,7 +318,7 @@ struct EditView: View {
                     
                     let startTimeString = dateFormatter.string(from: startTime)
                     let endTimeString = dateFormatter.string(from: endTime)
-                    for i in 0..<7{
+                    for i in 0..<5{
                         if daysBoolean[i]{
                             finalDow.append(finalDowList[i])
                             finalDow.append(", ")

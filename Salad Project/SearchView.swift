@@ -31,7 +31,7 @@ struct ClassList: View{
             VStack (alignment: .leading){
                 
                 if classes.userClass.count != 0{
-                    Text("Enrolled class(es)")
+                    Text("\(classes.Quarter) class")
                         .foregroundColor(.secondary)
                         .fontWeight(.bold)
                         .font(.system(.subheadline, design: .rounded))
@@ -68,12 +68,12 @@ struct ClassList: View{
                                             .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
                                             .multilineTextAlignment(.leading)
-                                        Text(i.MeetingInfo.components(separatedBy: ": ")[0])
+                                        Text(i.MeetingInfo.contains(": ") ? i.MeetingInfo.components(separatedBy: ": ")[0] : "TBA")
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
                                             .multilineTextAlignment(.leading)
-                                        Text(i.MeetingInfo.components(separatedBy: ": ")[1])
+                                        Text(i.MeetingInfo.contains(": ") ? i.MeetingInfo.components(separatedBy: ": ")[1] : "TBA")
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption, design: .rounded))
                                             .tracking(-0.5)
@@ -143,11 +143,11 @@ struct ClassList: View{
                 
             }
             
-            else if self.classes.Section.count == 0{
+            else if classes.Section.count == 0{
                ScrollView(showsIndicators: false){
                     ForEach(elements.prefix(12)){ i in
                         Button(action:{
-                            self.classes.Section = self.datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
+                            classes.Section = datas.filter({($0.Class + $0.Major).lowercased().contains(i.Class.lowercased() + i.Major.lowercased())})
                             
                         }) {
                             HStack {
@@ -201,10 +201,15 @@ struct ClassList: View{
             } else {
                 VStack{
                     ScrollView(showsIndicators: false){
-                        ForEach(self.classes.Section){ i in
+                        ForEach(classes.Section){ i in
                             Button(action: {
-                                self.classes.detail.removeAll()
-                                self.classes.detail.append(i)
+                                classes.detail.removeAll()
+                                classes.detail.append(i)
+                                let startHour = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classes.detail[0].MeetingInfo))[0]
+                                let endHour = separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: classes.detail[0].MeetingInfo))[0]
+                                classes.startTime = startHour != -1 ? min(classes.startTime, startHour - 1) : classes.startTime
+                                classes.endTime = endHour != -1 ? max(classes.endTime, endHour + 2) : classes.endTime
+                                
                             })
                             {
                                 
@@ -223,13 +228,13 @@ struct ClassList: View{
                                             .fontWeight(.semibold)
                                             .tracking(-0.5)
                                             .multilineTextAlignment(.leading)
-                                        Text(i.MeetingInfo.components(separatedBy: ": ")[0])
+                                        Text(i.MeetingInfo.contains(": ") ? i.MeetingInfo.components(separatedBy: ": ")[0] : "TBA")
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption2, design: .rounded))
                                             .fontWeight(.semibold)
                                             .tracking(-0.5)
                                             .multilineTextAlignment(.leading)
-                                        Text(i.MeetingInfo.components(separatedBy: ": ")[1])
+                                        Text(i.MeetingInfo.contains(": ") ? i.MeetingInfo.components(separatedBy: ": ")[1] : "TBA")
                                             .foregroundColor(.secondary)
                                             .font(.system(.caption2, design: .rounded))
                                             .fontWeight(.semibold)
@@ -267,9 +272,11 @@ class getClass: ObservableObject{
     @Published var data = [ClassInfo]()
     @Published var uniquedata = [ClassInfo]()
     @Published var uniqueprof = [ClassInfo]()
+    @Published var quarter = UserDefaults.standard.string(forKey: "Quarter") ?? "Spring 2022"
     
     init(){
-        if let fileLocation = Bundle.main.url(forResource: "Matcha_Spring", withExtension: "json") {
+        
+        if let fileLocation = Bundle.main.url(forResource: quarter, withExtension: "json") {
             do {
                 let classData = try Data(contentsOf: fileLocation)
                 let jsonDecoder = JSONDecoder()
@@ -278,10 +285,15 @@ class getClass: ObservableObject{
                 self.data = datafromJson
                 for document in self.data{
                     if self.uniquedata.count == 0 || self.uniquedata.last!.Class + self.uniquedata.last!.Major != (document.Class + document.Major){
+                        
                         self.uniquedata.append(document)
+                        
+                        
                     }
                     if self.uniqueprof.count == 0 || self.uniqueprof.last!.Instructor != (document.Instructor){
+                        
                         self.uniqueprof.append(document)
+                        
                     }
                     
                 }

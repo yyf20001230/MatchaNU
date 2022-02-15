@@ -33,40 +33,61 @@ struct SettingsView: View {
             
             VStack(spacing: 16.0) {
                 
-                if settings.Settings{
-                    HStack{
-                        Text("Notification in Advance")
-                            .foregroundColor(Color("Default"))
-                        Spacer()
-                        Picker("\(settings.TimeInAdvance) mins", selection: $settings.TimeInAdvance){
-                            ForEach([10,20,30,40,50,60], id: \.self){
-                                Text("\($0) mins")
-                            }
+                
+                HStack{
+                    Text("Notification in Advance")
+                        .foregroundColor(Color("Default"))
+                    Spacer()
+                    Picker("Notification in Advance", selection: $settings.TimeInAdvance){
+                        ForEach([10,20,30,40,50,60], id: \.self){
+                            Text("\($0) mins")
                         }
-                        .accentColor(Color("Theme"))
-                        .pickerStyle(.menu)
                     }
-                    .padding(.horizontal)
-                    .padding(.top)
+                    .accentColor(Color("Theme"))
+                    .pickerStyle(.menu)
                 }
+                .padding(.horizontal)
+                .padding(.top)
                 
-                
-                
-                Toggle("Toggle Dark Mode", isOn: $settings.isDarkMode)
-                    .onChange(of: settings.isDarkMode) {value in
-                        if (settings.isDarkMode == true){
-                            settings.currentSystemScheme = .dark
-                            
+                HStack{
+                    Text("Load quarter data")
+                        .foregroundColor(Color("Default"))
+                    Spacer()
+                    Picker("Load quarter data", selection: $classes.Quarter){
+                        ForEach(["Spring 2022", "Winter 2022"], id: \.self){
+                            Text("\($0)")
                         }
-                        else{
-                            settings.currentSystemScheme = .light
-                        }
-                        
-                        
                     }
-                    .foregroundColor(Color("Default"))
-                    .padding(.horizontal)
-                    .padding(.bottom, 4)
+                    .accentColor(Color("Theme"))
+                    .pickerStyle(.menu)
+                    .alert(isPresented: $classes.showAlert){
+                        Alert(title: Text("Caution"),
+                              message: Text("You are about to load course from \(classes.Quarter). You must restart matcha upon a successful switch of course data. Wish to proceed?"),
+                              primaryButton: .destructive(Text("Yes"), action: {
+                                classes.showAlert = false
+                                exit(0)
+                              }),
+                              secondaryButton: .default(Text("No"))
+                            )
+                    }
+                    
+                }
+                .padding(.horizontal)
+                
+                HStack{
+                    Text("System Appearance")
+                        .foregroundColor(Color("Default"))
+                    Spacer()
+                    Picker("System Appearance", selection: $settings.isDarkMode){
+                        ForEach(["Automatic", "Light", "Dark"], id: \.self){
+                            Text("\($0)")
+                        }
+                    }
+                    .accentColor(Color("Theme"))
+                    .pickerStyle(.menu)
+                }
+                .padding(.horizontal)
+                
                 
                 Button(action:{
                     settings.About.toggle()
@@ -78,7 +99,7 @@ struct SettingsView: View {
                         Spacer()
                         Image(systemName: "arrow.right")
                             .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
-                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                            .foregroundColor(Color("Theme"))
                     }
                 }
                 
@@ -94,14 +115,15 @@ struct SettingsView: View {
                         Spacer()
                         Image(systemName: "arrow.right")
                             .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
-                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                            .foregroundColor(Color("Theme"))
                     }
                     
                 }
-                .padding([.horizontal, .top])
+                .padding(.horizontal)
+                .padding(.top, CGFloat(UIScreen.main.bounds.height) * 0.01)
                 
                 Button(action:{
-                    self.showAlert = true
+                    showAlert = true
                 }){
                     HStack{
                         Text("Clear Classes")
@@ -109,11 +131,12 @@ struct SettingsView: View {
                         Spacer()
                         Image(systemName: "arrow.right")
                             .opacity(/*@START_MENU_TOKEN@*/0.6/*@END_MENU_TOKEN@*/)
-                            .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                            .foregroundColor(Color("Theme"))
                     }
                     
                 }
-                .padding(.all)
+                .padding([.horizontal, .bottom])
+                .padding(.top, CGFloat(UIScreen.main.bounds.height) * 0.01)
                 .alert(isPresented: $showAlert) {
                     Alert(
                         title: Text("Warning"),
@@ -122,8 +145,6 @@ struct SettingsView: View {
                             classes.userClass.removeAll()
                         }),
                         secondaryButton: .default(Text("No"))
-                        
-                        
                     )
                 }
                 

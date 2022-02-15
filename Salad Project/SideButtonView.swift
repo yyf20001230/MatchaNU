@@ -13,6 +13,8 @@ struct SideButtonView: View {
     @EnvironmentObject var settings: appSettings
 
     var body: some View {
+        
+        
         VStack {
             Button(action: {
                 settings.Schedule.toggle()
@@ -20,18 +22,19 @@ struct SideButtonView: View {
             }) {
                 Image(systemName: "map")
                     .padding(.bottom,8)
-                    .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                    .foregroundColor(Color("Theme"))
             }
             
             Divider()
                 .frame(width: 24.0)
                 .background(Color.white)
             
-            Button(action: {settings.Settings.toggle()
+            Button(action: {
+                settings.Settings.toggle()
             }){
                 Image(systemName: "gear")
                 .padding(.top,8)
-                .foregroundColor(Color(#colorLiteral(red: 0.4745098039, green: 0.768627451, blue: 0.5843137255, alpha: 1)))
+                .foregroundColor(Color("Theme"))
             }
             
         }

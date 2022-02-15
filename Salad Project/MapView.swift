@@ -53,7 +53,7 @@ struct MapView: UIViewRepresentable {
                 
                 directions.calculate{ response, error in
                     guard let route = response?.routes.first else { return }
-                    if classes.Time == 0{
+                    if classes.Time == 0 {
                         classes.Time = Int(route.expectedTravelTime / 60)
                     }
                     if classes.showRoute{

@@ -16,6 +16,16 @@ class ClassLocations: ObservableObject{
             savedItems()
         }
     }
+    @Published var usedClass: [ClassInfo] = [] {
+        didSet{
+            saveusedClass()
+        }
+    }
+    @Published var Quarter: String = "Spring 2022" {
+        didSet{
+            saveQuarters()
+        }
+    }
     
     @Published var Section: [ClassInfo] = []
     @Published var detail: [ClassInfo] = []
@@ -24,29 +34,73 @@ class ClassLocations: ObservableObject{
     @Published var showUserLocation = false
     @Published var ShowClass = false
     @Published var EditClass = false
-    @Published var Time = 0
-    
+    @Published var showAlert = false
     @Published var quickNavigate = false
+    @Published var Time = 0
     @Published var quickNavigateTime = 31
     @Published var quickNavigateclass: [ClassInfo] = []
+    
+    @Published var startTime: Int = 9
+    @Published var endTime: Int = 17
     
     
     init(){
         getItems()
+        getQuarter()
     }
     
     func getItems(){
         guard let data = UserDefaults.standard.data(forKey: "UserClassFile") else { return }
         guard let savedItems = try? JSONDecoder().decode([ClassInfo].self, from: data) else { return }
+        guard let usedData = UserDefaults.standard.data(forKey: "usedClass") else { return }
+        guard let usedSavedItems = try? JSONDecoder().decode([ClassInfo].self, from: usedData) else { return }
         
         userClass = savedItems
+        usedClass = usedSavedItems
+        
+    }
+    func getQuarter(){
+        Quarter = UserDefaults.standard.string(forKey: "Quarter") ?? Quarter
     }
     
     func savedItems(){
         if let encodedData = try? JSONEncoder().encode(userClass) {
             UserDefaults.standard.set(encodedData, forKey: "UserClassFile")
         }
+        if let encodedData = try? JSONEncoder().encode(usedClass) {
+            UserDefaults.standard.set(encodedData, forKey: "usedClass")
+        }
+        
+        var startTimeList = userClass.map{separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: $0.MeetingInfo))[0]}
+        var endTimeList = userClass.map{separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: $0.MeetingInfo))[0]}
+        startTimeList = startTimeList.filter({$0 != -1})
+        endTimeList = endTimeList.filter({$0 != -1})
+        startTime = startTimeList.isEmpty ? 9 : startTimeList.min()! - 1
+        endTime = endTimeList.isEmpty ? 17 : endTimeList.max()! + 2
+        
+        
+        let startHour = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: detail.isEmpty ? "" : detail[0].MeetingInfo))[0]
+        let endHour = separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: detail.isEmpty ? "" : detail[0].MeetingInfo))[0]
+        startTime = startHour == -1 ? startTime : min(startTime, startHour - 1)
+        endTime = endHour == -1 ? endTime : max(endTime, endHour + 2)
     }
+    
+    func saveQuarters(){
+        if UserDefaults.standard.string(forKey: "Quarter") != Quarter{
+            let tempClass = usedClass
+            usedClass = userClass
+            userClass = tempClass
+            showAlert = true
+        }
+        UserDefaults.standard.set(Quarter, forKey: "Quarter")
+    }
+    
+    func saveusedClass(){
+        if let encodedData = try? JSONEncoder().encode(usedClass) {
+            UserDefaults.standard.set(encodedData, forKey: "usedClass")
+        }
+    }
+    
     
 }
 
@@ -55,49 +109,60 @@ class ClassLocations: ObservableObject{
 class appSettings: ObservableObject{
     
     @Published var currentSystemScheme = schemeTransform(userInterfaceStyle: UITraitCollection.current.userInterfaceStyle)
-    @Published var isDarkMode: Bool = false {
+    @Published var isDarkMode: String = "Automatic" {
         didSet{
             saveDarkMode()
         }
     }
-    @Published var Schedule = false
-    @Published var Settings = false
-    @Published var About = false
-    @Published var Bug = false
+    
     @Published var TimeInAdvance: Int = 10 {
         didSet{
             saveTime()
         }
     }
     
+    @Published var timeline = true
+    @Published var Schedule = false
+    @Published var Settings = false
+    @Published var About = false
+    @Published var Bug = false
+    @Published var showAlert = false
+    
     init(){
         getTime()
         getDarkMode()
-        
     }
     
     func getTime(){
         TimeInAdvance = UserDefaults.standard.integer(forKey: "TimeInAdvance")
     }
     
+    func getDarkMode(){
+        isDarkMode = UserDefaults.standard.string(forKey: "isDarkMode") ?? isDarkMode
+        
+        if isDarkMode == "Dark"{
+            currentSystemScheme = .dark
+        } else if isDarkMode == "Light" {
+            currentSystemScheme = .light
+        } else {
+            currentSystemScheme = schemeTransform(userInterfaceStyle: UITraitCollection.current.userInterfaceStyle)
+        }
+    }
+    
     func saveTime(){
         UserDefaults.standard.set(TimeInAdvance, forKey: "TimeInAdvance")
     }
     
-    func getDarkMode(){
-        isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
-        
-        if isDarkMode{
-            currentSystemScheme = .dark
-        } else {
-            currentSystemScheme = .light
-        }
-    }
-    
     func saveDarkMode(){
         UserDefaults.standard.set(isDarkMode, forKey: "isDarkMode")
+        if isDarkMode == "Dark"{
+            currentSystemScheme = .dark
+        } else if isDarkMode == "Light" {
+            currentSystemScheme = .light
+        } else {
+            currentSystemScheme = schemeTransform(userInterfaceStyle: UITraitCollection.current.userInterfaceStyle)
+        }
     }
-    
 }
 
 
@@ -108,62 +173,53 @@ struct ContentView: View {
     @State var ShowClass = false
     
     @State var ClassName = ""
-
-    
     @StateObject var classes = ClassLocations()
+    @StateObject var settings = appSettings()
     @ObservedObject var datas = getClass()
     @ObservedObject var locationManager = LocationManager()
     @ObservedObject var notificationManager = NotificationManager()
-    @StateObject var settings = appSettings()
     
     var body: some View {
 
         ZStack () {
             
-            MapView().environmentObject(classes)
-                .ignoresSafeArea()
-                .accentColor(Color("Theme"))
+            !settings.Schedule ?
+                MapView()
+                    .environmentObject(classes)
+                    .environmentObject(settings)
+                    .accentColor(Color("Theme"))
+                    .ignoresSafeArea()
+                : nil
+            
+            settings.Schedule ?
+                ScheduleView()
+                    .environmentObject(settings)
+                    .environmentObject(classes)
+                : nil
             
             VStack{
-                VStack{
-                    HStack {
-                        Spacer()
-                        SideButtonView()
-                            .environmentObject(settings)
-                            .environmentObject(classes)
-                            .padding(.trailing)
-                            .padding(.top, height / 18)
-                    }
-                    Spacer()
-                }
                 Spacer()
                 HStack {
                     if MainTab.height >= 0 && !classes.ShowClass{
                         CornerButtonView()
-                            .environmentObject(classes)
                             .onTapGesture {
-                                classes.showUserLocation.toggle()
+                                settings.Settings.toggle()
                                 classes.quickNavigate = false
                             }
-                            .foregroundColor(classes.showUserLocation ? Color("Red") : Color("Theme"))
+                            .foregroundColor(Color("Theme"))
                             .offset(y: -height / 12 - 50)
                             .padding(.leading)
                             .opacity(Double(1 + MainTab.height))
                         Spacer()
                         
                         if !classes.EditClass{
-                            UserClassView().environmentObject(classes)
+                            ScheduleButtonView()
+                                .environmentObject(settings)
                                 .onTapGesture {
-                                    classes.showUserClass.toggle()
-                                    classes.detail.removeAll()
-                                    classes.Section.removeAll()
+                                    settings.Schedule.toggle()
                                     classes.quickNavigate = false
-                                    if classes.showUserClass {
-                                        classes.ShowClass = true
-                                    }
-                                    
                                 }
-                                .foregroundColor(classes.showUserClass ? Color("Red") : Color("Theme"))
+                                .foregroundColor(Color("Theme"))
                                 .offset(y: -height / 12 - 50)
                                 .padding(.trailing)
                                 .opacity(Double(1 + MainTab.height))
@@ -257,6 +313,14 @@ struct ContentView: View {
                                             classes.showRoute = false
                                             classes.EditClass = false
                                             classes.Time = 0
+                                            
+                                            var startTimeList = classes.userClass.map{separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: $0.MeetingInfo))[0]}
+                                            var endTimeList = classes.userClass.map{separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: $0.MeetingInfo))[0]}
+                                            startTimeList = startTimeList.filter({$0 != -1})
+                                            endTimeList = endTimeList.filter({$0 != -1})
+                                            classes.startTime = startTimeList.isEmpty ? 9 : startTimeList.min()! - 1
+                                            classes.endTime = endTimeList.isEmpty ? 17 : endTimeList.max()! + 2
+                                            
                                         }
                                 }
                             }
@@ -297,6 +361,9 @@ struct ContentView: View {
                             .padding(.trailing)
                             .padding(.trailing)
                             .onTapGesture{
+                                if !classes.EditClass{
+                                    classes.detail.removeAll()
+                                }
                                 classes.EditClass = false
                                 if !classes.showRoute{
                                     classes.ShowClass = true
@@ -307,9 +374,8 @@ struct ContentView: View {
                                 } else{
                                     classes.showRoute = false
                                 }
-                                classes.Time = 0
-                                classes.detail.removeAll()
                                 
+                                classes.Time = 0
                             }
                     }
                     .padding(.top, 6)
@@ -320,7 +386,8 @@ struct ContentView: View {
                 
                 if MainTab.height < -20 || classes.ShowClass{
                     if classes.EditClass{
-                        EditView(datas: datas.data, uniqueProf: datas.uniqueprof).environmentObject(classes)
+                        EditView(datas: datas.data, uniqueProf: datas.uniqueprof, ClassLocation: classes.detail[0].MeetingInfo.components(separatedBy: ": ")[0])
+                            .environmentObject(classes)
                     } else {
                         if classes.detail.isEmpty{
                             if !classes.showUserClass{
@@ -333,10 +400,13 @@ struct ContentView: View {
                                         }
                                     )
                             } else {
-                                UserClassList().environmentObject(classes)
+                                UserClassList()
+                                    .environmentObject(classes)
                             }
                         } else {
-                            DetailView().environmentObject(classes)
+                            DetailView()
+                                .environmentObject(classes)
+                                .environmentObject(settings)
                         }
                     }
                    
@@ -380,20 +450,13 @@ struct ContentView: View {
             .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
             
             
-            Rectangle()
+            (settings.Settings  || settings.About || settings.Bug) ? Rectangle()
                 .foregroundColor(Color.black)
                 .opacity(0.7)
                 .ignoresSafeArea()
-                .offset(y: (settings.Settings || settings.Schedule || settings.About || settings.Bug) ? 0 : height)
                 .onTapGesture(){
                     settings.Settings = false
-                }
-            
-            
-            ScheduleView()
-                .environmentObject(settings)
-                .offset(y: settings.Schedule ?  0 : height)
-            
+                } : nil
             
             SettingsView()
                 .environmentObject(settings)
