@@ -86,7 +86,7 @@ class ClassLocations: ObservableObject{
     }
     
     func saveQuarters(){
-        if UserDefaults.standard.string(forKey: "Quarter") != Quarter{
+        if UserDefaults.standard.string(forKey: "Quarter") != nil && UserDefaults.standard.string(forKey: "Quarter") != Quarter{
             let tempClass = usedClass
             usedClass = userClass
             userClass = tempClass
@@ -121,8 +121,19 @@ class appSettings: ObservableObject{
         }
     }
     
-    @Published var timeline = true
-    @Published var Schedule = false
+    @Published var timeline: Bool = false {
+        didSet{
+            saveTimeLine()
+        }
+    }
+    
+    @Published var hidePastEvent: Bool = false {
+        didSet{
+            saveHidePastEvent()
+        }
+    }
+    
+    @Published var Schedule = true
     @Published var Settings = false
     @Published var About = false
     @Published var Bug = false
@@ -131,6 +142,8 @@ class appSettings: ObservableObject{
     init(){
         getTime()
         getDarkMode()
+        getTimeLine()
+        getHidePastEvent()
     }
     
     func getTime(){
@@ -149,8 +162,24 @@ class appSettings: ObservableObject{
         }
     }
     
+    func getTimeLine(){
+        timeline = UserDefaults.standard.bool(forKey: "TimeLine")
+    }
+    
+    func getHidePastEvent(){
+        hidePastEvent = UserDefaults.standard.bool(forKey: "HidePastEvent")
+    }
+
     func saveTime(){
         UserDefaults.standard.set(TimeInAdvance, forKey: "TimeInAdvance")
+    }
+    
+    func saveTimeLine(){
+        UserDefaults.standard.set(timeline, forKey: "TimeLine")
+    }
+    
+    func saveHidePastEvent(){
+        UserDefaults.standard.set(hidePastEvent, forKey: "HidePastEvent")
     }
     
     func saveDarkMode(){
@@ -476,6 +505,7 @@ struct ContentView: View {
             
             QuickNavigationWindow()
                 .environmentObject(classes)
+                .environmentObject(settings)
                 .offset(y: classes.quickNavigate ?  0 : height * 2)
                 .animation(.spring())
             

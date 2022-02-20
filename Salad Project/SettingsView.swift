@@ -62,12 +62,11 @@ struct SettingsView: View {
                     .pickerStyle(.menu)
                     .alert(isPresented: $classes.showAlert){
                         Alert(title: Text("Caution"),
-                              message: Text("You are about to load course from \(classes.Quarter). You must restart matcha upon a successful switch of course data. Wish to proceed?"),
-                              primaryButton: .destructive(Text("Yes"), action: {
+                              message: Text("You are about to load course from \(classes.Quarter). You must restart matcha upon a successful switch of course data."),
+                              dismissButton: .destructive(Text("I understand"), action: {
                                 classes.showAlert = false
                                 exit(0)
-                              }),
-                              secondaryButton: .default(Text("No"))
+                              })
                             )
                     }
                     
@@ -85,6 +84,16 @@ struct SettingsView: View {
                     }
                     .accentColor(Color("Theme"))
                     .pickerStyle(.menu)
+                }
+                .padding(.horizontal)
+                
+                Toggle(isOn: $settings.hidePastEvent){
+                    Text("Hide past event")
+                }
+                .padding(.horizontal)
+                
+                Toggle(isOn: $settings.timeline){
+                    Text("Display timeline")
                 }
                 .padding(.horizontal)
                 
@@ -110,7 +119,7 @@ struct SettingsView: View {
                     settings.Settings = false
                 }){
                     HStack{
-                        Text("Report Bugs")
+                        Text("Send us feedback")
                             .foregroundColor(Color("Default"))
                         Spacer()
                         Image(systemName: "arrow.right")

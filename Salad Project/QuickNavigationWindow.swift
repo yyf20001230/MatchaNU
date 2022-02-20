@@ -10,6 +10,7 @@ import SwiftUI
 struct QuickNavigationWindow: View {
     
     @EnvironmentObject var classes: ClassLocations
+    @EnvironmentObject var settings: appSettings
     @State var MainTab = CGSize.zero
     
     var body: some View {
@@ -43,6 +44,7 @@ struct QuickNavigationWindow: View {
                     classes.detail = classes.quickNavigateclass
                     classes.showRoute = true
                     classes.quickNavigate = false
+                    settings.Schedule = false
                 }){
                    Text("Yes")
                         .foregroundColor(Color("ClassColor"))

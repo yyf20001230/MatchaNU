@@ -14,7 +14,7 @@ struct ScheduleView: View {
     @State var calendar = Calendar.current
     @State var height = CGFloat(UIScreen.main.bounds.height)
     @State var width =  CGFloat(UIScreen.main.bounds.width)
-    @State var timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    @State var timer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var settings: appSettings
     @EnvironmentObject var classes: ClassLocations
@@ -22,39 +22,41 @@ struct ScheduleView: View {
     
     var body: some View {
         let hourDistance = CGFloat(height * 0.70 / CGFloat(classes.endTime - classes.startTime))
-        let day = calendar.component(.weekday, from: date)
+        var day = calendar.component(.weekday, from: date)
+        var hour = calendar.component(.hour, from: date)
+        var minute = calendar.component(.minute, from: date)
         
         VStack{
             HStack (spacing: 0){
                 Text("Mon")
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundColor(day == 2 ? Color.white : .secondary)
+                    .foregroundColor(day == 2 && settings.timeline ? Color.white : .secondary)
                     .frame(width: width * 0.175, alignment: .center)
-                    .background(day == 2 ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
+                    .background(day == 2 && settings.timeline ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 Text("Tue")
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundColor(day == 3 ? Color.white : .secondary)
+                    .foregroundColor(day == 3 && settings.timeline ? Color.white : .secondary)
                     .frame(width: width * 0.175, alignment: .center)
-                    .background(day == 3 ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
+                    .background(day == 3 && settings.timeline ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 Text("Wed")
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundColor(day == 4 ? Color.white : .secondary)
+                    .foregroundColor(day == 4 && settings.timeline ? Color.white : .secondary)
                     .frame(width: width * 0.175, alignment: .center)
-                    .background(day == 4 ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
+                    .background(day == 4 && settings.timeline ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 Text("Thu")
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundColor(day == 5 ? Color.white : .secondary)
+                    .foregroundColor(day == 5 && settings.timeline ? Color.white : .secondary)
                     .frame(width: width * 0.175, alignment: .center)
-                    .background(day == 5 ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
+                    .background(day == 5 && settings.timeline ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 Text("Fri")
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundColor(day == 6 ? Color.white : .secondary)
+                    .foregroundColor(day == 6 && settings.timeline ? Color.white : .secondary)
                     .frame(width: width * 0.175, alignment: .center)
-                    .background(day == 6 ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
+                    .background(day == 6 && settings.timeline ? Color.red.opacity(0.5) : colorScheme == .dark ? Color.black : Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             .padding(.leading, width * 0.08)
@@ -80,14 +82,13 @@ struct ScheduleView: View {
                         }
                     }
                     
-                    Double(calendar.component(.hour, from: date)) + Double(calendar.component(.minute, from: date) / 60) < Double(classes.endTime) + 0.5 && Double(calendar.component(.hour, from: date)) + Double(calendar.component(.minute, from: date) / 60) > Double(classes.startTime) - 0.5 ?
+                    Double(hour) + Double(minute / 60) < Double(classes.endTime) + 0.5 && Double(hour) + Double(minute / 60) > Double(classes.startTime) - 0.5 &&  settings.timeline ?
                     HStack{
-                        var hour = calendar.component(.hour, from: date)
-                        var minute = calendar.component(.minute, from: date)
-                        Text(minute > 5 && minute < 55 ? String(hour) + ":" + (minute > 9 ? String(minute) : "0" + String(minute)) : "")
+                        Text(minute > 3 && minute < 57 ? (hour < 12 ? String(hour) : String(hour - 12)) + ":" + (minute > 9 ? String(minute) : "0" + String(minute)) : "")
                             .onReceive(timer){ _ in
                                 date = Date()
                                 calendar = Calendar.current
+                                day = calendar.component(.weekday, from: date)
                                 hour = calendar.component(.hour, from: date)
                                 minute = calendar.component(.minute, from: date)
                             }
@@ -103,8 +104,8 @@ struct ScheduleView: View {
                         
                     }
                     .padding(.leading, width * 0.01)
-                    .offset(y: CGFloat(calendar.component(.hour, from: date) - classes.startTime) * hourDistance)
-                    .offset(y: CGFloat(calendar.component(.minute, from: date)) / 60 * hourDistance)
+                    .offset(y: CGFloat(hour - classes.startTime) * hourDistance)
+                    .offset(y: CGFloat(minute) / 60 * hourDistance)
                     
                     : nil
                     
@@ -170,6 +171,7 @@ struct ScheduleView: View {
                                         .environment(\.colorScheme, colorScheme == .dark ? .light : .dark)
                                         .multilineTextAlignment(.center)
                                 }
+                                .opacity(settings.hidePastEvent && (weekday * 24 + endHour + endMinute / 60 < day * 24 + hour + minute / 60) ? 0.2 : 1)
                                 .frame(width: width * 0.16, height: (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance)
                                 .position(x: width * 0.19 + CGFloat(weekday - 2) * width * 0.175, y: CGFloat(startHour - classes.startTime) * hourDistance + CGFloat(startMinute) * hourDistance / 60 + hourDistance / 2 + (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance / 2)
                                 .onTapGesture(perform: {
