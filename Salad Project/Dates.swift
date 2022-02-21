@@ -198,3 +198,16 @@ func scrapeClassroom(rawString: String) -> String{
     
     return newString
 }
+
+//func hasConflict(time1: String, time2: String) -> Bool{
+////    #If there is a single overlap, then we know to return false.
+////            #The way we would know is if in any meeting, the end time is larger than the start time of the iterated meeting
+////            #If we sort the intervals by start time first, then we can check if each meeting ends before the next one starts
+//
+////            intervals.sort()
+////            for i in range(len(intervals)-1):
+////                if intervals[i][1] > intervals[i+1][0]:
+////                    return False
+////            return True
+//
+//}
