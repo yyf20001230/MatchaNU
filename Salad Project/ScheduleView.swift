@@ -84,7 +84,7 @@ struct ScheduleView: View {
                     
                     Double(hour) + Double(minute / 60) < Double(classes.endTime) + 0.5 && Double(hour) + Double(minute / 60) > Double(classes.startTime) - 0.5 &&  settings.timeline ?
                     HStack{
-                        Text(minute > 3 && minute < 57 ? (hour < 12 ? String(hour) : String(hour - 12)) + ":" + (minute > 9 ? String(minute) : "0" + String(minute)) : "")
+                        Text(minute > 5 && minute < 55 ? (hour < 12 ? String(hour) : String(hour - 12)) + ":" + (minute > 9 ? String(minute) : "0" + String(minute)) : "")
                             .onReceive(timer){ _ in
                                 date = Date()
                                 calendar = Calendar.current
