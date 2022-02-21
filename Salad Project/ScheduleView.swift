@@ -84,7 +84,7 @@ struct ScheduleView: View {
                     
                     Double(hour) + Double(minute / 60) < Double(classes.endTime) + 0.5 && Double(hour) + Double(minute / 60) > Double(classes.startTime) - 0.5 &&  settings.timeline ?
                     HStack{
-                        Text(minute > 3 && minute < 57 ? (hour < 12 ? String(hour) : String(hour - 12)) + ":" + (minute > 9 ? String(minute) : "0" + String(minute)) : "")
+                        Text(minute > 5 && minute < 55 ? (hour < 12 ? String(hour) : String(hour - 12)) + ":" + (minute > 9 ? String(minute) : "0" + String(minute)) : "")
                             .onReceive(timer){ _ in
                                 date = Date()
                                 calendar = Calendar.current
@@ -132,8 +132,6 @@ struct ScheduleView: View {
                             .frame(width: width * 0.16, height: (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance)
                             .position(x: width * 0.19 + CGFloat(weekday - 2) * width * 0.175, y: CGFloat(startHour - classes.startTime) * hourDistance + CGFloat(startMinute) * hourDistance / 60 + hourDistance / 2 + (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance / 2)
                             .onTapGesture(perform: {
-                                classes.detail.removeAll()
-                                classes.detail.append(classes.detail[0])
                                 classes.ShowClass = true
                             })
                         }
