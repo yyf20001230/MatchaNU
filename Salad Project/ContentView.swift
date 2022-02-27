@@ -568,7 +568,6 @@ struct ContentView: View {
             if maxInterval < settings.TimeInAdvance{
                 classes.quickNavigate = true
                 classes.quickNavigateTime = maxInterval
-                print(maxInterval)
             }
         }
         .onChange(of: notificationManager.authorizationStatus){ authorizationStatus in
