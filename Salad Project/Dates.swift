@@ -146,7 +146,7 @@ func scrapeDatesOfWeek(rawString: String) -> [String] {
     var newString = String(rawString[startIndex...])
     let validList = ["mo","tu","we","th","fr"]
     var isValid: Bool = false
-    
+        
     for str in validList{
         if newString.lowercased().contains(str){
             isValid = true
@@ -199,15 +199,42 @@ func scrapeClassroom(rawString: String) -> String{
     return newString
 }
 
-//func hasConflict(time1: String, time2: String) -> Bool{
-////    #If there is a single overlap, then we know to return false.
-////            #The way we would know is if in any meeting, the end time is larger than the start time of the iterated meeting
-////            #If we sort the intervals by start time first, then we can check if each meeting ends before the next one starts
-//
-////            intervals.sort()
-////            for i in range(len(intervals)-1):
-////                if intervals[i][1] > intervals[i+1][0]:
-////                    return False
-////            return True
-//
-//}
+func hasConflict(classesOnDay: [ClassInfo]) -> Bool{
+    //First, take the class infos and convert them into an array of [startTime, endTime]
+    var timesList = [[],[],[],[],[]]
+    //timesList is formatted as:
+        //Each row represents a day from Mon to Fri
+        //In each row, each entry is a tuple of [startTime,endTime]
+    for classes in classesOnDay{
+        let startTimeString = scrapeStartHoursMinutes(rawString: classes.MeetingInfo)
+        let endTimeString = scrapeEndHoursMinutes(rawString: classes.MeetingInfo)
+        let startTimeInt = Int(newDate(inString: startTimeString).timeIntervalSince1970)
+        let endTimeInt = Int(newDate(inString: endTimeString).timeIntervalSince1970)
+        let dows = switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classes.MeetingInfo))
+        //Indexing can be done as dow - 2, since monday starts at 2
+        for dow in dows{
+            timesList[dow-2].append([startTimeInt, endTimeInt])
+        }
+    }
+    print(timesList)
+    
+    //1. Need to have a count for how many conflict, not jsut whether there is conflict
+        //Count is used to detemrine the scale factor for the width
+    //2. Optional: Might also need to know which class is the one that causes the conflict
+        //might not need it, because rendering is done in scheduleview.
+    
+    
+//    #If there is a single overlap, then we know to return false.
+//            #The way we would know is if in any meeting, the end time is larger than the start time of the iterated meeting
+//            #If we sort the intervals by start time first, then we can check if each meeting ends before the next one starts
+
+//            intervals.sort()
+//            for i in range(len(intervals)-1):
+//                if intervals[i][1] > intervals[i+1][0]:
+//                    return False
+//            return True
+    return false
+}
+
+
+

@@ -135,6 +135,10 @@ struct ScheduleView: View {
                         }
                     }
                     
+                    
+                        
+                    let myBool = hasConflict(classesOnDay: classes.userClass)
+                    
                     ForEach(classes.userClass, id: \.self){classInfo in
                         let dow = switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classInfo.MeetingInfo))
                         
