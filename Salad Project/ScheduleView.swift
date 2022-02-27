@@ -95,7 +95,7 @@ struct ScheduleView: View {
                             .frame(width: width * 0.08, height: hourDistance)
                             .foregroundColor(Color.red.opacity(0.7))
                             .font(.system(.caption2, design: .rounded))
-                            
+                        
                         
                         Rectangle()
                             .fill(Color.red.opacity(0.7))
@@ -109,7 +109,8 @@ struct ScheduleView: View {
                     
                     : nil
                     
-                    let dow = !classes.detail.isEmpty ? switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classes.detail[0].MeetingInfo)) : []
+                    
+                    let dow = !classes.detail.isEmpty && classes.detail[0].MeetingInfo.contains(": ") ? switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classes.detail[0].MeetingInfo)) : []
                     ForEach(dow, id: \.self){ weekday in
                         let start = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classes.detail[0].MeetingInfo))
                         let end = separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: classes.detail[0].MeetingInfo))
@@ -128,7 +129,7 @@ struct ScheduleView: View {
                                     .foregroundColor(Color("EditColor"))
                                     .multilineTextAlignment(.center)
                             }
-
+                            
                             .frame(width: width * 0.16, height: (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance)
                             .position(x: width * 0.19 + CGFloat(weekday - 2) * width * 0.175, y: CGFloat(startHour - classes.startTime) * hourDistance + CGFloat(startMinute) * hourDistance / 60 + hourDistance / 2 + (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance / 2)
                             .onTapGesture(perform: {
@@ -138,45 +139,47 @@ struct ScheduleView: View {
                     }
                     
                     ForEach(classes.userClass, id: \.self){classInfo in
-                        let dow = switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classInfo.MeetingInfo))
-                        
-                        ForEach(dow, id: \.self){ weekday in
-                            let start = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo))
-                            let end = separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: classInfo.MeetingInfo))
-                            let startHour = start[0]
-                            let startMinute = start[1]
-                            let endHour = end[0]
-                            let endMinute = end[1]
-                            
-                            
-                            if startHour != -1 && startMinute != -1 && endHour != -1 && endMinute != -1 && !dow.contains(-1){
-                                let inputData = Data(classInfo.Class.utf8)
-                                let hashed = SHA256.hash(data: inputData)
-                                let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
-                                let hashNumber = hashString.filter({$0.isNumber})
-                                let coloring = hashNumber.compactMap{$0.wholeNumberValue}.reduce(0, +) % 12 + 1
+                        if classInfo.MeetingInfo.contains(": "){
+                            let dow = switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classInfo.MeetingInfo))
+
+                            ForEach(dow, id: \.self){ weekday in
+                                let start = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classInfo.MeetingInfo))
+                                let end = separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: classInfo.MeetingInfo))
+                                let startHour = start[0]
+                                let startMinute = start[1]
+                                let endHour = end[0]
+                                let endMinute = end[1]
                                 
-                                ZStack (alignment: .center){
-                                    Rectangle()
-                                        .fill(Color(String(coloring)))
-                                        .cornerRadius(5)
-                                        //.shadow(color: Color.black.opacity(0.08), radius: 5, x: 5, y: 5)
+                                
+                                if startHour != -1 && startMinute != -1 && endHour != -1 && endMinute != -1 && !dow.contains(-1){
+                                    let inputData = Data(classInfo.Class.utf8)
+                                    let hashed = SHA256.hash(data: inputData)
+                                    let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
+                                    let hashNumber = hashString.filter({$0.isNumber})
+                                    let coloring = hashNumber.compactMap{$0.wholeNumberValue}.reduce(0, +) % 12 + 1
                                     
-                                    Text(classInfo.Major.components(separatedBy: " ")[0] + " " + classInfo.Class.components(separatedBy: "-")[0])
-                                        .font(.system(.caption2, design: .rounded))
-                                        .fontWeight(.bold)
-                                        .foregroundColor(Color(String(coloring)).opacity(0.8))
-                                        .environment(\.colorScheme, colorScheme == .dark ? .light : .dark)
-                                        .multilineTextAlignment(.center)
+                                    ZStack (alignment: .center){
+                                        Rectangle()
+                                            .fill(Color(String(coloring)))
+                                            .cornerRadius(5)
+                                        //.shadow(color: Color.black.opacity(0.08), radius: 5, x: 5, y: 5)
+                                        
+                                        Text(classInfo.Major.components(separatedBy: " ")[0] + " " + classInfo.Class.components(separatedBy: "-")[0])
+                                            .font(.system(.caption2, design: .rounded))
+                                            .fontWeight(.bold)
+                                            .foregroundColor(Color(String(coloring)).opacity(0.8))
+                                            .environment(\.colorScheme, colorScheme == .dark ? .light : .dark)
+                                            .multilineTextAlignment(.center)
+                                    }
+                                    .opacity(settings.hidePastEvent && (weekday * 24 + endHour + endMinute / 60 < day * 24 + hour + minute / 60) ? 0.2 : 1)
+                                    .frame(width: width * 0.16, height: (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance)
+                                    .position(x: width * 0.19 + CGFloat(weekday - 2) * width * 0.175, y: CGFloat(startHour - classes.startTime) * hourDistance + CGFloat(startMinute) * hourDistance / 60 + hourDistance / 2 + (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance / 2)
+                                    .onTapGesture(perform: {
+                                        classes.detail.removeAll()
+                                        classes.detail.append(classInfo)
+                                        classes.ShowClass = true
+                                    })
                                 }
-                                .opacity(settings.hidePastEvent && (weekday * 24 + endHour + endMinute / 60 < day * 24 + hour + minute / 60) ? 0.2 : 1)
-                                .frame(width: width * 0.16, height: (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance)
-                                .position(x: width * 0.19 + CGFloat(weekday - 2) * width * 0.175, y: CGFloat(startHour - classes.startTime) * hourDistance + CGFloat(startMinute) * hourDistance / 60 + hourDistance / 2 + (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance / 2)
-                                .onTapGesture(perform: {
-                                    classes.detail.removeAll()
-                                    classes.detail.append(classInfo)
-                                    classes.ShowClass = true
-                                })
                             }
                         }
                     }
