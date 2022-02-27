@@ -132,11 +132,13 @@ struct ScheduleView: View {
                             
                             .frame(width: width * 0.16, height: (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance)
                             .position(x: width * 0.19 + CGFloat(weekday - 2) * width * 0.175, y: CGFloat(startHour - classes.startTime) * hourDistance + CGFloat(startMinute) * hourDistance / 60 + hourDistance / 2 + (CGFloat(endHour - startHour) + CGFloat(endMinute - startMinute) / 60) * hourDistance / 2)
-                            .onTapGesture(perform: {
-                                classes.ShowClass = true
-                            })
+                            
                         }
                     }
+                    
+                    
+                        
+                    let myBool = hasConflict(classesOnDay: classes.userClass)
                     
                     ForEach(classes.userClass, id: \.self){classInfo in
                         if classInfo.MeetingInfo.contains(": "){
