@@ -1,5 +1,7 @@
 
 import Foundation
+import SwiftUI
+import CryptoKit
 //TESTING
 func compile() -> String{
     
@@ -199,26 +201,39 @@ func scrapeClassroom(rawString: String) -> String{
     return newString
 }
 
-func hasConflict(classesOnDay: [ClassInfo]) -> Bool{
+func hasConflict(allClasses: [ClassInfo]) -> [Any]{
     //First, take the class infos and convert them into an array of [startTime, endTime]
-    var timesList = [[],[],[],[],[]]
+    var timesList = [[ClassInfo:[Int]](),[ClassInfo:[Int]](),[ClassInfo:[Int]](),[ClassInfo:[Int]](),[ClassInfo:[Int]]()]
     //timesList is formatted as:
         //Each row represents a day from Mon to Fri
         //In each row, each entry is a tuple of [startTime,endTime]
-    for classes in classesOnDay{
+    for classes in allClasses{
         let startTimeString = scrapeStartHoursMinutes(rawString: classes.MeetingInfo)
         let endTimeString = scrapeEndHoursMinutes(rawString: classes.MeetingInfo)
-        let startTimeInt = Int(newDate(inString: startTimeString).timeIntervalSince1970)
-        let endTimeInt = Int(newDate(inString: endTimeString).timeIntervalSince1970)
-        let dows = switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classes.MeetingInfo))
-        //Indexing can be done as dow - 2, since monday starts at 2
-        for dow in dows{
-            timesList[dow-2].append([startTimeInt, endTimeInt])
+        
+        if startTimeString != "TBA" && endTimeString != "TBA"{
+            let startTimeInt = Int(newDate(inString: startTimeString).timeIntervalSince1970)
+            let endTimeInt = Int(newDate(inString: endTimeString).timeIntervalSince1970)
+            let dows = switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classes.MeetingInfo))
+            //Indexing can be done as dow - 2, since monday starts at 2
+            if !dows.contains(-1){
+                for dow in dows{
+                    timesList[dow-2][classes] = [startTimeInt, endTimeInt]
+                }
+            }
         }
     }
+    
+    let dict = Dictionary(timesList[0].sorted(by: {
+        $0.value[0] < $1.value[0]
+    }))
+    timesList[0] = dict
+        
+        
+    
     print(timesList)
     
-    //1. Need to have a count for how many conflict, not jsut whether there is conflict
+    //1. Need to have a count for how many conflict, not just whether there is conflict
         //Count is used to detemrine the scale factor for the width
     //2. Optional: Might also need to know which class is the one that causes the conflict
         //might not need it, because rendering is done in scheduleview.
@@ -233,7 +248,7 @@ func hasConflict(classesOnDay: [ClassInfo]) -> Bool{
 //                if intervals[i][1] > intervals[i+1][0]:
 //                    return False
 //            return True
-    return false
+    return timesList
 }
 
 

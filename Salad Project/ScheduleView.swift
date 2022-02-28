@@ -67,7 +67,7 @@ struct ScheduleView: View {
                     VStack(alignment: .leading, spacing: 0){
                         ForEach(classes.startTime..<classes.endTime + 1, id: \.self){ i in
                             HStack(alignment: .center){
-                                Text(i < 12 ? String(i) + "AM" : i != 12 ? String(i - 12) + "PM" : "12PM")
+                                Text(i < 12 ? String(i) : i != 12 ? String(i - 12): String(12))
                                     .foregroundColor(.secondary)
                                     .font(.system(.caption2, design: .rounded))
                                     .frame(width: width * 0.08, height: hourDistance)
@@ -110,6 +110,8 @@ struct ScheduleView: View {
                     : nil
                     
                     
+                    let myBool = classes.detail.isEmpty ? hasConflict(allClasses: classes.userClass) : hasConflict(allClasses: classes.userClass + classes.detail)
+                    
                     let dow = !classes.detail.isEmpty && classes.detail[0].MeetingInfo.contains(": ") ? switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classes.detail[0].MeetingInfo)) : []
                     ForEach(dow, id: \.self){ weekday in
                         let start = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classes.detail[0].MeetingInfo))
@@ -136,9 +138,6 @@ struct ScheduleView: View {
                         }
                     }
                     
-                    
-                        
-                    let myBool = hasConflict(classesOnDay: classes.userClass)
                     
                     ForEach(classes.userClass, id: \.self){classInfo in
                         if classInfo.MeetingInfo.contains(": "){
