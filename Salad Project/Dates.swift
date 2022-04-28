@@ -224,14 +224,14 @@ func hasConflict(allClasses: [ClassInfo]) -> [Any]{
         }
     }
     
-    let dict = Dictionary(timesList[0].sorted(by: {
-        $0.value[0] < $1.value[0]
-    }))
-    timesList[0] = dict
-        
-        
-    
-    print(timesList)
+//    let dict = Dictionary(timesList[0].sorted(by: {
+//        $0.value[0] < $1.value[0]
+//    }))
+//    timesList[0] = dict
+//        
+//        
+//    
+//    print(timesList)
     
     //1. Need to have a count for how many conflict, not just whether there is conflict
         //Count is used to detemrine the scale factor for the width
