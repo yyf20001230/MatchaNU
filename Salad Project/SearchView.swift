@@ -272,7 +272,7 @@ class getClass: ObservableObject{
     @Published var data = [ClassInfo]()
     @Published var uniquedata = [ClassInfo]()
     @Published var uniqueprof = [ClassInfo]()
-    @Published var quarter = UserDefaults.standard.string(forKey: "Quarter") ?? "Spring 2022"
+    @Published var quarter = UserDefaults.standard.string(forKey: "Quarter") ?? "Fall 2022"
     
     init(){
         

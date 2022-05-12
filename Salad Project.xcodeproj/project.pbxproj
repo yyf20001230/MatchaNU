@@ -17,6 +17,7 @@
 		016BB1292706BB89003DCD6A /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016BB1282706BB89003DCD6A /* EditView.swift */; };
 		0175756A26D8D2FA00757862 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0175756926D8D2FA00757862 /* LocationManager.swift */; };
 		0175756C26D8D45C00757862 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0175756B26D8D45C00757862 /* MapView.swift */; };
+		0178BE78282CA8C400224284 /* Fall 2022.json in Resources */ = {isa = PBXBuildFile; fileRef = 0178BE77282CA8C400224284 /* Fall 2022.json */; };
 		0191A83A27C4301F00FD1BC0 /* Spring 2022.json in Resources */ = {isa = PBXBuildFile; fileRef = 0191A83927C4301F00FD1BC0 /* Spring 2022.json */; };
 		019CB4D326D60F8E00577EBF /* Salad_ProjectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019CB4D226D60F8E00577EBF /* Salad_ProjectApp.swift */; };
 		019CB4D526D60F8E00577EBF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019CB4D426D60F8E00577EBF /* ContentView.swift */; };
@@ -64,6 +65,7 @@
 		016BB1282706BB89003DCD6A /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		0175756926D8D2FA00757862 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		0175756B26D8D45C00757862 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		0178BE77282CA8C400224284 /* Fall 2022.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Fall 2022.json"; sourceTree = "<group>"; };
 		0191A83927C4301F00FD1BC0 /* Spring 2022.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Spring 2022.json"; sourceTree = "<group>"; };
 		019CB4CF26D60F8E00577EBF /* Salad Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Salad Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		019CB4D226D60F8E00577EBF /* Salad_ProjectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Salad_ProjectApp.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				0175756926D8D2FA00757862 /* LocationManager.swift */,
 				0175756B26D8D45C00757862 /* MapView.swift */,
 				01FEC9DA26DB412D004B506F /* SearchView.swift */,
+				0178BE77282CA8C400224284 /* Fall 2022.json */,
 				019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */,
 				0191A83927C4301F00FD1BC0 /* Spring 2022.json */,
 				011318002742320000A708A6 /* Winter 2022.json */,
@@ -301,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				019EFA1E26F1C14400C83E00 /* Launch Screen.storyboard in Resources */,
+				0178BE78282CA8C400224284 /* Fall 2022.json in Resources */,
 				01AFF214270C093300661805 /* Matcha5.json in Resources */,
 				019CB4D726D60F9000577EBF /* Assets.xcassets in Resources */,
 				01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */,

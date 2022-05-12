@@ -110,7 +110,7 @@ struct ScheduleView: View {
                     : nil
                     
                     
-                    let myBool = classes.detail.isEmpty ? hasConflict(allClasses: classes.userClass) : hasConflict(allClasses: classes.userClass + classes.detail)
+                    let ConflictSheet = ConflictSheet(allClasses: classes.detail.isEmpty ? classes.userClass : classes.userClass + classes.detail)
                     
                     let dow = !classes.detail.isEmpty && classes.detail[0].MeetingInfo.contains(": ") ? switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classes.detail[0].MeetingInfo)) : []
                     ForEach(dow, id: \.self){ weekday in
