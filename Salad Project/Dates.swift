@@ -202,56 +202,28 @@ func scrapeClassroom(rawString: String) -> String{
     return newString
 }
 
-func ConflictSheet(allClasses: [ClassInfo]) -> [Int: [String: [Int]]]{
-    var MondayDict: [String: [Int]] = [:]
-    var TuesdayDict: [String: [Int]] = [:]
-    var WednesdayDict: [String: [Int]] = [:]
-    var ThursdayDict: [String: [Int]] = [:]
-    var FridayDict: [String: [Int]] = [:]
-    var conflictSheet: [Int: [String: [Int]]] = [:]
+func ConflictClass(start: Int, end: Int, date: Int, allClasses: [ClassInfo]) -> [Int]{
+    var ClassList: [[Int]] = []
 
     for classes in allClasses{
         let weekdays = switchDaysWithInt(dowList: scrapeDatesOfWeek(rawString: classes.MeetingInfo))
-        let startTimeList = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classes.MeetingInfo))
-        let endTimeList = separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: classes.MeetingInfo))
+        let startTime = separateHourMinute(scrapedString: scrapeStartHoursMinutes(rawString: classes.MeetingInfo))
+        let endTime = separateHourMinute(scrapedString: scrapeEndHoursMinutes(rawString: classes.MeetingInfo))
         
-        if startTimeList != [-1,-1] && endTimeList != [-1,-1] && !weekdays.contains(-1){
-            let startTime = startTimeList[0] * 60 + startTimeList[1]
-            let endTime = endTimeList[0] * 60 + endTimeList[1]
-            let className = classes.Class
-            
-            //need to make dictionaries allow duplicate values
+        if startTime != [-1,-1] && endTime != [-1,-1] && !weekdays.contains(-1){
+            let startTime = startTime[0] * 60 + startTime[1]
+            let endTime = endTime[0] * 60 + endTime[1]
             for dow in weekdays{
-                switch dow {
-                case 2:
-                    MondayDict[className] = [startTime, endTime]
-                case 3:
-                    TuesdayDict[className] = [startTime, endTime]
-                case 4:
-                    WednesdayDict[className] = [startTime, endTime]
-                case 5:
-                    ThursdayDict[className] = [startTime, endTime]
-                case 6:
-                    FridayDict[className] = [startTime, endTime]
-                default:
-                    continue
+                if dow == date{
+                    ClassList.append([startTime, endTime])
                 }
             }
-            
-            MondayDict.sorted(by: {$0.0 < $1.0})
-            TuesdayDict.sorted(by: {$0.0 < $1.0})
-            WednesdayDict.sorted(by: {$0.0 < $1.0})
-            ThursdayDict.sorted(by: {$0.0 < $1.0})
-            FridayDict.sorted(by: {$0.0 < $1.0})
-            
-            
-            
-            
         }
     }
-    print(WednesdayDict)
     
-    return conflictSheet
+    print(ClassList.sorted(by: {$0.first! < $1.first!}))
+
+    return [0,0]
 }
 
 
