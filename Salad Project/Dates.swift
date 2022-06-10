@@ -221,20 +221,6 @@ func ConflictClass(start: Int, end: Int, date: Int, allClasses: [ClassInfo]) -> 
         }
     }
     
-//    let dict = Dictionary(timesList[0].sorted(by: {
-//        $0.value[0] < $1.value[0]
-//    }))
-//    timesList[0] = dict
-//        
-//        
-//    
-//    print(timesList)
-    
-    //1. Need to have a count for how many conflict, not just whether there is conflict
-        //Count is used to detemrine the scale factor for the width
-    //2. Optional: Might also need to know which class is the one that causes the conflict
-        //might not need it, because rendering is done in scheduleview.
-    
     
     print(ClassList.sorted(by: {$0.first! < $1.first!}))
 
