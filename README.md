@@ -1,4 +1,4 @@
-# Salad-Project
+# Matcha
 Allows students to select their classes and navigate them on the map
 
 One of the most user-friendly course navigation and planning APP in Northwestern. To download the APP, search @MatchaNU on APP store. 
