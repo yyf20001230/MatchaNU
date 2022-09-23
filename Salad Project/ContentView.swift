@@ -268,7 +268,7 @@ struct ContentView: View {
                     .frame(width: 40.0, height: 4.0)
                     .foregroundColor(Color("Theme"))
                     .cornerRadius(2.0)
-                    .padding(.top, 10)
+                    .padding([.top, .bottom], 10)
                 
                 
                 if classes.Section.count == 0 && !classes.EditClass{
