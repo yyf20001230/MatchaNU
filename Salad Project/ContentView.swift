@@ -21,7 +21,7 @@ class ClassLocations: ObservableObject{
             saveusedClass()
         }
     }
-    @Published var Quarter: String = "Spring 2022" {
+    @Published var Quarter: String = "Winter 2023" {
         didSet{
             saveQuarters()
         }

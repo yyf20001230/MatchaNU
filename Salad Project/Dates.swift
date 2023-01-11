@@ -220,9 +220,6 @@ func ConflictClass(start: Int, end: Int, date: Int, allClasses: [ClassInfo]) -> 
             }
         }
     }
-    
-    
-    print(ClassList.sorted(by: {$0.first! < $1.first!}))
 
     return [0,0]
 }
