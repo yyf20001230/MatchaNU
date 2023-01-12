@@ -38,7 +38,7 @@ struct SettingsView: View {
                     Text("Notification in Advance")
                         .foregroundColor(Color("Default"))
                     Spacer()
-                    Picker("Notification in Advance", selection: $settings.TimeInAdvance){
+                    Picker("", selection: $settings.TimeInAdvance){
                         ForEach([10,20,30,40,50,60], id: \.self){
                             Text("\($0) mins").tag(Optional<String>(nil))
                         }
@@ -53,7 +53,7 @@ struct SettingsView: View {
                     Text("Load quarter data")
                         .foregroundColor(Color("Default"))
                     Spacer()
-                    Picker("Load quarter data", selection: $classes.Quarter){
+                    Picker("", selection: $classes.Quarter){
                         ForEach(["Winter 2023", "Fall 2022"], id: \.self){
                             Text($0)
                         }
@@ -77,7 +77,7 @@ struct SettingsView: View {
                     Text("System Appearance")
                         .foregroundColor(Color("Default"))
                     Spacer()
-                    Picker("System Appearance", selection: $settings.isDarkMode){
+                    Picker("", selection: $settings.isDarkMode){
                         ForEach(["Automatic", "Light", "Dark"], id: \.self){
                             Text("\($0)").tag(Optional<String>(nil))
                         }
@@ -188,18 +188,6 @@ struct SettingsView: View {
                     
                 }
         )
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
     }
 }
