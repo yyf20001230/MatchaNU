@@ -54,7 +54,7 @@ struct SettingsView: View {
                         .foregroundColor(Color("Default"))
                     Spacer()
                     Picker("", selection: $classes.Quarter){
-                        ForEach(["Winter 2023", "Fall 2022"], id: \.self){
+                        ForEach(["Spring 2023", "Winter 2023"], id: \.self){
                             Text($0)
                         }
                     }
