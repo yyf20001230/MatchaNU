@@ -30,6 +30,7 @@
 		01AFF214270C093300661805 /* Matcha5.json in Resources */ = {isa = PBXBuildFile; fileRef = 01AFF213270C093300661805 /* Matcha5.json */; };
 		01B76258272CC24100E33123 /* QuickNavigationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B76257272CC24100E33123 /* QuickNavigationWindow.swift */; };
 		01CFC76D26D7909C00497454 /* CornerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01CFC76C26D7909C00497454 /* CornerButtonView.swift */; };
+		01E33A672AB9F5C000898826 /* Fall 2023.json in Resources */ = {isa = PBXBuildFile; fileRef = 01E33A662AB9F5C000898826 /* Fall 2023.json */; };
 		01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EF57E826DAF19000005597 /* GoogleService-Info.plist */; };
 		01FEC9DB26DB412D004B506F /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FEC9DA26DB412D004B506F /* SearchView.swift */; };
 		2B44E67B26E0D131002531C7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B44E67A26E0D131002531C7 /* SettingsView.swift */; };
@@ -86,6 +87,7 @@
 		01AFF213270C093300661805 /* Matcha5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Matcha5.json; sourceTree = "<group>"; };
 		01B76257272CC24100E33123 /* QuickNavigationWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickNavigationWindow.swift; sourceTree = "<group>"; };
 		01CFC76C26D7909C00497454 /* CornerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerButtonView.swift; sourceTree = "<group>"; };
+		01E33A662AB9F5C000898826 /* Fall 2023.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Fall 2023.json"; sourceTree = "<group>"; };
 		01EF57E826DAF19000005597 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		01FEC9DA26DB412D004B506F /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		2B44E67A26E0D131002531C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				0175756B26D8D45C00757862 /* MapView.swift */,
 				01FEC9DA26DB412D004B506F /* SearchView.swift */,
 				0178BE77282CA8C400224284 /* Fall 2022.json */,
+				01E33A662AB9F5C000898826 /* Fall 2023.json */,
 				0190BDD729D3836A00FDC7C7 /* Spring 2023.json */,
 				019EFA1D26F1C14400C83E00 /* Launch Screen.storyboard */,
 				0191A83927C4301F00FD1BC0 /* Spring 2022.json */,
@@ -314,6 +317,7 @@
 				01AFF214270C093300661805 /* Matcha5.json in Resources */,
 				019B6524296EA0E200C45395 /* Winter 2023.json in Resources */,
 				0190BDD829D3836A00FDC7C7 /* Spring 2023.json in Resources */,
+				01E33A672AB9F5C000898826 /* Fall 2023.json in Resources */,
 				019CB4D726D60F9000577EBF /* Assets.xcassets in Resources */,
 				01EF57E926DAF19000005597 /* GoogleService-Info.plist in Resources */,
 				0191A83A27C4301F00FD1BC0 /* Spring 2022.json in Resources */,
