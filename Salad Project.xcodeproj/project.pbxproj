@@ -523,7 +523,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Salad Project/Preview Content\"";
-				DEVELOPMENT_TEAM = KTWPWU629W;
+				DEVELOPMENT_TEAM = 6G8M4B7VY8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Salad Project/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -531,7 +531,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = nu.matcha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -546,7 +546,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Salad Project/Preview Content\"";
-				DEVELOPMENT_TEAM = KTWPWU629W;
+				DEVELOPMENT_TEAM = 6G8M4B7VY8;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Salad Project/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -554,7 +554,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = nu.matcha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
